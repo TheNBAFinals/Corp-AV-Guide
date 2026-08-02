@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Corporate AV Field Guide</title>
+<meta name="description" content="Interactive corporate AV study guide: signal flow, wireless, video, crew positions, and troubleshooting drills.">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="theme-color" content="#0d1117">
+<style>
+:root{
+  --bg:#0d1117; --bg2:#161b22; --bg3:#1c2430; --line:#2b3440;
+  --txt:#e6edf3; --dim:#8b98a5; --dimmer:#5c6773;
+  /* signal color code — used everywhere, consistently */
+  --audio:#3fb950;    /* XLR / analog audio — GREEN */
+  --rf:#f0883e;       /* RF / wireless / coax — ORANGE */
+  --video:#58a6ff;    /* HDMI / video — BLUE */
+  --sdi:#bc8cff;      /* SDI / BNC — PURPLE */
+  --power:#f85149;    /* IEC / power — RED */
+  --data:#39d0d8;     /* CAT / Dante / network — CYAN */
+  --warn:#e3b341;
+  --radius:14px;
+  font-synthesis:none;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--txt);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+a{color:var(--video)}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 80px}
+
+/* ---------- header ---------- */
+header{
+  background:linear-gradient(160deg,#161b22 0%,#0d1117 100%);
+  border-bottom:1px solid var(--line);padding:28px 16px 22px;
+}
+header .inner{max-width:900px;margin:0 auto}
+h1{margin:0 0 6px;font-size:26px;letter-spacing:-.5px;line-height:1.2}
+.sub{color:var(--dim);font-size:14px;margin:0}
+.badge{display:inline-block;font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--rf);border:1px solid var(--rf);border-radius:99px;padding:3px 10px;margin-bottom:10px;font-weight:600}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:50;background:rgba(13,17,23,.94);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav .navinner{display:flex;gap:4px;max-width:900px;margin:0 auto;padding:8px 12px}
+nav button{
+  flex:0 0 auto;background:transparent;border:1px solid transparent;color:var(--dim);
+  font:600 13px/1 inherit;padding:9px 13px;border-radius:99px;cursor:pointer;white-space:nowrap;transition:.15s}
+nav button:hover{color:var(--txt);background:var(--bg2)}
+nav button[aria-selected="true"]{background:var(--bg3);color:var(--txt);border-color:var(--line)}
+
+/* ---------- panels ---------- */
+.panel{display:none;animation:fade .25s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2{font-size:20px;margin:30px 0 4px;letter-spacing:-.3px}
+h2:first-child{margin-top:26px}
+h3{font-size:15px;margin:22px 0 8px;color:var(--txt)}
+.lede{color:var(--dim);margin:0 0 18px;font-size:14.5px}
+
+/* ---------- cards ---------- */
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 18px;margin:12px 0}
+.card h4{margin:0 0 6px;font-size:15.5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card p{margin:0;color:var(--dim);font-size:14.5px}
+.card p+p{margin-top:8px}
+.card.L{border-left:3px solid var(--line)}
+.card.audio{border-left-color:var(--audio)} .card.rf{border-left-color:var(--rf)}
+.card.video{border-left-color:var(--video)} .card.sdi{border-left-color:var(--sdi)}
+.card.power{border-left-color:var(--power)} .card.data{border-left-color:var(--data)}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+
+.pill{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;
+  padding:3px 8px;border-radius:5px;white-space:nowrap}
+.p-audio{background:rgba(63,185,80,.15);color:var(--audio)}
+.p-rf{background:rgba(240,136,62,.15);color:var(--rf)}
+.p-video{background:rgba(88,166,255,.15);color:var(--video)}
+.p-sdi{background:rgba(188,140,255,.15);color:var(--sdi)}
+.p-power{background:rgba(248,81,73,.15);color:var(--power)}
+.p-data{background:rgba(57,208,216,.15);color:var(--data)}
+
+/* ---------- key callout ---------- */
+.key{background:rgba(227,179,65,.08);border:1px solid rgba(227,179,65,.3);
+  border-radius:10px;padding:12px 14px;margin:14px 0;font-size:14px}
+.key b{color:var(--warn)}
+
+/* ---------- legend ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 4px}
+.legend span{font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:6px}
+
+/* ---------- signal chain visual ---------- */
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:14px 0}
+.node{background:var(--bg3);border:1px solid var(--line);border-radius:9px;
+  padding:8px 12px;font-size:13px;font-weight:600}
+.arrow{color:var(--dimmer);font-size:14px;font-weight:700}
+.arrow.a-audio{color:var(--audio)} .arrow.a-rf{color:var(--rf)}
+.arrow.a-video{color:var(--video)} .arrow.a-sdi{color:var(--sdi)}
+
+/* ---------- figures ---------- */
+.fig{background:#090d12;border:1px solid var(--line);border-radius:11px;
+  padding:16px 12px 12px;margin:14px 0}
+.fig svg{display:block;width:100%;height:auto;max-width:430px;margin:0 auto}
+.figcap{font-size:12px;color:var(--dimmer);text-align:center;margin-top:10px;line-height:1.55}
+.figcap b{color:var(--dim)}
+svg .s{fill:none;stroke:#8b98a5;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+svg .sf{fill:#1c2430;stroke:#8b98a5;stroke-width:2;stroke-linejoin:round}
+svg .sd{fill:#0d1117;stroke:#5c6773;stroke-width:1.5}
+svg .met{fill:#3f4a57;stroke:#8b98a5;stroke-width:1.5}
+svg .gold{fill:#c9a227}
+svg .hl{fill:none;stroke-width:2;stroke-dasharray:5 4}
+svg .lead{stroke-width:1.4;fill:none}
+svg text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+svg .lbl{font-size:11px;font-weight:600;fill:#8b98a5}
+svg .num{font-size:10px;font-weight:700;fill:#0d1117}
+svg .tag{font-size:11.5px;font-weight:800;letter-spacing:.5px}
+svg .cap{font-size:12px;font-weight:700;fill:#e6edf3}
+.c-audio{stroke:#3fb950} .f-audio{fill:#3fb950}
+.c-rf{stroke:#f0883e} .f-rf{fill:#f0883e}
+.c-video{stroke:#58a6ff} .f-video{fill:#58a6ff}
+.c-sdi{stroke:#bc8cff} .f-sdi{fill:#bc8cff}
+.c-power{stroke:#f85149} .f-power{fill:#f85149}
+.c-data{stroke:#39d0d8} .f-data{fill:#39d0d8}
+.c-warn{stroke:#e3b341} .f-warn{fill:#e3b341}
+
+/* ---------- connector ID drill ---------- */
+.idgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.idcard{background:var(--bg2);border:1px solid var(--line);border-radius:11px;padding:12px;
+  cursor:pointer;text-align:center;transition:.15s}
+.idcard:hover{border-color:var(--dimmer)}
+.idcard svg{width:100%;height:auto;max-width:130px}
+.idcard .nm{font-size:12.5px;font-weight:700;margin-top:8px}
+.idcard .rv{font-size:11.5px;color:var(--dim);margin-top:5px;display:none;line-height:1.5}
+.idcard.open .rv{display:block}
+.idcard.open{border-color:var(--rf)}
+
+/* ---------- ordered steps ---------- */
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:14px 0}
+ol.steps li{counter-increment:s;position:relative;padding:12px 14px 12px 48px;
+  background:var(--bg2);border:1px solid var(--line);border-radius:10px;margin-bottom:8px;font-size:14.5px}
+ol.steps li::before{content:counter(s);position:absolute;left:14px;top:11px;
+  width:22px;height:22px;border-radius:50%;background:var(--bg3);border:1px solid var(--line);
+  color:var(--rf);font-size:12px;font-weight:700;display:grid;place-items:center}
+
+ul.chk{list-style:none;padding:0;margin:12px 0}
+ul.chk li{padding:9px 12px 9px 32px;position:relative;font-size:14.5px;color:var(--dim);
+  border-bottom:1px solid var(--line)}
+ul.chk li:last-child{border-bottom:none}
+ul.chk li::before{content:"▸";position:absolute;left:12px;color:var(--audio);font-weight:700}
+
+/* ---------- table ---------- */
+.tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;display:block;overflow-x:auto}
+.tbl th,.tbl td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl th{color:var(--dim);font-size:11.5px;text-transform:uppercase;letter-spacing:.6px}
+
+/* ---------- buttons ---------- */
+.btn{background:var(--bg3);border:1px solid var(--line);color:var(--txt);
+  font:600 14px/1 inherit;padding:11px 18px;border-radius:9px;cursor:pointer;transition:.15s}
+.btn:hover{border-color:var(--dimmer)}
+.btn.pri{background:var(--audio);border-color:var(--audio);color:#08130b}
+.btn.pri:hover{filter:brightness(1.1)}
+.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:14px 0}
+
+/* ---------- flashcards ---------- */
+.fcstage{perspective:1200px;margin:16px 0}
+.fc{position:relative;min-height:190px;cursor:pointer;transition:transform .5s;
+  transform-style:preserve-3d}
+.fc.flip{transform:rotateY(180deg)}
+.fcface{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:var(--radius);border:1px solid var(--line);background:var(--bg2);
+  padding:24px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.fcback{transform:rotateY(180deg);background:var(--bg3)}
+.fcq{font-size:18px;font-weight:600;line-height:1.4}
+.fca{font-size:15px;color:var(--dim);line-height:1.6}
+.fchint{position:absolute;bottom:12px;left:0;right:0;text-align:center;
+  font-size:11px;color:var(--dimmer);letter-spacing:.5px;text-transform:uppercase}
+.counter{font-size:13px;color:var(--dim);font-variant-numeric:tabular-nums}
+
+/* ---------- quiz ---------- */
+.qbox{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:16px 0}
+.qtext{font-size:16.5px;font-weight:600;margin:0 0 16px;line-height:1.45}
+.opt{display:block;width:100%;text-align:left;background:var(--bg3);border:1px solid var(--line);
+  color:var(--txt);font:15px/1.45 inherit;padding:13px 15px;border-radius:10px;margin-bottom:9px;
+  cursor:pointer;transition:.15s}
+.opt:hover:not(:disabled){border-color:var(--dimmer)}
+.opt.right{border-color:var(--audio);background:rgba(63,185,80,.12)}
+.opt.wrong{border-color:var(--power);background:rgba(248,81,73,.12)}
+.opt:disabled{cursor:default}
+.expl{font-size:14px;color:var(--dim);border-left:3px solid var(--rf);
+  padding:2px 0 2px 12px;margin:14px 0 0}
+.bar{height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;margin:6px 0 0}
+.bar i{display:block;height:100%;background:var(--audio);width:0;transition:width .3s}
+.score{font-size:44px;font-weight:800;letter-spacing:-2px;margin:6px 0}
+
+/* ---------- chain builder ---------- */
+.slots{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:12px;
+  background:var(--bg2);border:1px dashed var(--line);border-radius:12px;margin:12px 0;align-items:center}
+.slots:empty::before{content:"Tap the pieces below in order…";color:var(--dimmer);font-size:13.5px}
+.tok{background:var(--bg3);border:1px solid var(--line);border-radius:8px;padding:9px 13px;
+  font-size:13.5px;font-weight:600;cursor:pointer;transition:.15s}
+.tok:hover{border-color:var(--dimmer)}
+.tok.used{opacity:.25;pointer-events:none}
+.tok.ok{border-color:var(--audio);color:var(--audio)}
+.tok.no{border-color:var(--power);color:var(--power)}
+
+/* ---------- scenario ---------- */
+.scn{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--rf);
+  border-radius:var(--radius);padding:18px;margin:14px 0}
+.scn .setting{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--rf);
+  font-weight:700;margin-bottom:8px}
+.scn .q{font-size:15px;margin:0 0 12px;line-height:1.55}
+.reveal{display:none;border-top:1px solid var(--line);margin-top:14px;padding-top:14px;
+  font-size:14.5px;color:var(--dim);line-height:1.65}
+.reveal.on{display:block}
+.reveal b{color:var(--txt)}
+
+footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
+  color:var(--dimmer);font-size:12.5px;text-align:center;line-height:1.7}
+@media(max-width:520px){
+  h1{font-size:22px} .wrap{padding:0 13px 70px} .card{padding:14px 15px}
+  .score{font-size:38px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <div class="badge">Live Events · Corporate AV</div>
+    <h1>Corporate AV Field Guide</h1>
+    <p class="sub">Signal flow, wireless, video, and crew positions — built to drill, not to read. Works offline.</p>
+  </div>
+</header>
+
+<nav role="tablist">
+  <div class="navinner" id="nav"></div>
+</nav>
+
+<div class="wrap">
+
+<!-- ══════════════════ START ══════════════════ -->
+<section class="panel on" id="p-start">
+  <h2>How to use this</h2>
+  <p class="lede">Read the reference tabs once. Then live in the <b>Drills</b> and <b>Scenarios</b> tabs — that's where it actually sticks.</p>
+
+  <div class="key">
+    <b>The one idea that runs through everything:</b> signal flow. You're taking a source from one place and getting it to another. Every piece of gear on the truck is either a <i>source</i>, a <i>path</i>, a <i>processor</i>, or a <i>destination</i>. Every problem you'll ever troubleshoot is a break somewhere in that line. Learn the chain and the gear names stop mattering.
+  </div>
+
+  <h3>Color code — same everywhere in this guide</h3>
+  <div class="legend">
+    <span class="pill p-audio">XLR · Analog Audio</span>
+    <span class="pill p-rf">RF · Wireless · Coax</span>
+    <span class="pill p-video">HDMI · Video</span>
+    <span class="pill p-sdi">SDI · BNC</span>
+    <span class="pill p-power">IEC · Power</span>
+    <span class="pill p-data">CAT · Dante · Network</span>
+  </div>
+
+  <h3>What's in here</h3>
+  <div class="grid">
+    <div class="card L audio"><h4>Cables</h4><p>What each one carries, how far it goes, and which end sends vs. receives.</p></div>
+    <div class="card L rf"><h4>Audio &amp; RF</h4><p>Mics, transmitters, receivers, antennas, mixers, gain structure, EQ.</p></div>
+    <div class="card L video"><h4>Video</h4><p>HDMI vs. SDI, switchers vs. splitters, converters, screens, projectors.</p></div>
+    <div class="card L sdi"><h4>Workflow</h4><p>Set order for audio and video rooms. Do it in this order and you don't backtrack.</p></div>
+    <div class="card L data"><h4>Crew</h4><p>A1/A2/Audio Tech, V1/V2/Cam Op, and who talks to the client.</p></div>
+    <div class="card L power"><h4>Drills + Scenarios</h4><p>Flashcards, quiz, chain builder, and real-gig problems with no easy answer.</p></div>
+  </div>
+
+  <div class="key" style="border-color:rgba(63,185,80,.3);background:rgba(63,185,80,.06)">
+    <b style="color:var(--audio)">Save this to your phone.</b> On iPhone: Share → Add to Home Screen. It opens like an app and works with no signal — useful in a ballroom basement where nothing loads.
+  </div>
+</section>
+
+<!-- ══════════════════ CABLES ══════════════════ -->
+<section class="panel" id="p-cables">
+  <h2>Cables &amp; Connectors</h2>
+  <p class="lede">Know what each carries and how far it goes. That alone solves half the problems on a floor.</p>
+
+  <div class="card L audio">
+    <h4>XLR <span class="pill p-audio">Analog Audio</span></h4>
+    <p>The most common cable in audio. Three pins: <b>Pin 1 = shield/ground, Pin 2 = positive/hot, Pin 3 = negative/cold.</b></p>
+    <p><b>The rule that never changes: female receives, male sends.</b> So the female end goes into the source device's output, the male end goes into the next device's input. Balanced — that's why it rejects noise over long runs.</p>
+
+    <div class="fig">
+      <svg viewBox="0 0 420 210" role="img" aria-label="XLR male and female connector faces compared">
+        <!-- MALE -->
+        <circle class="sf" cx="105" cy="88" r="58"/>
+        <circle class="sd" cx="105" cy="88" r="47"/>
+        <!-- key notch -->
+        <rect class="met" x="93" y="36" width="24" height="12" rx="3"/>
+        <!-- pins (solid = male) -->
+        <circle class="met" cx="86" cy="70" r="9" style="fill:#8b98a5"/>
+        <text class="num" x="86" y="74" text-anchor="middle">2</text>
+        <circle class="met" cx="124" cy="88" r="9" style="fill:#8b98a5"/>
+        <text class="num" x="124" y="92" text-anchor="middle">3</text>
+        <circle class="met" cx="86" cy="110" r="9" style="fill:#8b98a5"/>
+        <text class="num" x="86" y="114" text-anchor="middle">1</text>
+        <text class="cap" x="105" y="172" text-anchor="middle">MALE</text>
+        <text class="tag f-audio" x="105" y="190" text-anchor="middle">SENDS →</text>
+
+        <!-- FEMALE -->
+        <circle class="sf" cx="315" cy="88" r="58"/>
+        <circle class="sd" cx="315" cy="88" r="47"/>
+        <rect class="met" x="303" y="36" width="24" height="12" rx="3"/>
+        <!-- sockets (hollow = female) -->
+        <circle class="met" cx="334" cy="70" r="9"/><circle cx="334" cy="70" r="3.5" fill="#0d1117"/>
+        <text class="lbl" x="356" y="74" text-anchor="middle">2</text>
+        <circle class="met" cx="296" cy="88" r="9"/><circle cx="296" cy="88" r="3.5" fill="#0d1117"/>
+        <text class="lbl" x="274" y="92" text-anchor="middle">3</text>
+        <circle class="met" cx="334" cy="110" r="9"/><circle cx="334" cy="110" r="3.5" fill="#0d1117"/>
+        <text class="lbl" x="356" y="114" text-anchor="middle">1</text>
+        <text class="cap" x="315" y="172" text-anchor="middle">FEMALE</text>
+        <text class="tag f-audio" x="315" y="190" text-anchor="middle">← RECEIVES</text>
+
+        <!-- callout -->
+        <path class="hl c-warn" d="M172 88 h76"/>
+        <path class="lead c-warn" d="M210 88 l-6 -5 M210 88 l-6 5" transform="translate(38,0)"/>
+        <text class="lbl f-warn" x="210" y="76" text-anchor="middle">mates</text>
+      </svg>
+      <div class="figcap"><b>Tell them apart instantly:</b> solid pins sticking out = male. Holes = female. Mnemonic that works and you won't forget — pins go in holes.</div>
+    </div>
+  </div>
+
+  <div class="card L rf">
+    <h4>Coax (BNC) <span class="pill p-rf">RF</span></h4>
+    <p>Looks identical to SDI — same cable, same connector. The difference is what's on it. Coax in the audio world carries <b>RF from your paddle antennas to your receivers</b> (or to an antenna distro).</p>
+    <p>Because it looks like SDI, label it. This is the #1 cable people grab wrong on a mixed AV cart.</p>
+  </div>
+
+  <div class="card L sdi">
+    <h4>SDI (BNC) <span class="pill p-sdi">Video</span></h4>
+    <p>Coax cable with a BNC connector carrying video. <b>Runs about 300 feet</b> before signal degradation. Locks on with a twist — it doesn't fall out, which is why it's the standard for anything crossing a room.</p>
+  </div>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 250" role="img" aria-label="Coax RF and SDI video BNC connectors are physically identical">
+      <!-- top: RF -->
+      <g transform="translate(0,4)">
+        <path class="s" d="M18 44 h44"/>
+        <rect class="sf" x="62" y="26" width="26" height="36" rx="4"/>
+        <rect class="met" x="88" y="22" width="46" height="44" rx="5"/>
+        <path class="s" d="M96 22 v-7 M126 22 v-7"/>
+        <rect class="met" x="134" y="34" width="20" height="20" rx="3"/>
+        <circle class="gold" cx="160" cy="44" r="5"/>
+        <path class="s" d="M154 30 h14 M154 58 h14"/>
+        <text class="tag f-rf" x="186" y="40">COAX → RF</text>
+        <text class="lbl" x="186" y="57">antenna to receiver</text>
+      </g>
+      <!-- bottom: SDI -->
+      <g transform="translate(0,104)">
+        <path class="s" d="M18 44 h44"/>
+        <rect class="sf" x="62" y="26" width="26" height="36" rx="4"/>
+        <rect class="met" x="88" y="22" width="46" height="44" rx="5"/>
+        <path class="s" d="M96 22 v-7 M126 22 v-7"/>
+        <rect class="met" x="134" y="34" width="20" height="20" rx="3"/>
+        <circle class="gold" cx="160" cy="44" r="5"/>
+        <path class="s" d="M154 30 h14 M154 58 h14"/>
+        <text class="tag f-sdi" x="186" y="40">SDI → VIDEO</text>
+        <text class="lbl" x="186" y="57">switcher to display</text>
+      </g>
+      <!-- identical bracket -->
+      <path class="hl c-power" d="M10 20 h164 M10 20 v168 M10 188 h164"/>
+      <text class="tag f-power" x="210" y="215" text-anchor="middle">PHYSICALLY IDENTICAL — YOU CANNOT TELL BY LOOKING</text>
+      <text class="lbl f-warn" x="210" y="236" text-anchor="middle">This is why you label both ends of every run.</text>
+    </svg>
+    <div class="figcap"><b>The most important figure in this guide.</b> Same cable, same BNC connector, same twist-lock. The only thing that differs is the signal riding on it. Trace the run or read the label — never trust your eyes on this one.</div>
+  </div>
+
+  <div class="card L video">
+    <h4>HDMI <span class="pill p-video">Video + Audio</span></h4>
+    <p>Carries <b>both video and audio</b>. Maxes out around <b>50 feet</b> before degradation — that's the whole reason converters exist.</p>
+    <p>Friction-fit connector. It walks out of ports. Tape it or use a locking adapter on anything that matters.</p>
+
+    <div class="fig">
+      <svg viewBox="0 0 420 190" role="img" aria-label="HDMI connector shape and how it differs from BNC">
+        <!-- HDMI plug, face on -->
+        <path class="sf" d="M120 46 h130 l-16 44 h-98 z"/>
+        <path class="sd" d="M132 58 h106 l-10 22 h-86 z"/>
+        <g class="gold">
+          <rect x="140" y="62" width="4" height="7"/><rect x="150" y="62" width="4" height="7"/>
+          <rect x="160" y="62" width="4" height="7"/><rect x="170" y="62" width="4" height="7"/>
+          <rect x="180" y="62" width="4" height="7"/><rect x="190" y="62" width="4" height="7"/>
+          <rect x="200" y="62" width="4" height="7"/><rect x="210" y="62" width="4" height="7"/>
+          <rect x="220" y="62" width="4" height="7"/>
+          <rect x="145" y="72" width="4" height="7"/><rect x="155" y="72" width="4" height="7"/>
+          <rect x="165" y="72" width="4" height="7"/><rect x="175" y="72" width="4" height="7"/>
+          <rect x="185" y="72" width="4" height="7"/><rect x="195" y="72" width="4" height="7"/>
+          <rect x="205" y="72" width="4" height="7"/><rect x="215" y="72" width="4" height="7"/>
+        </g>
+        <path class="s" d="M155 90 h60 l0 22 h-60 z"/>
+        <path class="s" d="M175 112 h20 v34 h-20 z"/>
+
+        <!-- callout: asymmetric trapezoid -->
+        <path class="lead c-video" d="M120 46 L78 32"/>
+        <text class="lbl f-video" x="8" y="28">flat top,</text>
+        <text class="lbl f-video" x="8" y="42">angled sides</text>
+
+        <path class="lead c-warn" d="M250 46 L296 30"/>
+        <text class="lbl f-warn" x="300" y="26">19 pins,</text>
+        <text class="lbl f-warn" x="300" y="40">two rows</text>
+
+        <path class="lead c-power" d="M185 146 L185 168"/>
+        <text class="lbl f-power" x="185" y="182" text-anchor="middle">no lock — it walks out. tape it.</text>
+
+        <text class="tag f-video" x="30" y="120">HDMI</text>
+        <text class="lbl" x="30" y="137">video + audio</text>
+        <text class="lbl" x="30" y="152">~50 ft max</text>
+      </svg>
+      <div class="figcap"><b>Shape is the tell:</b> a lopsided trapezoid — flat on top, tapered underneath. It only goes in one way, and it never locks. Every other connector in this guide either screws, twists, or clips.</div>
+    </div>
+  </div>
+
+  <div class="card L power">
+    <h4>IEC (D-Plug) <span class="pill p-power">Power</span></h4>
+    <p>Supplies power to active speakers and other powered gear. If a powered speaker is silent, this is the first thing you look at — before you look at anything clever.</p>
+  </div>
+
+  <div class="card L data">
+    <h4>CAT / Ethernet <span class="pill p-data">Data</span></h4>
+    <p>Data between network switches, receivers, and computers. Also the backbone for <b>Dante</b> audio networking.</p>
+  </div>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 175" role="img" aria-label="IEC power connector and RJ45 ethernet connector compared">
+      <!-- IEC C13 -->
+      <g transform="translate(38,20)">
+        <path class="sf" d="M8 22 h72 a8 8 0 0 1 8 8 v14 l-14 16 h-60 a8 8 0 0 1 -8 -8 v-22 a8 8 0 0 1 8 -8 z"/>
+        <rect class="sd" x="20" y="34" width="9" height="18" rx="2"/>
+        <rect class="sd" x="42" y="34" width="9" height="18" rx="2"/>
+        <rect class="sd" x="64" y="34" width="9" height="18" rx="2"/>
+        <path class="s" d="M8 62 h56"/>
+        <text class="tag f-power" x="48" y="98" text-anchor="middle">IEC</text>
+        <text class="lbl" x="48" y="115" text-anchor="middle">POWER only</text>
+        <path class="lead c-power" d="M88 44 L118 30"/>
+        <text class="lbl f-power" x="122" y="27">notched corner</text>
+        <text class="lbl f-power" x="122" y="41">= one orientation</text>
+      </g>
+      <!-- RJ45 -->
+      <g transform="translate(268,20)">
+        <rect class="sf" x="14" y="26" width="58" height="42" rx="4"/>
+        <path class="sf" d="M34 26 h18 v-14 h-18 z"/>
+        <g class="gold">
+          <rect x="20" y="30" width="4" height="12"/><rect x="27" y="30" width="4" height="12"/>
+          <rect x="34" y="30" width="4" height="12"/><rect x="41" y="30" width="4" height="12"/>
+          <rect x="48" y="30" width="4" height="12"/><rect x="55" y="30" width="4" height="12"/>
+          <rect x="62" y="30" width="4" height="12"/>
+        </g>
+        <path class="s" d="M14 68 h58"/>
+        <text class="tag f-data" x="43" y="98" text-anchor="middle">CAT / RJ45</text>
+        <text class="lbl" x="43" y="115" text-anchor="middle">DATA + Dante</text>
+        <path class="lead c-data" d="M43 12 L20 -2"/>
+        <text class="lbl f-data" x="16" y="-6" text-anchor="end">plastic clip</text>
+      </g>
+      <path class="s" style="stroke:#2b3440" d="M210 26 v104"/>
+      <text class="lbl f-warn" x="210" y="162" text-anchor="middle">The clip and the notch are the tells.</text>
+    </svg>
+    <div class="figcap"><b>Confusable at a glance in a dark room.</b> IEC has a notched, D-shaped body with three flat slots. RJ45 is smaller, has a springy clip on top, and shows eight gold contacts.</div>
+  </div>
+
+  <div class="card L audio">
+    <h4>Snake <span class="pill p-audio">Multi-channel Audio</span></h4>
+    <p>Multiple XLR runs bundled into one jacket. Purpose: <b>condense the number of cable runs</b>. One snake from stage to front of house instead of sixteen loose XLRs across a walkway.</p>
+  </div>
+
+  <div class="key">
+    <b>The lookalike trap:</b> Coax and SDI are physically the same cable with the same BNC ends. One is carrying RF to a receiver, the other is carrying video to a display. Label both ends of every run — the deck says it and every A2 who's been burned says it louder.
+  </div>
+
+  <h3>Distance cheat sheet</h3>
+  <table class="tbl">
+    <tr><th>Cable</th><th>Carries</th><th>Max run</th></tr>
+    <tr><td><span class="pill p-video">HDMI</span></td><td>Video + audio</td><td>~50 ft</td></tr>
+    <tr><td><span class="pill p-sdi">SDI</span></td><td>Video</td><td>~300 ft</td></tr>
+    <tr><td><span class="pill p-rf">Whip antenna</span></td><td>RF pickup</td><td>~75 ft</td></tr>
+    <tr><td><span class="pill p-rf">Paddle antenna</span></td><td>RF pickup</td><td>200–300 ft</td></tr>
+  </table>
+
+  <h2>Connector ID Drill</h2>
+  <p class="lede">Name it before you tap it. If you can't call these instantly, you'll be the one holding up a load-in.</p>
+  <div class="idgrid">
+
+    <div class="idcard">
+      <svg viewBox="0 0 100 100"><circle class="sf" cx="50" cy="46" r="34"/><circle class="sd" cx="50" cy="46" r="27"/>
+        <rect class="met" x="43" y="15" width="14" height="7" rx="2"/>
+        <circle cx="39" cy="35" r="5.5" fill="#8b98a5"/><circle cx="61" cy="46" r="5.5" fill="#8b98a5"/><circle cx="39" cy="58" r="5.5" fill="#8b98a5"/></svg>
+      <div class="nm">?</div>
+      <div class="rv"><b style="color:var(--audio)">XLR Male</b><br>Solid pins. <b>Sends.</b> Goes into the mixer input.</div>
+    </div>
+
+    <div class="idcard">
+      <svg viewBox="0 0 100 100"><circle class="sf" cx="50" cy="46" r="34"/><circle class="sd" cx="50" cy="46" r="27"/>
+        <rect class="met" x="43" y="15" width="14" height="7" rx="2"/>
+        <circle class="met" cx="61" cy="35" r="5.5"/><circle cx="61" cy="35" r="2" fill="#0d1117"/>
+        <circle class="met" cx="39" cy="46" r="5.5"/><circle cx="39" cy="46" r="2" fill="#0d1117"/>
+        <circle class="met" cx="61" cy="58" r="5.5"/><circle cx="61" cy="58" r="2" fill="#0d1117"/></svg>
+      <div class="nm">?</div>
+      <div class="rv"><b style="color:var(--audio)">XLR Female</b><br>Holes. <b>Receives.</b> Goes onto the receiver output.</div>
+    </div>
+
+    <div class="idcard">
+      <svg viewBox="0 0 100 100"><path class="s" d="M6 46 h20"/><rect class="sf" x="26" y="34" width="16" height="24" rx="3"/>
+        <rect class="met" x="42" y="30" width="30" height="32" rx="4"/><path class="s" d="M49 30 v-6 M65 30 v-6"/>
+        <rect class="met" x="72" y="39" width="13" height="14" rx="2"/><circle class="gold" cx="89" cy="46" r="4"/></svg>
+      <div class="nm">?</div>
+      <div class="rv"><b style="color:var(--rf)">BNC</b> — could be <b>coax (RF)</b> or <b>SDI (video)</b>. Identical. <b>Read the label.</b></div>
+    </div>
+
+    <div class="idcard">
+      <svg viewBox="0 0 100 100"><path class="sf" d="M18 32 h64 l-8 24 h-48 z"/><path class="sd" d="M25 39 h50 l-5 11 h-40 z"/>
+        <g class="gold"><rect x="30" y="41" width="3" height="5"/><rect x="37" y="41" width="3" height="5"/><rect x="44" y="41" width="3" height="5"/><rect x="51" y="41" width="3" height="5"/><rect x="58" y="41" width="3" height="5"/><rect x="65" y="41" width="3" height="5"/></g>
+        <path class="s" d="M36 56 h28 v12 h-28 z M44 68 h12 v18 h-12 z"/></svg>
+      <div class="nm">?</div>
+      <div class="rv"><b style="color:var(--video)">HDMI</b><br>Lopsided trapezoid. Video + audio. <b>~50 ft.</b> Never locks.</div>
+    </div>
+
+    <div class="idcard">
+      <svg viewBox="0 0 100 100"><path class="sf" d="M18 30 h50 a7 7 0 0 1 7 7 v12 l-12 14 h-45 a7 7 0 0 1 -7 -7 v-19 a7 7 0 0 1 7 -7 z"/>
+        <rect class="sd" x="27" y="40" width="8" height="16" rx="2"/><rect class="sd" x="43" y="40" width="8" height="16" rx="2"/><rect class="sd" x="59" y="40" width="8" height="16" rx="2"/>
+        <path class="s" d="M18 63 h40"/></svg>
+      <div class="nm">?</div>
+      <div class="rv"><b style="color:var(--power)">IEC</b><br>Notched corner, 3 flat slots. <b>Power only.</b></div>
+    </div>
+
+    <div class="idcard">
+      <svg viewBox="0 0 100 100"><rect class="sf" x="26" y="34" width="48" height="34" rx="4"/><path class="sf" d="M42 34 h16 v-12 h-16 z"/>
+        <g class="gold"><rect x="31" y="38" width="3" height="10"/><rect x="37" y="38" width="3" height="10"/><rect x="43" y="38" width="3" height="10"/><rect x="49" y="38" width="3" height="10"/><rect x="55" y="38" width="3" height="10"/><rect x="61" y="38" width="3" height="10"/><rect x="67" y="38" width="3" height="10"/></g>
+        <path class="s" d="M26 68 h48"/></svg>
+      <div class="nm">?</div>
+      <div class="rv"><b style="color:var(--data)">CAT / RJ45</b><br>Plastic clip on top. Data + <b>Dante</b>.</div>
+    </div>
+
+    <div class="idcard">
+      <svg viewBox="0 0 100 100"><path class="s" d="M8 46 h22"/><rect class="sf" x="30" y="36" width="26" height="20" rx="4"/>
+        <rect class="met" x="56" y="41" width="34" height="10" rx="5"/>
+        <rect x="68" y="41" width="2.5" height="10" fill="#0d1117"/><rect x="77" y="41" width="2.5" height="10" fill="#0d1117"/></svg>
+      <div class="nm">?</div>
+      <div class="rv"><b style="color:var(--audio)">3.5mm TRS (mini)</b><br><b>Two black rings</b> = stereo. This is your laptop feed — into a <b>PC DI</b>.</div>
+    </div>
+
+    <div class="idcard">
+      <svg viewBox="0 0 100 100"><path class="s" d="M8 46 h20"/><rect class="sf" x="28" y="34" width="24" height="24" rx="4"/>
+        <rect class="met" x="52" y="39" width="38" height="14" rx="6"/>
+        <rect x="72" y="39" width="3" height="14" fill="#0d1117"/>
+        <circle class="met" cx="88" cy="46" r="6"/></svg>
+      <div class="nm">?</div>
+      <div class="rv"><b style="color:var(--audio)">1/4" TS</b><br><b>One ring</b>, fat shaft. Instrument level — <b>unbalanced.</b> Needs a DI.</div>
+    </div>
+
+  </div>
+  <div class="key">
+    <b>The pattern for all mini/quarter-inch plugs:</b> count the black rings on the shaft. One ring = 2 conductors = unbalanced mono. Two rings = 3 conductors = stereo or balanced. That single habit tells you whether you need a DI box.
+  </div>
+</section>
+
+<!-- ══════════════════ AUDIO ══════════════════ -->
+<section class="panel" id="p-audio">
+  <h2>Microphones</h2>
+
+  <div class="grid">
+    <div class="card L audio">
+      <h4>Dynamic</h4>
+      <p>Rugged, hard to overload, no external power needed. Better for vocals in live sound. <b>Most common mic in corporate settings.</b> Works best in live environments.</p>
+    </div>
+    <div class="card L audio">
+      <h4>Condenser</h4>
+      <p>Significantly better sound quality and far more sensitive — picks up quiet sources. Common on high-frequency instruments and vocals. <b>Works best in a studio environment.</b> Needs power.</p>
+    </div>
+  </div>
+
+  <div class="card L audio">
+    <h4>Lavalier ("Lav") <span class="pill p-audio">Most-used in AV</span></h4>
+    <p>The most common piece of mic equipment in corporate AV. Normally a <b>condenser</b>. Wins on size and on picking up clear vocals from the presenter without being in the shot.</p>
+  </div>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 200" role="img" aria-label="Dynamic, condenser, and lavalier microphones compared">
+      <!-- dynamic (ball grille, tapered) -->
+      <g transform="translate(20,10)">
+        <circle class="sf" cx="42" cy="34" r="26"/>
+        <path class="s" d="M22 22 q20 -8 40 0 M20 34 h44 M22 46 q20 8 40 0"/>
+        <path class="sf" d="M22 50 q20 12 40 0 l-6 68 a14 14 0 0 1 -28 0 z"/>
+        <path class="s" d="M28 90 h28"/>
+        <text class="cap" x="42" y="146" text-anchor="middle">DYNAMIC</text>
+        <text class="lbl" x="42" y="163" text-anchor="middle">rugged · no power</text>
+        <text class="lbl f-audio" x="42" y="179" text-anchor="middle">corporate default</text>
+      </g>
+      <!-- condenser (straight body, larger grille basket) -->
+      <g transform="translate(160,10)">
+        <rect class="sf" x="18" y="12" width="48" height="52" rx="8"/>
+        <path class="s" d="M18 24 h48 M18 36 h48 M18 48 h48 M30 12 v52 M42 12 v52 M54 12 v52"/>
+        <rect class="sf" x="26" y="64" width="32" height="54" rx="5"/>
+        <circle class="met" cx="42" cy="80" r="4"/>
+        <text class="cap" x="42" y="146" text-anchor="middle">CONDENSER</text>
+        <text class="lbl" x="42" y="163" text-anchor="middle">sensitive · needs power</text>
+        <text class="lbl f-warn" x="42" y="179" text-anchor="middle">studio environment</text>
+      </g>
+      <!-- lav -->
+      <g transform="translate(286,10)">
+        <rect class="sf" x="44" y="24" width="17" height="26" rx="5"/>
+        <circle class="met" cx="52.5" cy="31" r="3"/>
+        <path class="s" d="M52 50 q-6 26 8 44 q14 18 2 34"/>
+        <rect class="met" x="52" y="126" width="14" height="10" rx="2"/>
+        <path class="lead c-audio" d="M44 34 L22 22"/>
+        <text class="lbl f-audio" x="18" y="19" text-anchor="end">tiny</text>
+        <text class="lbl f-audio" x="18" y="32" text-anchor="end">capsule</text>
+        <text class="cap" x="56" y="160" text-anchor="middle">LAVALIER</text>
+        <text class="lbl" x="56" y="177" text-anchor="middle">a tiny condenser</text>
+      </g>
+    </svg>
+    <div class="figcap"><b>Silhouette is the giveaway.</b> Dynamic = round ball grille on a tapered handle. Condenser = straight body with a large mesh basket, often side-address. Lav = a capsule the size of a pencil eraser on a thin cable ending in a pack connector.</div>
+  </div>
+
+  <h3>Micing a presenter</h3>
+  <p class="lede">Wardrobe decides your job. A button-up shirt gives you easy access to good placement. A sweatshirt or a dress does not — plan for extra time, tape, and a conversation.</p>
+
+  <h2>Wireless &amp; RF</h2>
+
+  <div class="chain">
+    <span class="node">Mic</span><span class="arrow a-audio">→</span>
+    <span class="node">Transmitter</span><span class="arrow a-rf">≈ RF ≈</span>
+    <span class="node">Antenna</span><span class="arrow a-rf">→</span>
+    <span class="node">Receiver</span><span class="arrow a-audio">→ XLR →</span>
+    <span class="node">Mixer</span>
+  </div>
+
+  <div class="card L rf">
+    <h4>Transmitter</h4>
+    <p>Every wireless mic has two halves. The transmitter takes the <b>electrical signal from the mic and converts it into a radio frequency</b>. Bodypack (like a ULXD1) for a lav, or built into a handheld.</p>
+  </div>
+
+  <div class="card L rf">
+    <h4>Receiver</h4>
+    <p>Takes in the encoded RF and <b>turns it back into analog signal</b>. That signal then goes to the mixer over XLR — female end into the receiver, male end into the mixer.</p>
+  </div>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 206" role="img" aria-label="Bodypack transmitter and rack receiver">
+      <!-- bodypack -->
+      <g transform="translate(26,24)">
+        <rect class="sf" x="20" y="26" width="62" height="94" rx="9"/>
+        <rect class="sd" x="30" y="38" width="42" height="24" rx="3"/>
+        <path class="s" d="M34 46 h20 M34 54 h30"/>
+        <circle class="met" cx="40" cy="82" r="6"/><circle class="met" cx="62" cy="82" r="6"/>
+        <rect class="met" x="38" y="98" width="26" height="9" rx="2"/>
+        <path class="s c-rf" d="M74 26 q10 -18 6 -24"/>
+        <rect class="met" x="34" y="16" width="16" height="10" rx="2"/>
+        <path class="lead c-rf" d="M80 4 L104 -6"/>
+        <text class="lbl f-rf" x="108" y="-3">antenna wire</text>
+        <path class="lead c-audio" d="M42 16 L26 -6"/>
+        <text class="lbl f-audio" x="22" y="-3" text-anchor="end">mic in</text>
+        <text class="cap" x="51" y="146" text-anchor="middle">TRANSMITTER</text>
+        <text class="lbl" x="51" y="163" text-anchor="middle">on the presenter</text>
+        <text class="lbl" x="51" y="178" text-anchor="middle">audio → RF</text>
+      </g>
+      <!-- receiver 1U -->
+      <g transform="translate(180,24)">
+        <path class="s c-rf" d="M28 44 l-14 -34 M196 44 l14 -34"/>
+        <circle class="f-rf" cx="14" cy="8" r="3"/><circle class="f-rf" cx="210" cy="8" r="3"/>
+        <rect class="sf" x="18" y="44" width="188" height="52" rx="6"/>
+        <rect class="sd" x="56" y="54" width="76" height="32" rx="3"/>
+        <path class="s" d="M62 64 h50 M62 74 h38"/>
+        <circle class="met" cx="152" cy="70" r="13"/>
+        <rect class="met" x="26" y="56" width="18" height="28" rx="2"/>
+        <g><rect class="f-rf" x="170" y="56" width="6" height="6"/><rect class="f-rf" x="170" y="66" width="6" height="6"/>
+           <rect class="f-audio" x="190" y="56" width="6" height="6"/><rect class="f-audio" x="190" y="66" width="6" height="6"/></g>
+        <text class="lbl f-rf" x="173" y="90" text-anchor="middle" style="font-size:9px">RF</text>
+        <text class="lbl f-audio" x="193" y="90" text-anchor="middle" style="font-size:9px">AUD</text>
+        <path class="lead c-warn" d="M35 56 L35 26"/>
+        <text class="lbl f-warn" x="35" y="22" text-anchor="middle">IR sync window</text>
+        <text class="cap" x="112" y="126" text-anchor="middle">RECEIVER</text>
+        <text class="lbl" x="112" y="143" text-anchor="middle">at your tech table</text>
+        <text class="lbl" x="112" y="158" text-anchor="middle">RF → analog → XLR out</text>
+      </g>
+    </svg>
+    <div class="figcap"><b>The two meters on the receiver face are your whole job as an A2.</b> RF meter = is the radio link healthy. Audio meter = is sound actually arriving. RF good but audio dead means a muted pack or a bad lav — not a frequency problem.</div>
+  </div>
+
+  <div class="card L rf">
+    <h4>Paddle antennas</h4>
+    <p>Replace the little whip antennas on the back of a receiver. <b>200–300 ft of pickup vs. about 75 ft on whips.</b> Get them up, get them out front, keep bodies and metal out of the path.</p>
+
+    <div class="fig">
+      <svg viewBox="0 0 420 180" role="img" aria-label="Whip antenna versus paddle antenna">
+        <!-- whip -->
+        <g transform="translate(46,16)">
+          <path class="s c-rf" style="stroke-width:3" d="M40 96 v-58"/>
+          <circle class="f-rf" cx="40" cy="34" r="4"/>
+          <rect class="met" x="30" y="96" width="20" height="14" rx="3"/>
+          <path class="s" d="M20 110 h40"/>
+          <text class="cap" x="40" y="136" text-anchor="middle">WHIP</text>
+          <text class="tag f-power" x="40" y="156" text-anchor="middle">~75 ft</text>
+          <text class="lbl" x="40" y="172" text-anchor="middle">stock, on the receiver</text>
+        </g>
+        <!-- paddle -->
+        <g transform="translate(200,10)">
+          <path class="sf" d="M18 20 l86 26 v22 l-86 26 v-30 l-16 -7 v-0 l16 -7 z"/>
+          <path class="s c-rf" d="M30 44 h62 M34 58 h54 M38 72 h46"/>
+          <rect class="met" x="6" y="52" width="22" height="18" rx="3"/>
+          <circle class="gold" cx="17" cy="80" r="4"/>
+          <path class="s" d="M17 84 v14 M8 116 h18 M17 98 v18"/>
+          <text class="cap" x="60" y="140" text-anchor="middle">PADDLE (directional)</text>
+          <text class="tag f-audio" x="60" y="160" text-anchor="middle">200–300 ft</text>
+          <text class="lbl" x="60" y="176" text-anchor="middle">on a stand, aimed at stage</text>
+        </g>
+        <path class="lead c-warn" d="M300 40 L344 26"/>
+        <text class="lbl f-warn" x="348" y="23">wide end</text>
+        <text class="lbl f-warn" x="348" y="37">points at</text>
+        <text class="lbl f-warn" x="348" y="51">the talent</text>
+      </svg>
+      <div class="figcap"><b>Unmistakable shape.</b> A paddle is a flat directional arrowhead on a mic stand — you aim the <b>wide end</b> at the stage. A whip is a bare rod screwed straight into the receiver. If you see whips on a big room, that's your dropout problem.</div>
+    </div>
+  </div>
+
+  <div class="card L rf">
+    <h4>Antenna distro</h4>
+    <p>Capture with two paddles, then <b>distribute that signal to every receiver over coax</b>. Instead of eight receivers each fighting with their own whips, they all share two well-placed paddles.</p>
+  </div>
+
+  <h3>Setting frequencies — the sequence</h3>
+  <ol class="steps">
+    <li>Connect your antennas and power up the receiver. <b>Antennas first</b> — scanning without them gives you a garbage result.</li>
+    <li>Hit the scan function. Choose whether you're scanning the group or the channel.</li>
+    <li>When it finds an open frequency, push <b>Enter</b> to confirm and set it.</li>
+    <li>Sync the mic: push <b>Sync</b> on the receiver, hold the transmitter about <b>6 inches from the IR window</b>.</li>
+  </ol>
+
+  <h2>Audio Gear</h2>
+
+  <div class="card L audio">
+    <h4>Digital mixer</h4>
+    <p>Judged on: channel count, quality, EQ types (parametric and graphic), routing/AUX sends, digital vs. analog, phantom power, and application. Recallable scenes and a visual display are why pros prefer them.</p>
+  </div>
+  <div class="card L audio">
+    <h4>Analog mixer</h4>
+    <p>Looks harder, is actually simpler for beginners — every function has one knob. Experienced engineers dislike them for real reasons: size, limited EQ bands, limited routing, and no visual display.</p>
+  </div>
+  <div class="fig">
+    <svg viewBox="0 0 420 180" role="img" aria-label="Digital mixer with touchscreen versus analog mixer with knob rows">
+      <!-- digital -->
+      <g transform="translate(14,10)">
+        <rect class="sf" x="6" y="14" width="176" height="94" rx="7"/>
+        <rect class="sd" x="16" y="22" width="102" height="52" rx="4"/>
+        <path class="s c-data" d="M24 60 h12 v-22 M42 60 h12 v-32 M60 60 h12 v-14 M78 60 h12 v-26 M96 60 h12 v-18"/>
+        <g class="met"><rect x="128" y="24" width="12" height="10" rx="2"/><rect x="146" y="24" width="12" height="10" rx="2"/>
+          <rect x="164" y="24" width="12" height="10" rx="2"/><rect x="128" y="40" width="12" height="10" rx="2"/>
+          <rect x="146" y="40" width="12" height="10" rx="2"/><rect x="164" y="40" width="12" height="10" rx="2"/></g>
+        <g class="s"><path d="M22 82 v20 M38 82 v20 M54 82 v20 M70 82 v20 M86 82 v20 M102 82 v20 M118 82 v20 M134 82 v20 M150 82 v20 M166 82 v20"/></g>
+        <g class="met"><rect x="18" y="88" width="8" height="6" rx="1"/><rect x="34" y="92" width="8" height="6" rx="1"/>
+          <rect x="50" y="86" width="8" height="6" rx="1"/><rect x="66" y="94" width="8" height="6" rx="1"/>
+          <rect x="82" y="89" width="8" height="6" rx="1"/><rect x="98" y="91" width="8" height="6" rx="1"/>
+          <rect x="114" y="87" width="8" height="6" rx="1"/><rect x="130" y="93" width="8" height="6" rx="1"/>
+          <rect x="146" y="88" width="8" height="6" rx="1"/><rect x="162" y="90" width="8" height="6" rx="1"/></g>
+        <text class="cap" x="94" y="132" text-anchor="middle">DIGITAL</text>
+        <text class="lbl f-data" x="94" y="149" text-anchor="middle">big screen · few knobs</text>
+        <text class="lbl" x="94" y="164" text-anchor="middle">recallable scenes</text>
+      </g>
+      <!-- analog -->
+      <g transform="translate(224,10)">
+        <rect class="sf" x="6" y="14" width="176" height="94" rx="7"/>
+        <g class="met">
+          <circle cx="20" cy="26" r="5"/><circle cx="42" cy="26" r="5"/><circle cx="64" cy="26" r="5"/><circle cx="86" cy="26" r="5"/><circle cx="108" cy="26" r="5"/><circle cx="130" cy="26" r="5"/><circle cx="152" cy="26" r="5"/><circle cx="170" cy="26" r="5"/>
+          <circle cx="20" cy="42" r="5"/><circle cx="42" cy="42" r="5"/><circle cx="64" cy="42" r="5"/><circle cx="86" cy="42" r="5"/><circle cx="108" cy="42" r="5"/><circle cx="130" cy="42" r="5"/><circle cx="152" cy="42" r="5"/><circle cx="170" cy="42" r="5"/>
+          <circle cx="20" cy="58" r="5"/><circle cx="42" cy="58" r="5"/><circle cx="64" cy="58" r="5"/><circle cx="86" cy="58" r="5"/><circle cx="108" cy="58" r="5"/><circle cx="130" cy="58" r="5"/><circle cx="152" cy="58" r="5"/><circle cx="170" cy="58" r="5"/>
+          <circle cx="20" cy="74" r="5"/><circle cx="42" cy="74" r="5"/><circle cx="64" cy="74" r="5"/><circle cx="86" cy="74" r="5"/><circle cx="108" cy="74" r="5"/><circle cx="130" cy="74" r="5"/><circle cx="152" cy="74" r="5"/><circle cx="170" cy="74" r="5"/>
+        </g>
+        <g class="s"><path d="M20 86 v18 M42 86 v18 M64 86 v18 M86 86 v18 M108 86 v18 M130 86 v18 M152 86 v18 M170 86 v18"/></g>
+        <text class="cap" x="94" y="132" text-anchor="middle">ANALOG</text>
+        <text class="lbl f-warn" x="94" y="149" text-anchor="middle">knob grid · no screen</text>
+        <text class="lbl" x="94" y="164" text-anchor="middle">one knob = one function</text>
+      </g>
+    </svg>
+    <div class="figcap"><b>Call it from ten feet away:</b> a big screen and a sparse surface means digital. A dense grid of knobs with no display means analog. Analog looks harder but it's simpler — every function has exactly one physical control, and nothing is buried in a menu.</div>
+  </div>
+
+  <div class="card L audio">
+    <h4>DI box</h4>
+    <p>Takes <b>unbalanced, high-impedance</b> signal and converts it to <b>balanced, low-impedance mic level</b>. That's the whole job — it makes a signal safe to run long distances into a mixer.</p>
+  </div>
+  <div class="card L audio">
+    <h4>PC DI box</h4>
+    <p>Same purpose, built for laptops. Has a mini stereo (3.5mm) cable attached that converts to XLR. This is your presenter's MacBook getting into the console.</p>
+  </div>
+  <div class="card L audio">
+    <h4>Stage box</h4>
+    <p>Takes a group of signals and sends them down a <b>snake</b>, usually to front of house.</p>
+  </div>
+  <div class="card L data">
+    <h4>Rio <span class="pill p-data">Dante</span></h4>
+    <p>Same function as a stage box, but passes signal over <b>ethernet using Dante</b> instead of a copper snake.</p>
+  </div>
+  <div class="card L data">
+    <h4>Dante</h4>
+    <p><b>D</b>igital <b>A</b>udio <b>N</b>etwork <b>T</b>hrough <b>E</b>thernet. Creates a network where any compatible device can see and talk to any other. One CAT cable replaces a snake.</p>
+  </div>
+  <div class="card L power">
+    <h4>Speakers</h4>
+    <p>A good speaker is measured by its ability to accurately reproduce <b>20 Hz – 20 kHz</b> and to limit distortion at high volume. Powered speakers need IEC.</p>
+  </div>
+
+  <h2>Signal Flow &amp; Processing</h2>
+
+  <div class="chain">
+    <span class="node">Input Source</span><span class="arrow a-audio">→</span>
+    <span class="node">Input Gain</span><span class="arrow a-audio">→</span>
+    <span class="node">EQ</span><span class="arrow a-audio">→</span>
+    <span class="node">Channel Level</span><span class="arrow a-audio">→</span>
+    <span class="node">Mixer Output</span><span class="arrow a-audio">→</span>
+    <span class="node">FOH Speaker</span>
+  </div>
+
+  <div class="card L audio">
+    <h4>Channel strip</h4>
+    <p>A single vertical unit on the console combining the mic preamp, EQ, compressor, and sometimes a gate — everything you need to shape one channel.</p>
+  </div>
+
+  <div class="card L audio">
+    <h4>Gain structure</h4>
+    <p>The goal: <b>highest output level without feedback or noise.</b></p>
+    <p>The technique: <b>set your fader to unity first, then slowly bring gain (trim) up</b> until you're at the right volume. Doing it the other way — cranking the fader to chase a weak input — is how you end up with a noise floor you can't fix later.</p>
+    <p>You're living between the <b>noise floor</b> and <b>clipping</b>. That gap is your dynamic range; the space above nominal is your <b>headroom</b>.</p>
+
+    <div class="fig">
+      <svg viewBox="0 0 420 220" role="img" aria-label="Gain structure: noise floor, nominal level, headroom, and clipping">
+        <rect x="150" y="18" width="60" height="26" fill="#f85149" opacity=".85"/>
+        <rect x="150" y="44" width="60" height="120" fill="#3fb950" opacity=".75"/>
+        <rect x="150" y="164" width="60" height="26" fill="#5c6773" opacity=".6"/>
+        <rect class="s" x="150" y="18" width="60" height="172" style="fill:none"/>
+
+        <path class="s" style="stroke:#e6edf3" d="M144 44 h72"/>
+        <path class="s" style="stroke:#e6edf3" d="M144 100 h72"/>
+        <path class="s" style="stroke:#e6edf3" d="M144 164 h72"/>
+
+        <text class="lbl f-power" x="138" y="32" text-anchor="end">CLIPPING</text>
+        <text class="lbl" x="138" y="46" text-anchor="end">max level</text>
+        <text class="cap f-audio" x="138" y="98" text-anchor="end">NOMINAL</text>
+        <text class="lbl" x="138" y="112" text-anchor="end">where you live</text>
+        <text class="lbl" x="138" y="162" text-anchor="end">NOISE FLOOR</text>
+        <text class="lbl" x="138" y="176" text-anchor="end">hiss lives here</text>
+
+        <text class="tag f-warn" x="224" y="70">HEADROOM</text>
+        <path class="lead c-warn" d="M214 66 L220 66"/>
+        <text class="tag f-audio" x="224" y="130">DYNAMIC RANGE</text>
+
+        <path class="lead c-warn" d="M300 70 L336 70"/>
+        <text class="tag f-warn" x="340" y="60">LEAVE</text>
+        <text class="tag f-warn" x="340" y="76">THIS SPACE</text>
+        <text class="lbl" x="340" y="94">a full room</text>
+        <text class="lbl" x="340" y="108">eats it later</text>
+        <text class="lbl f-audio" x="210" y="212" text-anchor="middle">Fader to unity FIRST → then trim up slowly into the green.</text>
+      </svg>
+      <div class="figcap"><b>Why the order matters:</b> chasing a weak input with the fader lifts the noise floor along with the signal. Setting trim properly raises the signal <i>above</i> the hiss. Same apparent volume, completely different mix — and only one of them survives a full room.</div>
+    </div>
+  </div>
+
+  <div class="card L audio">
+    <h4>EQ</h4>
+    <p>Boosts some frequencies and cuts others. Two jobs: get the best sound from the source, and <b>eliminate the frequencies causing feedback</b>.</p>
+    <p><b>Corporate technique:</b> don't excessively cut unless you're killing feedback. The target is <i>natural</i> — a CEO should sound like himself, not like a rock show.</p>
+  </div>
+
+  <div class="key">
+    <b>More inputs doesn't mean new rules.</b> You can fill every channel your mixer has and the principles don't change: source → path → processing → destination. Scale changes, flow doesn't.
+  </div>
+</section>
+
+<!-- ══════════════════ VIDEO ══════════════════ -->
+<section class="panel" id="p-video">
+  <h2>Video Gear</h2>
+
+  <div class="card L video">
+    <h4>Video switcher <span class="pill p-video">Chooses</span></h4>
+    <p>Multiple inputs in, <b>you choose which one goes out</b>. One or more outputs depending on size. ATEM Mini Pro is the common small-format box.</p>
+  </div>
+
+  <div class="card L sdi">
+    <h4>SDI splitter / distribution <span class="pill p-sdi">Copies</span></h4>
+    <p>Takes <b>one</b> signal and splits it to multiple outputs. Critical limitation: it can only split <b>ONE</b> signal, and <b>every output shows the same content</b>.</p>
+  </div>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 240" role="img" aria-label="Switcher chooses one of many; splitter copies one to many">
+      <!-- SWITCHER -->
+      <g transform="translate(0,6)">
+        <text class="tag f-video" x="12" y="12">SWITCHER — many in, you pick ONE</text>
+        <rect class="sd" x="12" y="24" width="46" height="16" rx="3"/><text class="lbl" x="35" y="36" text-anchor="middle">CAM</text>
+        <rect class="sd" x="12" y="46" width="46" height="16" rx="3"/><text class="lbl" x="35" y="58" text-anchor="middle">LAPTOP</text>
+        <rect class="sd" x="12" y="68" width="46" height="16" rx="3"/><text class="lbl" x="35" y="80" text-anchor="middle">PLAYBK</text>
+        <path class="s" style="stroke:#5c6773" d="M58 32 h34 M58 54 h34 M58 76 h34"/>
+        <rect class="sf" x="92" y="24" width="96" height="60" rx="6"/>
+        <g><rect class="sd" x="102" y="34" width="18" height="14" rx="2"/><rect class="f-video" x="124" y="34" width="18" height="14" rx="2"/>
+           <rect class="sd" x="146" y="34" width="18" height="14" rx="2"/><rect class="sd" x="168" y="34" width="12" height="14" rx="2"/></g>
+        <path class="s" d="M102 60 h78"/><text class="lbl" x="141" y="76" text-anchor="middle">select</text>
+        <path class="s c-video" style="stroke-width:2.5" d="M188 54 h44"/>
+        <path class="f-video" d="M232 54 l-8 -5 v10 z"/>
+        <rect class="sd" x="238" y="42" width="52" height="24" rx="3"/><text class="lbl" x="264" y="58" text-anchor="middle">SCREEN</text>
+        <text class="lbl f-video" x="330" y="50">only the</text>
+        <text class="lbl f-video" x="330" y="64">selected one</text>
+      </g>
+      <!-- divider -->
+      <path class="s" style="stroke:#2b3440" d="M12 108 h396"/>
+      <!-- SPLITTER -->
+      <g transform="translate(0,124)">
+        <text class="tag f-sdi" x="12" y="12">SPLITTER — ONE in, identical copies out</text>
+        <rect class="sd" x="12" y="42" width="46" height="18" rx="3"/><text class="lbl" x="35" y="55" text-anchor="middle">SOURCE</text>
+        <path class="s c-sdi" style="stroke-width:2.5" d="M58 51 h34"/>
+        <rect class="sf" x="92" y="24" width="96" height="56" rx="6"/>
+        <g class="met"><circle cx="106" cy="38" r="5"/><circle cx="106" cy="52" r="5"/><circle cx="106" cy="66" r="5"/>
+          <circle cx="174" cy="38" r="5"/><circle cx="174" cy="52" r="5"/><circle cx="174" cy="66" r="5"/></g>
+        <text class="lbl" x="140" y="56" text-anchor="middle">copy</text>
+        <path class="s c-sdi" d="M188 52 h20 M208 52 v-28 h24 M208 52 h24 M208 52 v28 h24"/>
+        <rect class="sd" x="232" y="14" width="52" height="20" rx="3"/><text class="lbl" x="258" y="28" text-anchor="middle">SAME</text>
+        <rect class="sd" x="232" y="42" width="52" height="20" rx="3"/><text class="lbl" x="258" y="56" text-anchor="middle">SAME</text>
+        <rect class="sd" x="232" y="70" width="52" height="20" rx="3"/><text class="lbl" x="258" y="84" text-anchor="middle">SAME</text>
+        <path class="hl c-power" d="M294 10 h108 v84 h-108"/>
+        <text class="lbl f-power" x="348" y="44" text-anchor="middle">every output</text>
+        <text class="lbl f-power" x="348" y="58" text-anchor="middle">is identical</text>
+      </g>
+    </svg>
+    <div class="figcap"><b>This is the one that gets people on a floor.</b> If a client asks for different content on two screens and all you have is a splitter, the answer is no — and no amount of configuring changes that.</div>
+  </div>
+
+  <div class="key">
+    <b>Switcher vs. splitter — the distinction people blow in interviews and on floors:</b><br>
+    A <b>switcher</b> takes many and picks one. A <b>splitter</b> takes one and copies it to many. If a client wants different content on two screens, a splitter cannot do it. Ever.
+  </div>
+
+  <div class="card L sdi">
+    <h4>Converters</h4>
+    <p>Change a video signal from one format to another — usually SDI ↔ HDMI. Some also do HDMI → HDMI while changing frame rate and/or resolution (that's <b>scaling</b>).</p>
+    <p>The classic run: HDMI out of the switcher → converter → <b>SDI across the room</b> → second converter → HDMI into the display. Two converters, because HDMI can't make the trip.</p>
+    <p>Common boxes: Blackmagic Micro Converter (SDI↔HDMI), Decimator MD-LX (bi-directional).</p>
+  </div>
+
+  <div class="card L video">
+    <h4>Multiview monitor</h4>
+    <p>Any standard monitor plugged into the switcher's <b>multiview output</b>. Lets the operator see every feed at once and choose which becomes the program.</p>
+  </div>
+
+  <div class="card L video">
+    <h4>TVs / monitors</h4>
+    <p>Usually in addition to fast-fold screens — showing different content like live camera, or acting as <b>confidence monitors</b> so the presenter can see their own slides without turning around.</p>
+  </div>
+
+  <div class="card L video">
+    <h4>Fast-fold screens</h4>
+    <p>Range of sizes, front or rear projection surface. <b>Minimum two people to set</b>, and normally set with a dress kit.</p>
+  </div>
+
+  <div class="card L video">
+    <h4>Projectors</h4>
+    <p>Placed in front of or behind the fast-fold depending on the setup. Type varies; the job doesn't — take video signal, put it on the screen.</p>
+  </div>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 170" role="img" aria-label="Micro converter with SDI on one side and HDMI on the other">
+      <rect class="sf" x="126" y="42" width="168" height="76" rx="8"/>
+      <!-- SDI side (BNC) -->
+      <circle class="met" cx="126" cy="62" r="10"/><circle class="gold" cx="126" cy="62" r="3"/>
+      <circle class="met" cx="126" cy="96" r="10"/><circle class="gold" cx="126" cy="96" r="3"/>
+      <text class="lbl f-sdi" x="104" y="58" text-anchor="end">SDI IN</text>
+      <text class="lbl f-sdi" x="104" y="100" text-anchor="end">SDI LOOP</text>
+      <!-- HDMI side -->
+      <path class="met" d="M294 72 h30 l-4 16 h-26 z"/>
+      <text class="lbl f-video" x="332" y="84">HDMI OUT</text>
+      <!-- usb power -->
+      <rect class="met" x="200" y="118" width="20" height="8" rx="2"/>
+      <text class="lbl f-power" x="210" y="142" text-anchor="middle">USB power — it needs it</text>
+      <text class="cap" x="210" y="72" text-anchor="middle">MICRO</text>
+      <text class="cap" x="210" y="90" text-anchor="middle">CONVERTER</text>
+      <path class="lead c-warn" d="M200 42 L200 30"/>
+      <text class="lbl f-warn" x="210" y="24" text-anchor="middle">round BNC one side, flat HDMI the other</text>
+    </svg>
+    <div class="figcap"><b>How you spot a converter on a cart:</b> a small metal brick with <b>two different connector types</b> — round BNC on one end, flat HDMI on the other. That mismatch is the whole identity of the device. If both ends are the same, it's a splitter or a repeater, not a converter.</div>
+  </div>
+
+  <h2>Video Signal Flow</h2>
+  <div class="chain">
+    <span class="node">Sources</span><span class="arrow a-video">→ HDMI →</span>
+    <span class="node">Switcher</span><span class="arrow a-video">→ HDMI →</span>
+    <span class="node">Converter</span><span class="arrow a-sdi">→ SDI (long run) →</span>
+    <span class="node">Converter</span><span class="arrow a-video">→ HDMI →</span>
+    <span class="node">Display</span>
+  </div>
+  <p class="lede">Sources are laptops, cameras, playback machines — anything generating content. Everything in the middle is just getting it there intact. <b>You convert to SDI to survive the distance, then convert back because the display speaks HDMI.</b></p>
+
+  <div class="key">
+    <b>Why two converters?</b> HDMI dies around 50 ft. SDI goes 300. The converters are a translation layer for the long walk across the ballroom — not processing, just transport.
+  </div>
+</section>
+
+<!-- ══════════════════ WORKFLOW ══════════════════ -->
+<section class="panel" id="p-flow">
+  <h2>Audio Room — Set Order</h2>
+  <p class="lede">This order exists so you never have to move something you already set. Follow it and you don't backtrack.</p>
+
+  <ol class="steps">
+    <li>Consider placement for your <b>tech table and speakers</b> based on the plot, or on preference if there's no plot.</li>
+    <li>Separate the gear. <b>Starting with speakers</b>, put them in place.</li>
+    <li>Set the tech table — <b>receivers and mixer</b> first.</li>
+    <li>Power the receivers and <b>connect the antennas</b>. Then plug them into the mixer, in the channel you want them to appear.</li>
+    <li>Connect XLR: <b>female into the receiver, male into the mixer</b>. The hardline shows up in that channel number.</li>
+    <li>Scan and set frequencies, then sync your mics.</li>
+    <li>Set <b>gain structure</b> — fader to unity, gain up slowly. Make noise.</li>
+  </ol>
+
+  <h3>The five-step version to keep in your head</h3>
+  <ul class="chk">
+    <li>Set your speakers in place</li>
+    <li>Set your tech table</li>
+    <li>Power your speakers and tech table</li>
+    <li>Set your receivers and get signal to your mixer</li>
+    <li>Adjust gain structure for optimum output — and make some noise</li>
+  </ul>
+
+  <h2>Video Room — Set Order</h2>
+  <ol class="steps">
+    <li>Place your <b>monitors or projector and screen</b> first.</li>
+    <li>Set the tech table with your <b>input sources and switcher</b>.</li>
+    <li>Connect the switcher to a <b>converter/splitter</b> if you have one, then run cable out to your displays.</li>
+    <li><b>Test your signal</b> by sending content out to every display. Not one. Every one.</li>
+  </ol>
+
+  <div class="key">
+    <b>Both rooms follow the same shape:</b> destination first (speakers / screens), then the brain (mixer / switcher), then the path between them, then test. You place the thing you can't easily move, and work backward to the thing you control.
+  </div>
+
+  <h2>Best Practices</h2>
+  <ul class="chk">
+    <li><b>Double-check your gear</b> before you set it — nothing broken, nothing missing</li>
+    <li>Make sure power is <b>easily accessible</b></li>
+    <li>Find the <b>cleanest cable path</b> possible</li>
+    <li><b>Label both ends</b> of every run so you can find the send you need instantly</li>
+    <li><b>Factory reset the mixer</b> and label channels to match your inputs</li>
+    <li><b>Don't rush the system.</b> Take your time and make it right the first time — a fast wrong setup costs more than a slow right one</li>
+  </ul>
+</section>
+
+<!-- ══════════════════ CREW ══════════════════ -->
+<section class="panel" id="p-crew">
+  <h2>Positions — Audio</h2>
+  <div class="card L audio">
+    <h4>A1 — Audio Engineer / Mixer</h4>
+    <p>Lead audio. Programs the mixer including all processing, determines <b>final</b> speaker positions, and live-mixes the show.</p>
+  </div>
+  <div class="card L audio">
+    <h4>A2 — Audio System Technician</h4>
+    <p>Sets and monitors receivers, <b>mics up presenters</b>, and sets up comms between all positions. This is the job with the most human contact and the most pressure right before doors.</p>
+  </div>
+  <div class="card L audio">
+    <h4>Audio Tech</h4>
+    <p>Sets equipment and establishes cable runs according to the plot, or according to how the A1 wants it.</p>
+  </div>
+
+  <h2>Positions — Video</h2>
+  <div class="card L video">
+    <h4>V1 — Video Engineer</h4>
+    <p>In charge of all things video, including gathering content and programming the video system setup.</p>
+  </div>
+  <div class="card L video">
+    <h4>V2 — Video Tech</h4>
+    <p>Helps the V1 set up and test video systems before the event. May also <b>operate the switcher</b> per the PM.</p>
+  </div>
+  <div class="card L video">
+    <h4>Camera Operator</h4>
+    <p>On a camera at front of house, or running a Robo Cam — sending the feed to the V1.</p>
+  </div>
+
+  <h3>The wider room</h3>
+  <p class="lede">Producer · Assistant Producer · Production Manager · Production Assistant · Technical Director · Stage Manager · L1 Lighting Designer · L2 Lighting System Tech · Master Electrician · Follow Spot Op · Graphics Op · Playback Op · Projectionist · Spyder Op · Teleprompter · Crew Chief · Lead Rigger · Rigger · Stagehand · Loader · Truck Driver</p>
+
+  <h2>Client Interaction</h2>
+  <div class="key">
+    <b>The goal is minimal interaction while staying friendly and helpful.</b> You interact directly with the client only if your position calls for it. The lead does the most client contact and relays needs to the crew. There are exceptions, but responsibilities break down by position — stay in yours.
+  </div>
+  <p class="lede">Practical version: be warm, be brief, and route real questions to the lead. "Let me grab my A1 for you" is almost always the right answer to a client asking for a change.</p>
+</section>
+
+<!-- ══════════════════ DRILLS ══════════════════ -->
+<section class="panel" id="p-drills">
+  <h2>Flashcards</h2>
+  <p class="lede">Tap the card to flip. Rate yourself honestly — "Got it" removes it from this pass, "Again" keeps it in rotation.</p>
+  <div class="row">
+    <span class="counter" id="fcCount"></span>
+    <button class="btn" id="fcShuffle" style="margin-left:auto">Shuffle</button>
+    <button class="btn" id="fcReset">Reset</button>
+  </div>
+  <div class="fcstage">
+    <div class="fc" id="fcCard">
+      <div class="fcface"><div class="fcq" id="fcQ"></div><div class="fchint">Tap to flip</div></div>
+      <div class="fcface fcback"><div class="fca" id="fcA"></div><div class="fchint">Tap to flip back</div></div>
+    </div>
+  </div>
+  <div class="row">
+    <button class="btn" id="fcAgain">Again</button>
+    <button class="btn pri" id="fcGot">Got it</button>
+  </div>
+
+  <h2>Quiz</h2>
+  <p class="lede">Twenty questions pulled from class material. Explanations on every answer — including the ones you get right.</p>
+  <div id="quizHost"></div>
+
+  <h2>Signal Chain Builder</h2>
+  <p class="lede">Tap the pieces in the correct order. Wrong piece and it tells you immediately — build the muscle memory.</p>
+  <div id="chainHost"></div>
+</section>
+
+<!-- ══════════════════ SCENARIOS ══════════════════ -->
+<section class="panel" id="p-scen">
+  <h2>Real-Gig Scenarios</h2>
+  <p class="lede">Think it through before you reveal. The answer matters less than the order you check things in.</p>
+  <div id="scnHost"></div>
+</section>
+
+<footer>
+  Corporate AV Field Guide · Reference and drill tool for live event technicians<br>
+  Gear illustrations are simplified diagrams for identification, not manufacturer specifications.
+</footer>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ═══════════ safe storage ═══════════ */
+var mem={};
+var store={
+  get:function(k){try{return localStorage.getItem(k)}catch(e){return mem[k]||null}},
+  set:function(k,v){try{localStorage.setItem(k,v)}catch(e){mem[k]=v}}
+};
+
+/* ═══════════ tabs ═══════════ */
+var TABS=[
+  ["p-start","Start"],["p-cables","Cables"],["p-audio","Audio & RF"],
+  ["p-video","Video"],["p-flow","Workflow"],["p-crew","Crew"],
+  ["p-drills","Drills"],["p-scen","Scenarios"]
+];
+var nav=document.getElementById("nav");
+TABS.forEach(function(t,i){
+  var b=document.createElement("button");
+  b.textContent=t[1]; b.setAttribute("role","tab");
+  b.setAttribute("aria-selected", i===0?"true":"false");
+  b.onclick=function(){go(t[0])};
+  b.dataset.target=t[0];
+  nav.appendChild(b);
+});
+function go(id){
+  document.querySelectorAll(".panel").forEach(function(p){p.classList.toggle("on",p.id===id)});
+  nav.querySelectorAll("button").forEach(function(b){
+    b.setAttribute("aria-selected", b.dataset.target===id?"true":"false");
+    if(b.dataset.target===id && b.scrollIntoView){
+      try{b.scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"})}catch(e){}
+    }
+  });
+  try{window.scrollTo({top:0,behavior:"smooth"})}catch(e){window.scrollTo(0,0)}
+  store.set("av_tab",id);
+}
+var saved=store.get("av_tab");
+if(saved && document.getElementById(saved)) go(saved);
+
+/* ═══════════ flashcards ═══════════ */
+var CARDS=[
+  ["On an XLR, which end sends and which receives?","<b>Male sends, female receives.</b> So the female end plugs into the output of the source device; the male end goes into the input of the next device."],
+  ["What are the three XLR pins?","Pin 1 = shield/ground · Pin 2 = positive/hot · Pin 3 = negative/cold."],
+  ["How far can a standard HDMI run before degradation?","About <b>50 feet</b>. This is the entire reason converters and SDI exist in a ballroom."],
+  ["How far can SDI run?","About <b>300 feet</b> — six times HDMI. Coax cable with a locking BNC connector."],
+  ["Coax and SDI look identical. What's the difference?","The cable is effectively the same; the <b>signal</b> differs. Coax in audio carries <b>RF from antennas to receivers</b>. SDI carries <b>video</b>. Label both ends."],
+  ["What does a DI box do?","Takes <b>unbalanced, high-impedance</b> signal and converts it to <b>balanced, low-impedance mic level</b> so it can safely run long distances into a mixer."],
+  ["What's a PC DI box for?","Same job as a DI, built for laptops — a mini stereo (3.5mm) cable attached that converts to XLR."],
+  ["Which mic type is most common in corporate AV, and why?","<b>Dynamic.</b> Rugged, hard to overload, needs no external power, and better for vocals in live sound."],
+  ["A lavalier is usually which type of mic?","A <b>condenser</b>. Chosen for its small size and its ability to pick up clear vocals from the presenter."],
+  ["Where does a condenser mic perform best?","A <b>studio environment</b>. It's far more sensitive and picks up quiet sound — great for detail, a liability in a noisy live room."],
+  ["What does a transmitter actually do?","Takes the <b>electrical signal from the mic and converts it into a radio frequency (RF)</b>."],
+  ["What does a receiver do with the RF?","Takes in the encoded frequency and <b>converts it back to analog signal</b>, then sends it to the mixer over XLR."],
+  ["Whip antenna range vs. paddle antenna range?","Whips: about <b>75 feet</b>. Paddles: <b>200–300 feet</b>."],
+  ["What does an antenna distro do?","Captures signal with your paddle antennas and <b>distributes it to multiple receivers over coax</b> — so every receiver shares two well-placed paddles instead of fighting with its own whips."],
+  ["Correct order for setting a frequency?","1) Connect antennas, power up receiver · 2) Scan (group or channel) · 3) Push Enter to confirm and set · 4) Sync the mic — press Sync, hold transmitter <b>6 inches from the IR window</b>."],
+  ["Correct gain structure technique?","<b>Set your fader to unity first, then slowly bring gain (trim) up</b> until you reach the right volume. Goal: highest output without feedback or noise."],
+  ["What is a channel strip?","A single unit on the console combining <b>mic preamp, EQ, compressor, and sometimes a gate</b> — everything for shaping one channel."],
+  ["EQ philosophy for corporate AV?","Don't excessively cut frequencies <b>unless you're controlling feedback</b>. The target is natural — the presenter should sound like themselves."],
+  ["Audio signal flow, source to speaker?","Input Source → Input Gain → EQ → Channel Level → Mixer Output → Front of House Speaker."],
+  ["Switcher vs. splitter?","A <b>switcher</b> takes many inputs and lets you choose <b>one</b> to send out. A <b>splitter</b> takes <b>one</b> signal and copies it to multiple outputs — every output shows the <b>same</b> content."],
+  ["What's the limitation of an SDI splitter?","It can only split <b>ONE</b> signal, and every output shows <b>identical</b> content. If the client wants different content on two screens, a splitter can't do it."],
+  ["What does a converter do?","Changes a video signal from one format to another — usually SDI ↔ HDMI. Some do HDMI→HDMI while changing frame rate/resolution, which is <b>scaling</b>."],
+  ["Why do you often need TWO converters in one run?","HDMI dies at ~50 ft, SDI goes ~300. Convert HDMI→SDI to cross the room, then SDI→HDMI because the display speaks HDMI."],
+  ["What's a multiview monitor?","Any standard monitor connected to the switcher's <b>multiview output</b> — lets the operator see every feed and pick which becomes program."],
+  ["What is a stage box?","Takes a group of signals and sends them down a <b>snake cable</b>, usually to front of house."],
+  ["Rio vs. stage box?","Same function, different transport. A <b>Rio passes signal over ethernet using Dante</b> instead of a copper snake."],
+  ["What does DANTE stand for?","<b>D</b>igital <b>A</b>udio <b>N</b>etwork <b>T</b>hrough <b>E</b>thernet. Creates a network where compatible devices see and talk to each other."],
+  ["What's the point of a snake cable?","To <b>condense the number of cable runs</b> — one jacket instead of a dozen loose XLRs across the floor."],
+  ["What frequency range defines a good speaker?","Accurate output across <b>20 Hz – 20 kHz</b>, plus the ability to limit distortion at high volume."],
+  ["A1 responsibilities?","Lead audio: programs the mixer and all processing, determines <b>final</b> speaker positions, and live-mixes the show."],
+  ["A2 responsibilities?","Sets and monitors receivers, <b>mics up presenters</b>, and sets up comms between all positions."],
+  ["Audio Tech responsibilities?","Sets equipment and establishes cable runs per the plot, or per how the A1 wants it."],
+  ["V1 vs. V2?","<b>V1</b> runs all things video — gathering content and programming the system. <b>V2</b> assists with setup and testing before the event, and may operate the switcher per the PM."],
+  ["Audio room set order, five steps?","1) Speakers in place · 2) Set tech table · 3) Power speakers and tech table · 4) Set receivers, get signal to mixer · 5) Set gain structure and make noise."],
+  ["Video room set order?","1) Place monitors/projector and screen · 2) Set tech table with sources and switcher · 3) Connect switcher to converter/splitter and run cable to displays · 4) Test signal to every display."],
+  ["How many people to set a fast-fold screen?","<b>Minimum two.</b> Normally set with a dress kit."],
+  ["What's the rule on client interaction?","<b>Minimal interaction while staying friendly and helpful.</b> Interact directly only if your position calls for it — the lead handles most client contact."],
+  ["What's the first principle of troubleshooting?","<b>Start at step one and work forward.</b> Retrace the signal flow to find where it breaks. Stay calm and focus on what <i>isn't</i> working."],
+  ["Which XLR end goes into the receiver?","The <b>female</b> end into the receiver, <b>male</b> into the mixer. The hardline then appears in that channel number."],
+  ["What does IEC power?","Active/powered speakers and other powered gear. First thing to check on a silent powered speaker."]
+];
+var fcQueue=[],fcIdx=0,fcCard=document.getElementById("fcCard");
+function fcInit(sh){
+  fcQueue=CARDS.map(function(c,i){return i});
+  if(sh) fcQueue.sort(function(){return Math.random()-.5});
+  fcIdx=0;fcRender();
+}
+function fcRender(){
+  fcCard.classList.remove("flip");
+  var n=document.getElementById("fcCount");
+  if(!fcQueue.length){
+    document.getElementById("fcQ").innerHTML="All clear.";
+    document.getElementById("fcA").innerHTML="You've worked through the whole deck. Shuffle to run it again cold.";
+    n.textContent="0 left";return;
+  }
+  if(fcIdx>=fcQueue.length) fcIdx=0;
+  var c=CARDS[fcQueue[fcIdx]];
+  document.getElementById("fcQ").innerHTML=c[0];
+  document.getElementById("fcA").innerHTML=c[1];
+  n.textContent=fcQueue.length+" card"+(fcQueue.length===1?"":"s")+" left";
+}
+fcCard.onclick=function(){fcCard.classList.toggle("flip")};
+document.getElementById("fcGot").onclick=function(){
+  if(!fcQueue.length)return;
+  fcQueue.splice(fcIdx,1);fcRender();
+};
+document.getElementById("fcAgain").onclick=function(){
+  if(!fcQueue.length)return;
+  fcIdx=(fcIdx+1)%fcQueue.length;fcRender();
+};
+document.getElementById("fcShuffle").onclick=function(){fcInit(true)};
+document.getElementById("fcReset").onclick=function(){fcInit(false)};
+fcInit(true);
+
+/* ═══════════ quiz ═══════════ */
+var QS=[
+ {q:"You're running video 120 feet from the tech table to a projector. What do you use?",
+  o:["A 120 ft HDMI cable","HDMI into a converter, SDI across the room, converter back to HDMI","Two HDMI cables joined with a coupler","A CAT cable"],
+  a:1,e:"HDMI degrades around 50 ft. Convert to SDI for the long run (good to ~300 ft), then convert back to HDMI at the display. Couplers don't fix attenuation — they add failure points."},
+ {q:"The client wants a live camera feed on the confidence monitors and slides on the main screen. Your rack has an SDI splitter. Can you do it?",
+  o:["Yes, set the splitter to different outputs","Yes, if you scale one output","No — a splitter copies one signal to all outputs","Only with a Decimator"],
+  a:2,e:"A splitter takes ONE signal and copies it. Every output is identical. Different content on different displays requires a switcher with multiple outputs, or a second signal path entirely."},
+ {q:"Correct gain structure technique?",
+  o:["Gain to unity, then bring the fader up","Fader to unity, then bring gain (trim) up slowly","Both at max, then cut with EQ","Fader at 75%, gain at 75%"],
+  a:1,e:"Fader to unity first, then trim up slowly. Chasing a weak input with the fader buries the signal in the noise floor and you can't fix it downstream."},
+ {q:"A powered speaker is silent. Everything else in the system works. First check?",
+  o:["Rescan the receiver frequencies","IEC power and the XLR at both ends","Factory reset the mixer","Swap the speaker"],
+  a:1,e:"Start at step one and work forward. Physical layer first: is it powered, is the cable seated at BOTH ends. Frequency and console problems don't make one speaker silent while others work."},
+ {q:"Which end of the XLR goes into the receiver?",
+  o:["Male","Female","Either","Depends on the mixer"],
+  a:1,e:"Female receives, male sends. Female into the receiver's output, male into the mixer's input. The hardline then appears in that channel number."},
+ {q:"You need 8 wireless channels covering a 250 ft ballroom. What's the right RF setup?",
+  o:["Whip antennas on each receiver","Paddle antennas into an antenna distro feeding all receivers over coax","One paddle antenna on receiver 1, whips on the rest","Move the receivers closer to the stage"],
+  a:1,e:"Whips cover ~75 ft — nowhere near enough. Paddles cover 200–300 ft. The distro lets all eight receivers share those two well-placed paddles over coax."},
+ {q:"What does DANTE stand for?",
+  o:["Digital Audio Network Through Ethernet","Digital Analog Network Transfer Engine","Direct Audio Network To Ethernet","Distributed Audio Node Transport"],
+  a:0,e:"Digital Audio Network Through Ethernet. It creates a network where any compatible device can see and communicate with any other — one CAT cable replacing a snake."},
+ {q:"Presenter is in a sweatshirt with no waistband. What's the actual problem?",
+  o:["The mic won't work through fabric","No good placement point or pack anchor — plan extra time, tape, and a conversation","You need a dynamic mic instead","Sweatshirts block RF"],
+  a:1,e:"Wardrobe determines difficulty. Button-ups give easy access to good placement. Sweatshirts and dresses don't — the fix is planning and communication, not different gear."},
+ {q:"Correct first step of the audio room set order?",
+  o:["Power everything up","Place tech table and speakers per the plot","Scan frequencies","Label your channels"],
+  a:1,e:"Placement first, based on the plot or preference. You set the things you can't easily move, then work backward. Everything else follows from where the speakers and table land."},
+ {q:"What does a DI box do?",
+  o:["Boosts a weak signal","Converts unbalanced high-impedance to balanced low-impedance mic level","Splits one signal into two","Adds phantom power"],
+  a:1,e:"That conversion is the entire job — it makes a signal safe to run long distances into a mixer without picking up noise."},
+ {q:"Your first TV works, but the second TV you looped signal to is dead. Where do you look first?",
+  o:["The switcher's program output","The cable and connection between TV 1 and TV 2, and TV 2's input selection","Replace both converters","The source laptop"],
+  a:1,e:"Signal reaching TV 1 proves everything upstream works. The break is downstream of TV 1 — the loop cable, the loop-out port, or TV 2's input source setting."},
+ {q:"Which mic type needs no external power and is most common in corporate?",
+  o:["Condenser","Dynamic","Ribbon","Lavalier"],
+  a:1,e:"Dynamic. Rugged, hard to overload, no power needed, and better for live vocals — which is why it's the corporate default."},
+ {q:"EQ approach for a CEO's keynote?",
+  o:["Heavy cuts to shape a modern vocal tone","Boost 5k hard for presence","Minimal cutting — only what's needed to kill feedback, keep it natural","Flat, never touch it"],
+  a:2,e:"Corporate target is natural. Don't excessively cut unless you're controlling feedback — the exec should sound like himself, not like a produced record."},
+ {q:"What's the difference between a stage box and a Rio?",
+  o:["Nothing, different brands","A Rio passes signal over ethernet using Dante instead of a copper snake","A stage box is digital, a Rio is analog","A Rio only handles outputs"],
+  a:1,e:"Same function, different transport. Stage box → snake. Rio → ethernet/Dante."},
+ {q:"Correct frequency-setting sequence?",
+  o:["Power up, scan, connect antennas, sync","Connect antennas, power up, scan, Enter to confirm, sync at 6 inches","Sync first, then scan","Scan, sync, then connect antennas"],
+  a:1,e:"Antennas FIRST — scanning without them gives you a garbage result. Then power, scan, Enter to set, then sync the transmitter about 6 inches from the IR window."},
+ {q:"Who mics up the presenters?",
+  o:["A1","A2","Audio Tech","Stage Manager"],
+  a:1,e:"A2 sets and monitors receivers, mics presenters, and sets up comms. The A1 is at the console programming and mixing."},
+ {q:"A client walks up to you mid-set and asks to change the screen layout. You're the V2. What do you do?",
+  o:["Make the change — the client is paying","Politely route them to the lead/V1 or PM","Ignore it, you're busy","Tell them it's impossible"],
+  a:1,e:"Minimal interaction while friendly and helpful. Responsibilities break down by position, and the lead handles client needs. 'Let me grab my V1 for you' is the right answer — warm, and it protects the show from an unlogged change."},
+ {q:"What's a multiview monitor?",
+  o:["A monitor showing four copies of the program","Any standard monitor on the switcher's multiview output showing every feed at once","A monitor with built-in scaling","A confidence monitor for the presenter"],
+  a:1,e:"Any standard monitor plugged into the switcher's multiview out. It lets the operator see all feeds and choose which becomes the main display."},
+ {q:"You grab a BNC cable off the cart. How do you know if it's coax for RF or SDI for video?",
+  o:["Coax is thicker","By the connector color","You often can't tell by looking — that's why you label both ends of every run","SDI is always black"],
+  a:2,e:"They're physically the same cable with the same connectors. Labeling both ends isn't busywork — it's the only reliable way to tell them apart under time pressure."},
+ {q:"Best practice before you set any gear?",
+  o:["Power everything on to test","Double-check the gear for anything broken or missing","Label the channels","Set gain structure"],
+  a:1,e:"Check the gear first. Finding a dead receiver during your pre-check costs five minutes. Finding it during rehearsal costs the show."}
+];
+var qi=0,qScore=0,qHost=document.getElementById("quizHost");
+function qRender(){
+  if(qi>=QS.length){
+    var pct=Math.round(qScore/QS.length*100);
+    var msg = pct>=90?"Dialed in. You could run this material for someone else.":
+              pct>=75?"Solid. Clean up the misses and you're gig-ready.":
+              pct>=50?"Foundation's there. Run the flashcards, then come back.":
+                      "Go back through the reference tabs — then run this cold.";
+    qHost.innerHTML='<div class="qbox" style="text-align:center">'+
+      '<div class="score" style="color:'+(pct>=75?"var(--audio)":pct>=50?"var(--warn)":"var(--power)")+'">'+pct+'%</div>'+
+      '<p style="margin:0 0 4px;font-size:15px">'+qScore+' of '+QS.length+' correct</p>'+
+      '<p style="color:var(--dim);font-size:14px;margin:0 0 18px">'+msg+'</p>'+
+      '<button class="btn pri" id="qAgain">Run it again</button></div>';
+    document.getElementById("qAgain").onclick=function(){qi=0;qScore=0;QS.sort(function(){return Math.random()-.5});qRender()};
+    return;
+  }
+  var q=QS[qi];
+  var h='<div class="qbox"><div class="bar"><i style="width:'+(qi/QS.length*100)+'%"></i></div>'+
+        '<p style="color:var(--dim);font-size:12px;margin:10px 0 0;letter-spacing:.5px">QUESTION '+(qi+1)+' OF '+QS.length+'</p>'+
+        '<p class="qtext">'+q.q+'</p>';
+  q.o.forEach(function(o,i){h+='<button class="opt" data-i="'+i+'">'+o+'</button>'});
+  h+='<div id="qFoot"></div></div>';
+  qHost.innerHTML=h;
+  qHost.querySelectorAll(".opt").forEach(function(b){
+    b.onclick=function(){
+      var pick=+b.dataset.i;
+      qHost.querySelectorAll(".opt").forEach(function(x,i){
+        x.disabled=true;
+        if(i===q.a)x.classList.add("right");
+        else if(i===pick)x.classList.add("wrong");
+      });
+      if(pick===q.a)qScore++;
+      document.getElementById("qFoot").innerHTML=
+        '<p class="expl">'+q.e+'</p>'+
+        '<div class="row"><button class="btn pri" id="qNext" style="margin-left:auto">'+
+        (qi===QS.length-1?"See results":"Next")+'</button></div>';
+      document.getElementById("qNext").onclick=function(){qi++;qRender()};
+    };
+  });
+}
+qRender();
+
+/* ═══════════ chain builder ═══════════ */
+var CHAINS=[
+ {t:"Audio signal flow — source to speaker",
+  s:["Input Source","Input Gain","EQ","Channel Level","Mixer Output","FOH Speaker"]},
+ {t:"Wireless mic path — mouth to console",
+  s:["Microphone","Transmitter","RF through air","Antenna","Receiver","XLR","Mixer"]},
+ {t:"Video — laptop to a projector 150 ft away",
+  s:["Laptop Source","HDMI","Switcher","HDMI","Converter (HDMI→SDI)","SDI long run","Converter (SDI→HDMI)","Projector"]},
+ {t:"Audio room set order",
+  s:["Place speakers","Set tech table","Power speakers & table","Set receivers → signal to mixer","Set gain structure"]},
+ {t:"Setting a wireless frequency",
+  s:["Connect antennas","Power up receiver","Hit scan","Push Enter to set","Sync mic at IR window"]}
+];
+var ci=0,cHost=document.getElementById("chainHost");
+function cRender(){
+  var c=CHAINS[ci];
+  var shuffled=c.s.map(function(s,i){return {s:s,i:i}}).sort(function(){return Math.random()-.5});
+  var h='<div class="qbox"><p style="color:var(--dim);font-size:12px;margin:0;letter-spacing:.5px">CHAIN '+(ci+1)+' OF '+CHAINS.length+'</p>'+
+        '<p class="qtext" style="margin:8px 0 0">'+c.t+'</p>'+
+        '<div class="slots" id="cSlots"></div><div id="cToks">';
+  shuffled.forEach(function(o){h+='<button class="tok" data-i="'+o.i+'">'+o.s+'</button>'});
+  h+='</div><div class="row" id="cFoot"><button class="btn" id="cClear">Clear</button>'+
+     '<button class="btn" id="cSkip" style="margin-left:auto">Next chain</button></div></div>';
+  cHost.innerHTML=h;
+  var next=0;
+  cHost.querySelectorAll(".tok").forEach(function(b){
+    b.onclick=function(){
+      var want=+b.dataset.i;
+      if(want===next){
+        b.classList.add("used");
+        var n=document.createElement("span");
+        n.className="tok ok";n.textContent=b.textContent;
+        var sl=document.getElementById("cSlots");
+        if(next>0){var ar=document.createElement("span");ar.className="arrow";ar.textContent="→";sl.appendChild(ar)}
+        sl.appendChild(n);
+        next++;
+        if(next===c.s.length){
+          document.getElementById("cFoot").insertAdjacentHTML("afterbegin",
+            '<span style="color:var(--audio);font-weight:600;font-size:14px">Chain complete.</span>');
+        }
+      } else {
+        b.classList.add("no");
+        setTimeout(function(){b.classList.remove("no")},450);
+      }
+    };
+  });
+  document.getElementById("cClear").onclick=cRender;
+  document.getElementById("cSkip").onclick=function(){ci=(ci+1)%CHAINS.length;cRender()};
+}
+cRender();
+
+/* ═══════════ connector ID drill ═══════════ */
+document.querySelectorAll(".idcard").forEach(function(c){
+  var nm=c.querySelector(".nm");
+  c.onclick=function(){
+    var on=c.classList.toggle("open");
+    nm.textContent = on ? "" : "?";
+    nm.style.display = on ? "none" : "block";
+  };
+});
+
+/* ═══════════ scenarios ═══════════ */
+var SCN=[
+ {w:"Hotel ballroom · 45 min to doors",
+  q:"You're the A2. You've scanned and set eight frequencies. Twenty minutes later, channel 4 is dropping out intermittently while the other seven are rock solid. The room has filled with about 200 people since your scan.",
+  a:"<b>Don't rescan first.</b> Check physical before RF: is the transmitter's antenna kinked or tucked under the pack, is the pack's battery low, is the lav cable strained at the connector.<br><br>If physical checks out, the likely cause is the room itself — 200 bodies absorb RF and a frequency that was clean in an empty room can now be marginal. <b>Rescan channel 4 only</b>, with the room populated. Also confirm your paddles are still up and clear — someone may have set a pipe-and-drape or a stack of chairs in front of them.<br><br><b>Order matters:</b> physical → battery → antenna path → rescan. Rescanning first hides a bad cable and you'll chase it again during the show."},
+ {w:"Corporate AGM · during rehearsal",
+  q:"You're the V2. The main screen shows the presenter's deck perfectly. The two confidence monitors downstage — fed from the same SDI splitter — show nothing. Both are powered on.",
+  a:"Same signal, same splitter, both dead. That points at <b>one common failure between the splitter and those two monitors</b>, not two coincidental problems.<br><br>Check in this order: <b>1)</b> Is the splitter actually powered? (It's a +12V brick — easy to miss on a crowded cart.) <b>2)</b> Is the SDI feed reaching the splitter's IN, or did someone plug into an OUT? <b>3)</b> Are the downstream converters (SDI→HDMI) powered and are the monitors on the right input source?<br><br><b>The trap:</b> people assume 'main works, so signal is good.' If the main screen is fed from a different output — say, direct from the switcher — then the splitter is completely unproven. Confirm what's feeding what before you troubleshoot."},
+ {w:"Load-in · 6:00am call",
+  q:"You arrive and the plot shows the tech table at the back of the room, 180 feet from the stage. You need audio from two stage-side wireless receivers and video to a projector at the stage. What's your cable plan?",
+  a:"<b>Audio:</b> The receivers belong at the tech table, not the stage — RF travels through the air, so put the receivers where you can monitor them and run <b>paddle antennas</b> toward the stage. 180 ft is well inside paddle range (200–300 ft). Receivers → mixer over short XLR at the table. No 180 ft audio run needed at all.<br><br><b>Video:</b> 180 ft kills HDMI at 50 ft. Switcher → HDMI → converter → <b>SDI for the 180 ft run</b> → converter → HDMI → projector.<br><br><b>Then:</b> find the cleanest cable path, label both ends of every run, and confirm power is accessible at both the table and the stage before you commit to the route.<br><br><b>The insight:</b> the answer to a long run is rarely a long cable. It's putting the gear in the right place and choosing a transport that survives the distance."},
+ {w:"Breakout room · client is standing there",
+  q:"You're the Audio Tech. The client asks you directly to add a second wireless handheld for Q&A, right now, ten minutes before their session. Your A1 is in the main ballroom.",
+  a:"<b>Be friendly, be brief, and route it.</b> 'Absolutely — let me get my A1 on it right away.' Then get on comms.<br><br>Why you don't just do it: an added channel needs a frequency coordinated against everything else running in the building, a channel on the console, gain set, and the A1 needs to know it exists so it's not muted or unassigned when someone talks into it. A handheld you quietly patch in is a handheld that feeds back or stays dead on air.<br><br><b>The principle:</b> minimal interaction while remaining friendly and helpful. Your position doesn't own that decision — but 'no' isn't your answer either. Route it fast and warmly."},
+ {w:"General session · pre-show",
+  q:"You set your gain structure an hour ago with the room empty and it sounded great. Doors open, 400 people file in, and the same settings now sound thin and the presenter is asking to be turned up.",
+  a:"An empty room is reflective and bass-heavy; a full room absorbs. Your empty-room mix was flattered by reflections that 400 bodies just soaked up.<br><br><b>Don't just push the fader.</b> Work the structure: confirm your <b>gain/trim</b> is still giving you a healthy input level, then adjust. If you set trim conservatively you have headroom to work with — this is exactly why gain structure matters.<br><br>Watch feedback as you come up. Room absorption changed your feedback threshold too, usually in your favor, but the mic position relative to the speakers hasn't changed.<br><br><b>The lesson:</b> always leave yourself headroom at set-up. A mix with no room to move is a mix that fails the moment conditions change — and conditions always change."},
+ {w:"Strike · 11:00pm",
+  q:"Show's over. Everyone's tired and the truck is waiting. What separates a professional strike from a sloppy one?",
+  a:"<b>Power down in reverse order</b> — amps and powered speakers off before sources, so you don't send a thump through the system.<br><br><b>Coil cable properly</b> (over-under) and keep your labels on. The next crew — possibly you — inherits whatever you do here. A snake coiled wrong is a snake with a broken conductor in six months.<br><br><b>Account for every piece.</b> Small converters, IR sync windows, antenna mounts, and power bricks are what go missing. They're also the exact items whose absence kills a load-in.<br><br><b>The principle from the deck applies in reverse:</b> don't rush your system. Rushing strike is how gear goes missing and how you get hurt at the end of a fourteen-hour day."}
+];
+var sh=document.getElementById("scnHost");
+SCN.forEach(function(s,i){
+  var d=document.createElement("div");
+  d.className="scn";
+  d.innerHTML='<div class="setting">'+s.w+'</div><p class="q">'+s.q+'</p>'+
+    '<button class="btn" data-i="'+i+'">How would you work it?</button>'+
+    '<div class="reveal">'+s.a+'</div>';
+  sh.appendChild(d);
+  var btn=d.querySelector("button"),rev=d.querySelector(".reveal");
+  btn.onclick=function(){
+    var on=rev.classList.toggle("on");
+    btn.textContent=on?"Hide":"How would you work it?";
+  };
+});
+
+})();
+</script>
+</body>
+</html>
