@@ -1,0 +1,2200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Audio Field Guide</title>
+<meta name="description" content="Audio for live events: cables, microphones, wireless, mixers, signal flow and console operation.">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="theme-color" content="#0d1117">
+<style>
+
+:root{
+  --bg:#0d1117; --bg2:#161b22; --bg3:#1c2430; --line:#2b3440;
+  --txt:#e6edf3; --dim:#8b98a5; --dimmer:#5c6773;
+  /* signal color code — used everywhere, consistently */
+  --audio:#3fb950;    /* XLR / analog audio — GREEN */
+  --rf:#f0883e;       /* RF / wireless / coax — ORANGE */
+  --video:#58a6ff;    /* HDMI / video — BLUE */
+  --sdi:#bc8cff;      /* SDI / BNC — PURPLE */
+  --power:#f85149;    /* IEC / power — RED */
+  --data:#39d0d8;     /* CAT / Dante / network — CYAN */
+  --warn:#e3b341;
+  --radius:14px;
+  font-synthesis:none;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--txt);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+a{color:var(--video)}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 80px}
+
+/* ---------- header ---------- */
+header{
+  background:linear-gradient(160deg,#161b22 0%,#0d1117 100%);
+  border-bottom:1px solid var(--line);padding:28px 16px 22px;
+}
+header .inner{max-width:900px;margin:0 auto}
+h1{margin:0 0 6px;font-size:26px;letter-spacing:-.5px;line-height:1.2}
+.sub{color:var(--dim);font-size:14px;margin:0}
+.badge{display:inline-block;font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--rf);border:1px solid var(--rf);border-radius:99px;padding:3px 10px;margin-bottom:10px;font-weight:600}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:50;background:rgba(13,17,23,.94);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav .navinner{display:flex;gap:4px;max-width:900px;margin:0 auto;padding:8px 12px}
+nav button{
+  flex:0 0 auto;background:transparent;border:1px solid transparent;color:var(--dim);
+  font:600 13px/1 inherit;padding:9px 13px;border-radius:99px;cursor:pointer;white-space:nowrap;transition:.15s}
+nav button:hover{color:var(--txt);background:var(--bg2)}
+nav button[aria-selected="true"]{background:var(--bg3);color:var(--txt);border-color:var(--line)}
+
+/* ---------- panels ---------- */
+.panel{display:none;animation:fade .25s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2{font-size:20px;margin:30px 0 4px;letter-spacing:-.3px}
+h2:first-child{margin-top:26px}
+h3{font-size:15px;margin:22px 0 8px;color:var(--txt)}
+.lede{color:var(--dim);margin:0 0 18px;font-size:14.5px}
+
+/* ---------- cards ---------- */
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 18px;margin:12px 0}
+.card h4{margin:0 0 6px;font-size:15.5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card p{margin:0;color:var(--dim);font-size:14.5px}
+.card p+p{margin-top:8px}
+.card.L{border-left:3px solid var(--line)}
+.card.audio{border-left-color:var(--audio)} .card.rf{border-left-color:var(--rf)}
+.card.video{border-left-color:var(--video)} .card.sdi{border-left-color:var(--sdi)}
+.card.power{border-left-color:var(--power)} .card.data{border-left-color:var(--data)}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+
+.pill{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;
+  padding:3px 8px;border-radius:5px;white-space:nowrap}
+.p-audio{background:rgba(63,185,80,.15);color:var(--audio)}
+.p-rf{background:rgba(240,136,62,.15);color:var(--rf)}
+.p-video{background:rgba(88,166,255,.15);color:var(--video)}
+.p-sdi{background:rgba(188,140,255,.15);color:var(--sdi)}
+.p-power{background:rgba(248,81,73,.15);color:var(--power)}
+.p-data{background:rgba(57,208,216,.15);color:var(--data)}
+
+/* ---------- key callout ---------- */
+.key{background:rgba(227,179,65,.08);border:1px solid rgba(227,179,65,.3);
+  border-radius:10px;padding:12px 14px;margin:14px 0;font-size:14px}
+.key b{color:var(--warn)}
+
+/* ---------- legend ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 4px}
+.legend span{font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:6px}
+
+/* ---------- signal chain visual ---------- */
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:14px 0}
+.node{background:var(--bg3);border:1px solid var(--line);border-radius:9px;
+  padding:8px 12px;font-size:13px;font-weight:600}
+.arrow{color:var(--dimmer);font-size:14px;font-weight:700}
+.arrow.a-audio{color:var(--audio)} .arrow.a-rf{color:var(--rf)}
+.arrow.a-video{color:var(--video)} .arrow.a-sdi{color:var(--sdi)}
+
+/* ---------- figures ---------- */
+.fig{background:#090d12;border:1px solid var(--line);border-radius:11px;
+  padding:16px 12px 12px;margin:14px 0}
+.fig svg{display:block;width:100%;height:auto;max-width:430px;margin:0 auto}
+.figcap{font-size:12px;color:var(--dimmer);text-align:center;margin-top:10px;line-height:1.55}
+.figcap b{color:var(--dim)}
+svg .s{fill:none;stroke:#8b98a5;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+svg .sf{fill:#1c2430;stroke:#8b98a5;stroke-width:2;stroke-linejoin:round}
+svg .sd{fill:#0d1117;stroke:#5c6773;stroke-width:1.5}
+svg .met{fill:#3f4a57;stroke:#8b98a5;stroke-width:1.5}
+svg .gold{fill:#c9a227}
+svg .hl{fill:none;stroke-width:2;stroke-dasharray:5 4}
+svg .lead{stroke-width:1.4;fill:none}
+svg text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+svg .lbl{font-size:11px;font-weight:600;fill:#8b98a5}
+svg .num{font-size:10px;font-weight:700;fill:#0d1117}
+svg .tag{font-size:11.5px;font-weight:800;letter-spacing:.5px}
+svg .cap{font-size:12px;font-weight:700;fill:#e6edf3}
+.c-audio{stroke:#3fb950} .f-audio{fill:#3fb950}
+.c-rf{stroke:#f0883e} .f-rf{fill:#f0883e}
+.c-video{stroke:#58a6ff} .f-video{fill:#58a6ff}
+.c-sdi{stroke:#bc8cff} .f-sdi{fill:#bc8cff}
+.c-power{stroke:#f85149} .f-power{fill:#f85149}
+.c-data{stroke:#39d0d8} .f-data{fill:#39d0d8}
+.c-warn{stroke:#e3b341} .f-warn{fill:#e3b341}
+
+/* ---------- connector ID drill ---------- */
+.idgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.idcard{background:var(--bg2);border:1px solid var(--line);border-radius:11px;padding:12px;
+  cursor:pointer;text-align:center;transition:.15s}
+.idcard:hover{border-color:var(--dimmer)}
+.idcard svg{width:100%;height:auto;max-width:130px}
+.idcard .nm{font-size:12.5px;font-weight:700;margin-top:8px}
+.idcard .rv{font-size:11.5px;color:var(--dim);margin-top:5px;display:none;line-height:1.5}
+.idcard.open .rv{display:block}
+.idcard.open{border-color:var(--rf)}
+.ckitem{background:var(--bg2);border:1px solid var(--line);border-radius:11px;cursor:pointer;transition:.15s}
+.ckitem:hover{border-color:var(--dimmer)}
+
+/* ---------- ordered steps ---------- */
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:14px 0}
+ol.steps li{counter-increment:s;position:relative;padding:12px 14px 12px 48px;
+  background:var(--bg2);border:1px solid var(--line);border-radius:10px;margin-bottom:8px;font-size:14.5px}
+ol.steps li::before{content:counter(s);position:absolute;left:14px;top:11px;
+  width:22px;height:22px;border-radius:50%;background:var(--bg3);border:1px solid var(--line);
+  color:var(--rf);font-size:12px;font-weight:700;display:grid;place-items:center}
+
+ul.chk{list-style:none;padding:0;margin:12px 0}
+ul.chk li{padding:9px 12px 9px 32px;position:relative;font-size:14.5px;color:var(--dim);
+  border-bottom:1px solid var(--line)}
+ul.chk li:last-child{border-bottom:none}
+ul.chk li::before{content:"▸";position:absolute;left:12px;color:var(--audio);font-weight:700}
+
+/* ---------- table ---------- */
+.tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;display:block;overflow-x:auto}
+.tbl th,.tbl td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl th{color:var(--dim);font-size:11.5px;text-transform:uppercase;letter-spacing:.6px}
+
+/* ---------- buttons ---------- */
+.btn{background:var(--bg3);border:1px solid var(--line);color:var(--txt);
+  font:600 14px/1 inherit;padding:11px 18px;border-radius:9px;cursor:pointer;transition:.15s}
+.btn:hover{border-color:var(--dimmer)}
+.btn.pri{background:var(--audio);border-color:var(--audio);color:#08130b}
+.btn.pri:hover{filter:brightness(1.1)}
+.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:14px 0}
+
+/* ---------- flashcards ---------- */
+.fcstage{perspective:1200px;margin:16px 0}
+.fc{position:relative;min-height:190px;cursor:pointer;transition:transform .5s;
+  transform-style:preserve-3d}
+.fc.flip{transform:rotateY(180deg)}
+.fcface{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:var(--radius);border:1px solid var(--line);background:var(--bg2);
+  padding:24px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.fcback{transform:rotateY(180deg);background:var(--bg3)}
+.fcq{font-size:18px;font-weight:600;line-height:1.4}
+.fca{font-size:15px;color:var(--dim);line-height:1.6}
+.fchint{position:absolute;bottom:12px;left:0;right:0;text-align:center;
+  font-size:11px;color:var(--dimmer);letter-spacing:.5px;text-transform:uppercase}
+.counter{font-size:13px;color:var(--dim);font-variant-numeric:tabular-nums}
+
+/* ---------- quiz ---------- */
+.qbox{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:16px 0}
+.qtext{font-size:16.5px;font-weight:600;margin:0 0 16px;line-height:1.45}
+.opt{display:block;width:100%;text-align:left;background:var(--bg3);border:1px solid var(--line);
+  color:var(--txt);font:15px/1.45 inherit;padding:13px 15px;border-radius:10px;margin-bottom:9px;
+  cursor:pointer;transition:.15s}
+.opt:hover:not(:disabled){border-color:var(--dimmer)}
+.opt.right{border-color:var(--audio);background:rgba(63,185,80,.12)}
+.opt.wrong{border-color:var(--power);background:rgba(248,81,73,.12)}
+.opt:disabled{cursor:default}
+.expl{font-size:14px;color:var(--dim);border-left:3px solid var(--rf);
+  padding:2px 0 2px 12px;margin:14px 0 0}
+.bar{height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;margin:6px 0 0}
+.bar i{display:block;height:100%;background:var(--audio);width:0;transition:width .3s}
+.score{font-size:44px;font-weight:800;letter-spacing:-2px;margin:6px 0}
+
+/* ---------- chain builder ---------- */
+.slots{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:12px;
+  background:var(--bg2);border:1px dashed var(--line);border-radius:12px;margin:12px 0;align-items:center}
+.slots:empty::before{content:"Tap the pieces below in order…";color:var(--dimmer);font-size:13.5px}
+.tok{background:var(--bg3);border:1px solid var(--line);border-radius:8px;padding:9px 13px;
+  font-size:13.5px;font-weight:600;cursor:pointer;transition:.15s}
+.tok:hover{border-color:var(--dimmer)}
+.tok.used{opacity:.25;pointer-events:none}
+.tok.ok{border-color:var(--audio);color:var(--audio)}
+.tok.no{border-color:var(--power);color:var(--power)}
+
+/* ---------- scenario ---------- */
+.scn{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--rf);
+  border-radius:var(--radius);padding:18px;margin:14px 0}
+.scn .setting{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--rf);
+  font-weight:700;margin-bottom:8px}
+.scn .q{font-size:15px;margin:0 0 12px;line-height:1.55}
+.reveal{display:none;border-top:1px solid var(--line);margin-top:14px;padding-top:14px;
+  font-size:14.5px;color:var(--dim);line-height:1.65}
+.reveal.on{display:block}
+.reveal b{color:var(--txt)}
+
+footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
+  color:var(--dimmer);font-size:12.5px;text-align:center;line-height:1.7}
+@media(max-width:520px){
+  h1{font-size:22px} .wrap{padding:0 13px 70px} .card{padding:14px 15px}
+  .score{font-size:38px}
+}
+
+/* ---------- simulators ---------- */
+.sim{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin:14px 0}
+.simrow{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start}
+.simmeters{display:flex;gap:16px;flex:0 0 auto}
+.mtr{width:64px;text-align:center;position:relative}
+.mtrbar{position:relative;height:230px;width:34px;margin:0 auto;border-radius:5px;
+  overflow:hidden;background:#05080b;border:1px solid var(--line)}
+.mzone{position:absolute;left:0;right:0}
+.mclip{top:0;height:26%;background:rgba(248,81,73,.16)}
+.mgood{top:26%;height:52%;background:rgba(63,185,80,.12)}
+.mnoise{bottom:0;height:22%;background:rgba(92,103,115,.16)}
+.mfill{position:absolute;left:3px;right:3px;bottom:0;border-radius:3px;
+  background:linear-gradient(180deg,#3fb950,#2a7f38);transition:height .12s}
+.mfill.room{background:linear-gradient(180deg,#58a6ff,#2b6cb8)}
+.mfill.hot{background:linear-gradient(180deg,#f85149,#a4322c)}
+.mtick{position:absolute;left:0;right:0;height:1px;background:rgba(230,237,243,.45)}
+.mtick span{position:absolute;right:-24px;top:-7px;font-size:9.5px;color:var(--dim);font-weight:700}
+.mlbl{font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--dim);margin-top:9px;line-height:1.5}
+.mlbl span{color:var(--txt);font-size:13px;font-variant-numeric:tabular-nums}
+.pkled{position:absolute;top:-19px;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:800;
+  padding:2px 7px;border-radius:4px;border:1px solid var(--line);color:var(--dimmer);letter-spacing:.5px}
+.pkled.on{background:var(--power);border-color:var(--power);color:#fff}
+.simctl{flex:1 1 250px;min-width:230px}
+.slab{display:block;font-size:11px;font-weight:700;letter-spacing:.7px;color:var(--dim);margin-bottom:7px}
+.slab b{float:right;color:var(--txt);font-variant-numeric:tabular-nums;letter-spacing:0}
+.simctl input[type=range]{width:100%;accent-color:var(--audio);height:26px}
+.srange{display:flex;justify-content:space-between;font-size:10px;color:var(--dimmer);margin-top:-2px}
+.srcnote{margin-top:10px;font-size:12px;color:var(--dimmer)}
+.verdict{margin-top:16px;border-left:3px solid var(--line);padding:11px 14px;
+  background:var(--bg3);border-radius:0 9px 9px 0;font-size:14px;line-height:1.6}
+.verdict b{display:block;margin-bottom:4px;font-size:13px;letter-spacing:.4px;text-transform:uppercase}
+.verdict.ok{border-left-color:var(--audio)} .verdict.ok b{color:var(--audio)}
+.verdict.warn{border-left-color:var(--warn)} .verdict.warn b{color:var(--warn)}
+.verdict.bad{border-left-color:var(--power)} .verdict.bad b{color:var(--power)}
+@media(max-width:520px){.simrow{gap:16px}.mtrbar{height:180px;width:30px}.mtr{width:56px}}
+
+.homelink{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--dim);
+  text-decoration:none;margin-bottom:12px;padding:5px 11px;border:1px solid var(--line);
+  border-radius:99px;transition:.15s}
+.homelink:hover{color:var(--txt);border-color:var(--dimmer)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <a class="homelink" href="../">← All guides</a>
+    <div class="badge" style="color:var(--audio);border-color:var(--audio)">Live Events · Audio</div>
+    <h1>Audio Field Guide</h1>
+    <p class="sub">Cables, mics, wireless, consoles and signal flow — built to drill, not to read. Works offline.</p>
+  </div>
+</header>
+
+<nav role="tablist"><div class="navinner" id="nav"></div></nav>
+
+<div class="wrap">
+<section class="panel on" id="p-start">
+  <h2>How to use this</h2>
+  <p class="lede">Read the reference tabs once. Then live in <b>Drills</b> and <b>Scenarios</b> — that's where it sticks.</p>
+  <div class="key">
+    <b>The one idea that runs through everything:</b> signal flow. You're taking a source from one place and getting it to another. Every piece of gear is either a <i>source</i>, a <i>path</i>, a <i>processor</i>, or a <i>destination</i>. Every problem you'll troubleshoot is a break somewhere in that line.
+  </div>
+  <h3>Color code</h3>
+  <div class="legend">
+    <span class="pill p-audio">XLR · Analog Audio</span>
+    <span class="pill p-rf">RF · Wireless · Coax</span>
+    <span class="pill p-power">IEC · Power</span>
+    <span class="pill p-data">CAT · Dante · Network</span>
+    <span class="pill p-sdi">SDI · lookalike warning</span>
+  </div>
+  <h3>What's in here</h3>
+  <div class="grid">
+    <div class="card L audio"><h4>Cables</h4><p>What each carries, how far it goes, which end sends vs. receives.</p></div>
+    <div class="card L rf"><h4>Mics &amp; RF</h4><p>Mic types, polar patterns, transmitters, receivers, antennas, distros.</p></div>
+    <div class="card L audio"><h4>Qu-16 Console</h4><p>Architecture, signal flow, gain, processing, routing, the AMM, scenes.</p></div>
+    <div class="card L rf"><h4>Room Ops</h4><p>Power-on to strike, room profiles, mix-minus, checkable pre-doors list.</p></div>
+    <div class="card L data"><h4>Workflow &amp; Crew</h4><p>Set order, best practices, A1/A2/Audio Tech.</p></div>
+    <div class="card L power"><h4>Drills</h4><p>Flashcards, quiz, chain builders, real-gig scenarios.</p></div>
+  </div>
+  <div class="key" style="border-color:rgba(63,185,80,.3);background:rgba(63,185,80,.06)">
+    <b style="color:var(--audio)">Save this to your phone.</b> On iPhone: Share → Add to Home Screen. Opens like an app and works with no signal.
+  </div>
+</section>
+
+<section class="panel" id="p-cables">
+  <h2>Cables &amp; Connectors</h2>
+  <p class="lede">Know what each carries and how far it goes. That alone solves half the problems on a floor.</p>
+<div class="card L audio">
+    <h4>XLR <span class="pill p-audio">Analog Audio</span></h4>
+    <p>The most common cable in audio. Three pins: <b>Pin 1 = shield/ground, Pin 2 = positive/hot, Pin 3 = negative/cold.</b></p>
+    <p><b>The rule that never changes: female receives, male sends.</b> So the female end goes into the source device's output, the male end goes into the next device's input. Balanced — that's why it rejects noise over long runs.</p>
+
+    <div class="fig">
+      <svg viewBox="0 0 420 210" role="img" aria-label="XLR male and female connector faces compared">
+        <!-- MALE -->
+        <circle class="sf" cx="105" cy="88" r="58"/>
+        <circle class="sd" cx="105" cy="88" r="47"/>
+        <!-- key notch -->
+        <rect class="met" x="93" y="36" width="24" height="12" rx="3"/>
+        <!-- pins (solid = male) -->
+        <circle class="met" cx="86" cy="70" r="9" style="fill:#8b98a5"/>
+        <text class="num" x="86" y="74" text-anchor="middle">2</text>
+        <circle class="met" cx="124" cy="88" r="9" style="fill:#8b98a5"/>
+        <text class="num" x="124" y="92" text-anchor="middle">3</text>
+        <circle class="met" cx="86" cy="110" r="9" style="fill:#8b98a5"/>
+        <text class="num" x="86" y="114" text-anchor="middle">1</text>
+        <text class="cap" x="105" y="172" text-anchor="middle">MALE</text>
+        <text class="tag f-audio" x="105" y="190" text-anchor="middle">SENDS →</text>
+
+        <!-- FEMALE -->
+        <circle class="sf" cx="315" cy="88" r="58"/>
+        <circle class="sd" cx="315" cy="88" r="47"/>
+        <rect class="met" x="303" y="36" width="24" height="12" rx="3"/>
+        <!-- sockets (hollow = female) -->
+        <circle class="met" cx="334" cy="70" r="9"/><circle cx="334" cy="70" r="3.5" fill="#0d1117"/>
+        <text class="lbl" x="356" y="74" text-anchor="middle">2</text>
+        <circle class="met" cx="296" cy="88" r="9"/><circle cx="296" cy="88" r="3.5" fill="#0d1117"/>
+        <text class="lbl" x="274" y="92" text-anchor="middle">3</text>
+        <circle class="met" cx="334" cy="110" r="9"/><circle cx="334" cy="110" r="3.5" fill="#0d1117"/>
+        <text class="lbl" x="356" y="114" text-anchor="middle">1</text>
+        <text class="cap" x="315" y="172" text-anchor="middle">FEMALE</text>
+        <text class="tag f-audio" x="315" y="190" text-anchor="middle">← RECEIVES</text>
+
+        <!-- callout -->
+        <path class="hl c-warn" d="M172 88 h76"/>
+        <path class="lead c-warn" d="M210 88 l-6 -5 M210 88 l-6 5" transform="translate(38,0)"/>
+        <text class="lbl f-warn" x="210" y="76" text-anchor="middle">mates</text>
+      </svg>
+      <div class="figcap"><b>Tell them apart instantly:</b> solid pins sticking out = male. Holes = female. Mnemonic that works and you won't forget — pins go in holes.</div>
+    </div>
+  </div>
+
+  <div class="card L rf">
+    <h4>Coax (BNC) <span class="pill p-rf">RF</span></h4>
+    <p>Looks identical to SDI — same cable, same connector. The difference is what's on it. Coax in the audio world carries <b>RF from your paddle antennas to your receivers</b> (or to an antenna distro).</p>
+    <p>Because it looks like SDI, label it. This is the #1 cable people grab wrong on a mixed AV cart.</p>
+  </div>
+
+  <div class="card L sdi">
+    <h4>SDI (BNC) <span class="pill p-sdi">Video</span></h4>
+    <p>Coax cable with a BNC connector carrying video. <b>Runs about 300 feet</b> before signal degradation. Locks on with a twist — it doesn't fall out, which is why it's the standard for anything crossing a room.</p>
+  </div>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 250" role="img" aria-label="Coax RF and SDI video BNC connectors are physically identical">
+      <!-- top: RF -->
+      <g transform="translate(0,4)">
+        <path class="s" d="M18 44 h44"/>
+        <rect class="sf" x="62" y="26" width="26" height="36" rx="4"/>
+        <rect class="met" x="88" y="22" width="46" height="44" rx="5"/>
+        <path class="s" d="M96 22 v-7 M126 22 v-7"/>
+        <rect class="met" x="134" y="34" width="20" height="20" rx="3"/>
+        <circle class="gold" cx="160" cy="44" r="5"/>
+        <path class="s" d="M154 30 h14 M154 58 h14"/>
+        <text class="tag f-rf" x="186" y="40">COAX → RF</text>
+        <text class="lbl" x="186" y="57">antenna to receiver</text>
+      </g>
+      <!-- bottom: SDI -->
+      <g transform="translate(0,104)">
+        <path class="s" d="M18 44 h44"/>
+        <rect class="sf" x="62" y="26" width="26" height="36" rx="4"/>
+        <rect class="met" x="88" y="22" width="46" height="44" rx="5"/>
+        <path class="s" d="M96 22 v-7 M126 22 v-7"/>
+        <rect class="met" x="134" y="34" width="20" height="20" rx="3"/>
+        <circle class="gold" cx="160" cy="44" r="5"/>
+        <path class="s" d="M154 30 h14 M154 58 h14"/>
+        <text class="tag f-sdi" x="186" y="40">SDI → VIDEO</text>
+        <text class="lbl" x="186" y="57">switcher to display</text>
+      </g>
+      <!-- identical bracket -->
+      <path class="hl c-power" d="M10 20 h164 M10 20 v168 M10 188 h164"/>
+      <text class="tag f-power" x="210" y="215" text-anchor="middle">PHYSICALLY IDENTICAL — YOU CANNOT TELL BY LOOKING</text>
+      <text class="lbl f-warn" x="210" y="236" text-anchor="middle">This is why you label both ends of every run.</text>
+    </svg>
+    <div class="figcap"><b>The most important figure in this guide.</b> Same cable, same BNC connector, same twist-lock. The only thing that differs is the signal riding on it. Trace the run or read the label — never trust your eyes on this one.</div>
+  </div>
+
+  <div class="card L power">
+    <h4>IEC (D-Plug) <span class="pill p-power">Power</span></h4>
+    <p>Supplies power to active speakers and other powered gear. If a powered speaker is silent, this is the first thing you look at — before you look at anything clever.</p>
+  </div>
+
+  <div class="card L data">
+    <h4>CAT / Ethernet <span class="pill p-data">Data</span></h4>
+    <p>Data between network switches, receivers, and computers. Also the backbone for <b>Dante</b> audio networking.</p>
+  </div>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 175" role="img" aria-label="IEC power connector and RJ45 ethernet connector compared">
+      <!-- IEC C13 -->
+      <g transform="translate(38,20)">
+        <path class="sf" d="M8 22 h72 a8 8 0 0 1 8 8 v14 l-14 16 h-60 a8 8 0 0 1 -8 -8 v-22 a8 8 0 0 1 8 -8 z"/>
+        <rect class="sd" x="20" y="34" width="9" height="18" rx="2"/>
+        <rect class="sd" x="42" y="34" width="9" height="18" rx="2"/>
+        <rect class="sd" x="64" y="34" width="9" height="18" rx="2"/>
+        <path class="s" d="M8 62 h56"/>
+        <text class="tag f-power" x="48" y="98" text-anchor="middle">IEC</text>
+        <text class="lbl" x="48" y="115" text-anchor="middle">POWER only</text>
+        <path class="lead c-power" d="M88 44 L118 30"/>
+        <text class="lbl f-power" x="122" y="27">notched corner</text>
+        <text class="lbl f-power" x="122" y="41">= one orientation</text>
+      </g>
+      <!-- RJ45 -->
+      <g transform="translate(268,20)">
+        <rect class="sf" x="14" y="26" width="58" height="42" rx="4"/>
+        <path class="sf" d="M34 26 h18 v-14 h-18 z"/>
+        <g class="gold">
+          <rect x="20" y="30" width="4" height="12"/><rect x="27" y="30" width="4" height="12"/>
+          <rect x="34" y="30" width="4" height="12"/><rect x="41" y="30" width="4" height="12"/>
+          <rect x="48" y="30" width="4" height="12"/><rect x="55" y="30" width="4" height="12"/>
+          <rect x="62" y="30" width="4" height="12"/>
+        </g>
+        <path class="s" d="M14 68 h58"/>
+        <text class="tag f-data" x="43" y="98" text-anchor="middle">CAT / RJ45</text>
+        <text class="lbl" x="43" y="115" text-anchor="middle">DATA + Dante</text>
+        <path class="lead c-data" d="M43 12 L20 -2"/>
+        <text class="lbl f-data" x="16" y="-6" text-anchor="end">plastic clip</text>
+      </g>
+      <path class="s" style="stroke:#2b3440" d="M210 26 v104"/>
+      <text class="lbl f-warn" x="210" y="162" text-anchor="middle">The clip and the notch are the tells.</text>
+    </svg>
+    <div class="figcap"><b>Confusable at a glance in a dark room.</b> IEC has a notched, D-shaped body with three flat slots. RJ45 is smaller, has a springy clip on top, and shows eight gold contacts.</div>
+  </div>
+
+  <div class="card L audio">
+    <h4>Snake <span class="pill p-audio">Multi-channel Audio</span></h4>
+    <p>Multiple XLR runs bundled into one jacket. Purpose: <b>condense the number of cable runs</b>. One snake from stage to front of house instead of sixteen loose XLRs across a walkway.</p>
+  </div>
+
+  <div class="key">
+    <b>The lookalike trap:</b> Coax and SDI are physically the same cable with the same BNC ends. One is carrying RF to a receiver, the other is carrying video to a display. Label both ends of every run — the deck says it and every A2 who's been burned says it louder.
+  </div>
+
+  <h3>Distance cheat sheet</h3>
+  <table class="tbl">
+    <tr><th>Cable</th><th>Carries</th><th>Max run</th></tr>
+    <tr><td><span class="pill p-video">HDMI</span></td><td>Video + audio</td><td>~50 ft</td></tr>
+    <tr><td><span class="pill p-sdi">SDI</span></td><td>Video</td><td>~300 ft</td></tr>
+    <tr><td><span class="pill p-rf">Whip antenna</span></td><td>RF pickup</td><td>~75 ft</td></tr>
+    <tr><td><span class="pill p-rf">Paddle antenna</span></td><td>RF pickup</td><td>200–300 ft</td></tr>
+  </table>
+
+  <h2>Connector ID Drill</h2>
+  <p class="lede">Name it before you tap it. If you can't call these instantly, you'll be the one holding up a load-in.</p>
+  <div class="idgrid">
+
+    <div class="idcard">
+      <svg viewBox="0 0 100 100"><circle class="sf" cx="50" cy="46" r="34"/><circle class="sd" cx="50" cy="46" r="27"/>
+        <rect class="met" x="43" y="15" width="14" height="7" rx="2"/>
+        <circle cx="39" cy="35" r="5.5" fill="#8b98a5"/><circle cx="61" cy="46" r="5.5" fill="#8b98a5"/><circle cx="39" cy="58" r="5.5" fill="#8b98a5"/></svg>
+      <div class="nm">?</div>
+      <div class="rv"><b style="color:var(--audio)">XLR Male</b><br>Solid pins. <b>Sends.</b> Goes into the mixer input.</div>
+    </div>
+
+    <div class="idcard">
+      <svg viewBox="0 0 100 100"><circle class="sf" cx="50" cy="46" r="34"/><circle class="sd" cx="50" cy="46" r="27"/>
+        <rect class="met" x="43" y="15" width="14" height="7" rx="2"/>
+        <circle class="met" cx="61" cy="35" r="5.5"/><circle cx="61" cy="35" r="2" fill="#0d1117"/>
+        <circle class="met" cx="39" cy="46" r="5.5"/><circle cx="39" cy="46" r="2" fill="#0d1117"/>
+        <circle class="met" cx="61" cy="58" r="5.5"/><circle cx="61" cy="58" r="2" fill="#0d1117"/></svg>
+      <div class="nm">?</div>
+      <div class="rv"><b style="color:var(--audio)">XLR Female</b><br>Holes. <b>Receives.</b> Goes onto the receiver output.</div>
+    </div>
+
+    <div class="idcard">
+      <svg viewBox="0 0 100 100"><path class="s" d="M6 46 h20"/><rect class="sf" x="26" y="34" width="16" height="24" rx="3"/>
+        <rect class="met" x="42" y="30" width="30" height="32" rx="4"/><path class="s" d="M49 30 v-6 M65 30 v-6"/>
+        <rect class="met" x="72" y="39" width="13" height="14" rx="2"/><circle class="gold" cx="89" cy="46" r="4"/></svg>
+      <div class="nm">?</div>
+      <div class="rv"><b style="color:var(--rf)">BNC</b> — could be <b>coax (RF)</b> or <b>SDI (video)</b>. Identical. <b>Read the label.</b></div>
+    </div>
+
+    <div class="idcard">
+      <svg viewBox="0 0 100 100"><path class="sf" d="M18 32 h64 l-8 24 h-48 z"/><path class="sd" d="M25 39 h50 l-5 11 h-40 z"/>
+        <g class="gold"><rect x="30" y="41" width="3" height="5"/><rect x="37" y="41" width="3" height="5"/><rect x="44" y="41" width="3" height="5"/><rect x="51" y="41" width="3" height="5"/><rect x="58" y="41" width="3" height="5"/><rect x="65" y="41" width="3" height="5"/></g>
+        <path class="s" d="M36 56 h28 v12 h-28 z M44 68 h12 v18 h-12 z"/></svg>
+      <div class="nm">?</div>
+      <div class="rv"><b style="color:var(--video)">HDMI</b><br>Lopsided trapezoid. Video + audio. <b>~50 ft.</b> Never locks.</div>
+    </div>
+
+    <div class="idcard">
+      <svg viewBox="0 0 100 100"><path class="sf" d="M18 30 h50 a7 7 0 0 1 7 7 v12 l-12 14 h-45 a7 7 0 0 1 -7 -7 v-19 a7 7 0 0 1 7 -7 z"/>
+        <rect class="sd" x="27" y="40" width="8" height="16" rx="2"/><rect class="sd" x="43" y="40" width="8" height="16" rx="2"/><rect class="sd" x="59" y="40" width="8" height="16" rx="2"/>
+        <path class="s" d="M18 63 h40"/></svg>
+      <div class="nm">?</div>
+      <div class="rv"><b style="color:var(--power)">IEC</b><br>Notched corner, 3 flat slots. <b>Power only.</b></div>
+    </div>
+
+    <div class="idcard">
+      <svg viewBox="0 0 100 100"><rect class="sf" x="26" y="34" width="48" height="34" rx="4"/><path class="sf" d="M42 34 h16 v-12 h-16 z"/>
+        <g class="gold"><rect x="31" y="38" width="3" height="10"/><rect x="37" y="38" width="3" height="10"/><rect x="43" y="38" width="3" height="10"/><rect x="49" y="38" width="3" height="10"/><rect x="55" y="38" width="3" height="10"/><rect x="61" y="38" width="3" height="10"/><rect x="67" y="38" width="3" height="10"/></g>
+        <path class="s" d="M26 68 h48"/></svg>
+      <div class="nm">?</div>
+      <div class="rv"><b style="color:var(--data)">CAT / RJ45</b><br>Plastic clip on top. Data + <b>Dante</b>.</div>
+    </div>
+
+    <div class="idcard">
+      <svg viewBox="0 0 100 100"><path class="s" d="M8 46 h22"/><rect class="sf" x="30" y="36" width="26" height="20" rx="4"/>
+        <rect class="met" x="56" y="41" width="34" height="10" rx="5"/>
+        <rect x="68" y="41" width="2.5" height="10" fill="#0d1117"/><rect x="77" y="41" width="2.5" height="10" fill="#0d1117"/></svg>
+      <div class="nm">?</div>
+      <div class="rv"><b style="color:var(--audio)">3.5mm TRS (mini)</b><br><b>Two black rings</b> = stereo. This is your laptop feed — into a <b>PC DI</b>.</div>
+    </div>
+
+    <div class="idcard">
+      <svg viewBox="0 0 100 100"><path class="s" d="M8 46 h20"/><rect class="sf" x="28" y="34" width="24" height="24" rx="4"/>
+        <rect class="met" x="52" y="39" width="38" height="14" rx="6"/>
+        <rect x="72" y="39" width="3" height="14" fill="#0d1117"/>
+        <circle class="met" cx="88" cy="46" r="6"/></svg>
+      <div class="nm">?</div>
+      <div class="rv"><b style="color:var(--audio)">1/4" TS</b><br><b>One ring</b>, fat shaft. Instrument level — <b>unbalanced.</b> Needs a DI.</div>
+    </div>
+
+  </div>
+  <div class="key">
+    <b>The pattern for all mini/quarter-inch plugs:</b> count the black rings on the shaft. One ring = 2 conductors = unbalanced mono. Two rings = 3 conductors = stereo or balanced. That single habit tells you whether you need a DI box.
+  </div>
+</section>
+
+<section class="panel" id="p-gear">
+  <h2>Microphones</h2>
+
+  <div class="grid">
+    <div class="card L audio">
+      <h4>Dynamic</h4>
+      <p>Rugged, hard to overload, no external power needed. Better for vocals in live sound. <b>Most common mic in corporate settings.</b> Works best in live environments.</p>
+    </div>
+    <div class="card L audio">
+      <h4>Condenser</h4>
+      <p>Significantly better sound quality and far more sensitive — picks up quiet sources. Common on high-frequency instruments and vocals. <b>Works best in a studio environment.</b> Needs power.</p>
+    </div>
+  </div>
+
+  <div class="card L audio">
+    <h4>Lavalier ("Lav") <span class="pill p-audio">Most-used in AV</span></h4>
+    <p>The most common piece of mic equipment in corporate AV. Normally a <b>condenser</b>. Wins on size and on picking up clear vocals from the presenter without being in the shot.</p>
+  </div>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 200" role="img" aria-label="Dynamic, condenser, and lavalier microphones compared">
+      <!-- dynamic (ball grille, tapered) -->
+      <g transform="translate(20,10)">
+        <circle class="sf" cx="42" cy="34" r="26"/>
+        <path class="s" d="M22 22 q20 -8 40 0 M20 34 h44 M22 46 q20 8 40 0"/>
+        <path class="sf" d="M22 50 q20 12 40 0 l-6 68 a14 14 0 0 1 -28 0 z"/>
+        <path class="s" d="M28 90 h28"/>
+        <text class="cap" x="42" y="146" text-anchor="middle">DYNAMIC</text>
+        <text class="lbl" x="42" y="163" text-anchor="middle">rugged · no power</text>
+        <text class="lbl f-audio" x="42" y="179" text-anchor="middle">corporate default</text>
+      </g>
+      <!-- condenser (straight body, larger grille basket) -->
+      <g transform="translate(160,10)">
+        <rect class="sf" x="18" y="12" width="48" height="52" rx="8"/>
+        <path class="s" d="M18 24 h48 M18 36 h48 M18 48 h48 M30 12 v52 M42 12 v52 M54 12 v52"/>
+        <rect class="sf" x="26" y="64" width="32" height="54" rx="5"/>
+        <circle class="met" cx="42" cy="80" r="4"/>
+        <text class="cap" x="42" y="146" text-anchor="middle">CONDENSER</text>
+        <text class="lbl" x="42" y="163" text-anchor="middle">sensitive · needs power</text>
+        <text class="lbl f-warn" x="42" y="179" text-anchor="middle">studio environment</text>
+      </g>
+      <!-- lav -->
+      <g transform="translate(286,10)">
+        <rect class="sf" x="44" y="24" width="17" height="26" rx="5"/>
+        <circle class="met" cx="52.5" cy="31" r="3"/>
+        <path class="s" d="M52 50 q-6 26 8 44 q14 18 2 34"/>
+        <rect class="met" x="52" y="126" width="14" height="10" rx="2"/>
+        <path class="lead c-audio" d="M44 34 L22 22"/>
+        <text class="lbl f-audio" x="18" y="19" text-anchor="end">tiny</text>
+        <text class="lbl f-audio" x="18" y="32" text-anchor="end">capsule</text>
+        <text class="cap" x="56" y="160" text-anchor="middle">LAVALIER</text>
+        <text class="lbl" x="56" y="177" text-anchor="middle">a tiny condenser</text>
+      </g>
+    </svg>
+    <div class="figcap"><b>Silhouette is the giveaway.</b> Dynamic = round ball grille on a tapered handle. Condenser = straight body with a large mesh basket, often side-address. Lav = a capsule the size of a pencil eraser on a thin cable ending in a pack connector.</div>
+  </div>
+
+  <div class="card L audio">
+    <h4>SM57 vs. SM58 <span class="pill p-audio">the two you'll see most</span></h4>
+    <p>Both are dynamics. Both are on nearly every truck. They are not interchangeable.</p>
+    <p><b>SM58</b> — the ball grille one. Frequency response <b>shaped specifically for vocals</b>. This is the most popular microphone in the world and it's what goes on a podium or in a hand.</p>
+    <p><b>SM57</b> — the small flat-nosed one. <b>Flatter response, small grille.</b> Built for instruments — drums, guitar cabs. The narrow head lets you get it in close where a 58 won't fit.</p>
+  </div>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 190" role="img" aria-label="SM58 ball grille versus SM57 small flat grille">
+      <!-- 58 -->
+      <g transform="translate(56,12)">
+        <circle class="sf" cx="42" cy="34" r="26"/>
+        <path class="s" d="M22 22 q20 -8 40 0 M20 34 h44 M22 46 q20 8 40 0"/>
+        <path class="sf" d="M22 50 q20 12 40 0 l-6 62 a14 14 0 0 1 -28 0 z"/>
+        <text class="cap" x="42" y="140" text-anchor="middle">SM58</text>
+        <text class="lbl f-audio" x="42" y="156" text-anchor="middle">VOCALS</text>
+        <text class="lbl" x="42" y="172" text-anchor="middle">podium, handheld</text>
+        <path class="lead c-audio" d="M68 26 L104 14"/>
+        <text class="lbl f-audio" x="108" y="11">big round</text>
+        <text class="lbl f-audio" x="108" y="24">ball grille</text>
+      </g>
+      <!-- 57 -->
+      <g transform="translate(246,12)">
+        <path class="sf" d="M28 20 h34 a5 5 0 0 1 5 5 v18 a5 5 0 0 1 -5 5 h-34 a5 5 0 0 1 -5 -5 v-18 a5 5 0 0 1 5 -5 z"/>
+        <path class="s" d="M23 28 h44 M23 36 h44 M23 44 h44"/>
+        <path class="sf" d="M28 48 h34 l-4 62 a13 13 0 0 1 -26 0 z"/>
+        <text class="cap" x="45" y="140" text-anchor="middle">SM57</text>
+        <text class="lbl f-warn" x="45" y="156" text-anchor="middle">INSTRUMENTS</text>
+        <text class="lbl" x="45" y="172" text-anchor="middle">drums, guitar cabs</text>
+        <path class="lead c-warn" d="M67 30 L96 14"/>
+        <text class="lbl f-warn" x="100" y="11">small flat</text>
+        <text class="lbl f-warn" x="100" y="24">head</text>
+      </g>
+    </svg>
+    <div class="figcap"><b>One glance tells you which.</b> Big round ball = 58 = voices. Small flat nose = 57 = instruments. Handing a presenter a 57 isn't wrong exactly, but anyone who knows will notice.</div>
+  </div>
+
+  <div class="card L audio">
+    <h4>Inside a dynamic mic</h4>
+    <p>Worth knowing because it explains <i>why</i> a dynamic behaves the way it does: <b>windscreen → diaphragm → coil → magnetic core → capsule → transformer → XLR output.</b></p>
+    <p>Sound waves move the diaphragm, which moves a coil inside a magnet, which generates a tiny voltage. The transformer boosts it enough to reach the console. <b>It's a loudspeaker running backwards</b> — same induction coil, opposite direction.</p>
+    <p>That's why it needs no external power (it generates its own signal) and why it takes abuse (there's nothing delicate or electrically charged in the path).</p>
+  </div>
+
+  <div class="grid">
+    <div class="card L power">
+      <h4>Dynamic — the tradeoffs</h4>
+      <p><b style="color:var(--audio)">Wins:</b> hard to overload, rugged, better for live vocals, no external power, corporate default.</p>
+      <p><b style="color:var(--power)">Costs:</b> less sensitive — needs a louder source. Not well suited to high frequencies.</p>
+    </div>
+    <div class="card L power">
+      <h4>Condenser — the tradeoffs</h4>
+      <p><b style="color:var(--audio)">Wins:</b> better sound quality, far more sensitive, great on high-frequency sources, studio-grade detail.</p>
+      <p><b style="color:var(--power)">Costs:</b> <b>needs phantom power</b>, distorts more easily if misused, far more expensive. Its sensitivity makes it impractical in most corporate rooms.</p>
+    </div>
+  </div>
+
+  <div class="card L power">
+    <h4>Phantom power (+48V) <span class="pill p-power">travels on XLR</span></h4>
+    <p>XLR doesn't just carry audio — it can carry <b>48 volts of power back up the same cable</b>. That's how a condenser gets fed.</p>
+    <p><b>The practical version:</b> condenser needs it, dynamic doesn't. A dead condenser is very often just phantom left off on that channel. Look there before you swap the mic.</p>
+  </div>
+
+  <h2>Polar Patterns</h2>
+  <p class="lede">A polar pattern is the shape of what a mic <i>hears</i>. Pick wrong and you're amplifying the room instead of the presenter — which is the same thing as inviting feedback.</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 300" role="img" aria-label="Six microphone polar patterns compared">
+      <!-- row 1 -->
+      <g transform="translate(28,10)">
+        <path class="f-rf" opacity=".55" d="M40 78 C4 78 4 26 40 26 C76 26 76 78 40 78 Z"/>
+        <path class="s" d="M40 76 v26"/><circle class="met" cx="40" cy="72" r="6"/>
+        <text class="cap" x="40" y="122" text-anchor="middle">Cardioid</text>
+        <text class="lbl f-audio" x="40" y="137" text-anchor="middle">front only</text>
+      </g>
+      <g transform="translate(158,10)">
+        <path class="f-rf" opacity=".55" d="M40 66 C6 66 6 22 40 22 C74 22 74 66 40 66 Z"/>
+        <ellipse class="f-rf" opacity=".35" cx="40" cy="86" rx="17" ry="11"/>
+        <path class="s" d="M40 76 v26"/><circle class="met" cx="40" cy="72" r="6"/>
+        <text class="cap" x="40" y="122" text-anchor="middle">Supercardioid</text>
+        <text class="lbl" x="40" y="137" text-anchor="middle">tighter</text>
+      </g>
+      <g transform="translate(288,10)">
+        <path class="f-rf" opacity=".55" d="M40 64 C4 64 4 22 40 22 C76 22 76 64 40 64 Z"/>
+        <ellipse class="f-rf" opacity=".4" cx="40" cy="88" rx="21" ry="14"/>
+        <path class="s" d="M40 76 v26"/><circle class="met" cx="40" cy="72" r="6"/>
+        <text class="cap" x="40" y="122" text-anchor="middle">Hypercardioid</text>
+        <text class="lbl" x="40" y="137" text-anchor="middle">tightest</text>
+      </g>
+      <!-- row 2 -->
+      <g transform="translate(28,158)">
+        <circle class="f-rf" opacity=".55" cx="40" cy="52" r="34"/>
+        <path class="s" d="M40 76 v26"/><circle class="met" cx="40" cy="72" r="6"/>
+        <text class="cap" x="40" y="122" text-anchor="middle">Omnidirectional</text>
+        <text class="lbl f-power" x="40" y="137" text-anchor="middle">hears everything</text>
+      </g>
+      <g transform="translate(158,158)">
+        <ellipse class="f-rf" opacity=".55" cx="40" cy="40" rx="13" ry="32"/>
+        <ellipse class="f-rf" opacity=".3" cx="40" cy="76" rx="26" ry="7"/>
+        <path class="s" d="M40 76 v26"/><circle class="met" cx="40" cy="72" r="6"/>
+        <text class="cap" x="40" y="122" text-anchor="middle">Lobar</text>
+        <text class="lbl" x="40" y="137" text-anchor="middle">shotgun</text>
+      </g>
+      <g transform="translate(288,158)">
+        <ellipse class="f-rf" opacity=".55" cx="40" cy="34" rx="30" ry="22"/>
+        <ellipse class="f-rf" opacity=".55" cx="40" cy="88" rx="30" ry="22"/>
+        <path class="s" d="M40 76 v26"/><circle class="met" cx="40" cy="72" r="6"/>
+        <text class="cap" x="40" y="122" text-anchor="middle">Bidirectional</text>
+        <text class="lbl" x="40" y="137" text-anchor="middle">sides dead</text>
+      </g>
+      <path class="s" style="stroke:#2b3440" d="M20 152 h380"/>
+    </svg>
+    <div class="figcap"><b>The shaded area is what the mic hears.</b> Tighter pattern = more rejection of the room = more gain before feedback. That's the whole reason this matters on a live floor.</div>
+  </div>
+
+  <div class="key">
+    <b>Most lavs are cardioid.</b> That's deliberate — they reject sound from the back and sides, so they pick up the presenter and not the room, the speakers, or the guy talking at the next table. It's also why lav placement matters so much: point the pattern at the mouth, not the shoulder.
+  </div>
+
+  <h3>Micing a presenter</h3>
+  <p class="lede">Wardrobe decides your job. A button-up shirt gives you easy access to good placement. A sweatshirt or a dress does not — plan for extra time, tape, and a conversation.</p>
+
+  <h2>Wireless &amp; RF</h2>
+
+  <div class="chain">
+    <span class="node">Mic</span><span class="arrow a-audio">→</span>
+    <span class="node">Transmitter</span><span class="arrow a-rf">≈ RF ≈</span>
+    <span class="node">Antenna</span><span class="arrow a-rf">→</span>
+    <span class="node">Receiver</span><span class="arrow a-audio">→ XLR →</span>
+    <span class="node">Mixer</span>
+  </div>
+
+  <div class="card L rf">
+    <h4>Transmitter</h4>
+    <p>Every wireless mic has two halves. The transmitter takes the <b>electrical signal from the mic and converts it into a radio frequency</b>. Bodypack (like a ULXD1) for a lav, or built into a handheld.</p>
+  </div>
+
+  <div class="card L rf">
+    <h4>Receiver</h4>
+    <p>Takes in the encoded RF and <b>turns it back into analog signal</b>. That signal then goes to the mixer over XLR — female end into the receiver, male end into the mixer.</p>
+  </div>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 206" role="img" aria-label="Bodypack transmitter and rack receiver">
+      <!-- bodypack -->
+      <g transform="translate(26,24)">
+        <rect class="sf" x="20" y="26" width="62" height="94" rx="9"/>
+        <rect class="sd" x="30" y="38" width="42" height="24" rx="3"/>
+        <path class="s" d="M34 46 h20 M34 54 h30"/>
+        <circle class="met" cx="40" cy="82" r="6"/><circle class="met" cx="62" cy="82" r="6"/>
+        <rect class="met" x="38" y="98" width="26" height="9" rx="2"/>
+        <path class="s c-rf" d="M74 26 q10 -18 6 -24"/>
+        <rect class="met" x="34" y="16" width="16" height="10" rx="2"/>
+        <path class="lead c-rf" d="M80 4 L104 -6"/>
+        <text class="lbl f-rf" x="108" y="-3">antenna wire</text>
+        <path class="lead c-audio" d="M42 16 L26 -6"/>
+        <text class="lbl f-audio" x="22" y="-3" text-anchor="end">mic in</text>
+        <text class="cap" x="51" y="146" text-anchor="middle">TRANSMITTER</text>
+        <text class="lbl" x="51" y="163" text-anchor="middle">on the presenter</text>
+        <text class="lbl" x="51" y="178" text-anchor="middle">audio → RF</text>
+      </g>
+      <!-- receiver 1U -->
+      <g transform="translate(180,24)">
+        <path class="s c-rf" d="M28 44 l-14 -34 M196 44 l14 -34"/>
+        <circle class="f-rf" cx="14" cy="8" r="3"/><circle class="f-rf" cx="210" cy="8" r="3"/>
+        <rect class="sf" x="18" y="44" width="188" height="52" rx="6"/>
+        <rect class="sd" x="56" y="54" width="76" height="32" rx="3"/>
+        <path class="s" d="M62 64 h50 M62 74 h38"/>
+        <circle class="met" cx="152" cy="70" r="13"/>
+        <rect class="met" x="26" y="56" width="18" height="28" rx="2"/>
+        <g><rect class="f-rf" x="170" y="56" width="6" height="6"/><rect class="f-rf" x="170" y="66" width="6" height="6"/>
+           <rect class="f-audio" x="190" y="56" width="6" height="6"/><rect class="f-audio" x="190" y="66" width="6" height="6"/></g>
+        <text class="lbl f-rf" x="173" y="90" text-anchor="middle" style="font-size:9px">RF</text>
+        <text class="lbl f-audio" x="193" y="90" text-anchor="middle" style="font-size:9px">AUD</text>
+        <path class="lead c-warn" d="M35 56 L35 26"/>
+        <text class="lbl f-warn" x="35" y="22" text-anchor="middle">IR sync window</text>
+        <text class="cap" x="112" y="126" text-anchor="middle">RECEIVER</text>
+        <text class="lbl" x="112" y="143" text-anchor="middle">at your tech table</text>
+        <text class="lbl" x="112" y="158" text-anchor="middle">RF → analog → XLR out</text>
+      </g>
+    </svg>
+    <div class="figcap"><b>The two meters on the receiver face are your whole job as an A2.</b> RF meter = is the radio link healthy. Audio meter = is sound actually arriving. RF good but audio dead means a muted pack or a bad lav — not a frequency problem.</div>
+  </div>
+
+  <div class="card L rf">
+    <h4>Paddle antennas</h4>
+    <p>Replace the little whip antennas on the back of a receiver. <b>200–300 ft of pickup vs. about 75 ft on whips.</b> Get them up, get them out front, keep bodies and metal out of the path.</p>
+
+    <div class="fig">
+      <svg viewBox="0 0 420 180" role="img" aria-label="Whip antenna versus paddle antenna">
+        <!-- whip -->
+        <g transform="translate(46,16)">
+          <path class="s c-rf" style="stroke-width:3" d="M40 96 v-58"/>
+          <circle class="f-rf" cx="40" cy="34" r="4"/>
+          <rect class="met" x="30" y="96" width="20" height="14" rx="3"/>
+          <path class="s" d="M20 110 h40"/>
+          <text class="cap" x="40" y="136" text-anchor="middle">WHIP</text>
+          <text class="tag f-power" x="40" y="156" text-anchor="middle">~75 ft</text>
+          <text class="lbl" x="40" y="172" text-anchor="middle">stock, on the receiver</text>
+        </g>
+        <!-- paddle -->
+        <g transform="translate(200,10)">
+          <path class="sf" d="M18 20 l86 26 v22 l-86 26 v-30 l-16 -7 v-0 l16 -7 z"/>
+          <path class="s c-rf" d="M30 44 h62 M34 58 h54 M38 72 h46"/>
+          <rect class="met" x="6" y="52" width="22" height="18" rx="3"/>
+          <circle class="gold" cx="17" cy="80" r="4"/>
+          <path class="s" d="M17 84 v14 M8 116 h18 M17 98 v18"/>
+          <text class="cap" x="60" y="140" text-anchor="middle">PADDLE (directional)</text>
+          <text class="tag f-audio" x="60" y="160" text-anchor="middle">200–300 ft</text>
+          <text class="lbl" x="60" y="176" text-anchor="middle">on a stand, aimed at stage</text>
+        </g>
+        <path class="lead c-warn" d="M300 40 L344 26"/>
+        <text class="lbl f-warn" x="348" y="23">wide end</text>
+        <text class="lbl f-warn" x="348" y="37">points at</text>
+        <text class="lbl f-warn" x="348" y="51">the talent</text>
+      </svg>
+      <div class="figcap"><b>Unmistakable shape.</b> A paddle is a flat directional arrowhead on a mic stand — you aim the <b>wide end</b> at the stage. A whip is a bare rod screwed straight into the receiver. If you see whips on a big room, that's your dropout problem.</div>
+    </div>
+  </div>
+
+  <div class="card L rf">
+    <h4>Antenna distro</h4>
+    <p>Capture with two paddles, then <b>distribute that signal to every receiver over coax</b>. Instead of eight receivers each fighting with their own whips, they all share two well-placed paddles.</p>
+  </div>
+
+  <div class="card L rf">
+    <h4>Frequency coordinator</h4>
+    <p>On big events there's often a <b>frequency coordinator</b> who assigns you frequencies based on the strongest open RF in the building — because every department is competing for the same spectrum.</p>
+    <p>When there isn't one, <b>you assign them yourself</b> using the receiver's scan function. Know both situations: on a large show, don't just scan and take whatever you find — ask whether someone is coordinating first. Taking a frequency that belongs to another department is a fast way to make enemies and kill someone else's mic.</p>
+  </div>
+
+  <h3>Setting frequencies — the sequence</h3>
+  <ol class="steps">
+    <li>Connect your antennas and power up the receiver. <b>Antennas first</b> — scanning without them gives you a garbage result.</li>
+    <li>Hit the scan function. Choose whether you're scanning the group or the channel.</li>
+    <li>When it finds an open frequency, push <b>Enter</b> to confirm and set it.</li>
+    <li>Sync the mic: push <b>Sync</b> on the receiver, hold the transmitter about <b>6 inches from the IR window</b>.</li>
+  </ol>
+
+  <h2>Audio Gear</h2>
+
+  <div class="card L audio">
+    <h4>Digital mixer</h4>
+    <p>Judged on: channel count, quality, EQ types (parametric and graphic), routing/AUX sends, digital vs. analog, phantom power, and application. Recallable scenes and a visual display are why pros prefer them.</p>
+  </div>
+  <div class="card L audio">
+    <h4>Analog mixer</h4>
+    <p>Looks harder, is actually simpler for beginners — every function has one knob. Experienced engineers dislike them for real reasons: size, limited EQ bands, limited routing, and no visual display.</p>
+  </div>
+  <div class="fig">
+    <svg viewBox="0 0 420 180" role="img" aria-label="Digital mixer with touchscreen versus analog mixer with knob rows">
+      <!-- digital -->
+      <g transform="translate(14,10)">
+        <rect class="sf" x="6" y="14" width="176" height="94" rx="7"/>
+        <rect class="sd" x="16" y="22" width="102" height="52" rx="4"/>
+        <path class="s c-data" d="M24 60 h12 v-22 M42 60 h12 v-32 M60 60 h12 v-14 M78 60 h12 v-26 M96 60 h12 v-18"/>
+        <g class="met"><rect x="128" y="24" width="12" height="10" rx="2"/><rect x="146" y="24" width="12" height="10" rx="2"/>
+          <rect x="164" y="24" width="12" height="10" rx="2"/><rect x="128" y="40" width="12" height="10" rx="2"/>
+          <rect x="146" y="40" width="12" height="10" rx="2"/><rect x="164" y="40" width="12" height="10" rx="2"/></g>
+        <g class="s"><path d="M22 82 v20 M38 82 v20 M54 82 v20 M70 82 v20 M86 82 v20 M102 82 v20 M118 82 v20 M134 82 v20 M150 82 v20 M166 82 v20"/></g>
+        <g class="met"><rect x="18" y="88" width="8" height="6" rx="1"/><rect x="34" y="92" width="8" height="6" rx="1"/>
+          <rect x="50" y="86" width="8" height="6" rx="1"/><rect x="66" y="94" width="8" height="6" rx="1"/>
+          <rect x="82" y="89" width="8" height="6" rx="1"/><rect x="98" y="91" width="8" height="6" rx="1"/>
+          <rect x="114" y="87" width="8" height="6" rx="1"/><rect x="130" y="93" width="8" height="6" rx="1"/>
+          <rect x="146" y="88" width="8" height="6" rx="1"/><rect x="162" y="90" width="8" height="6" rx="1"/></g>
+        <text class="cap" x="94" y="132" text-anchor="middle">DIGITAL</text>
+        <text class="lbl f-data" x="94" y="149" text-anchor="middle">big screen · few knobs</text>
+        <text class="lbl" x="94" y="164" text-anchor="middle">recallable scenes</text>
+      </g>
+      <!-- analog -->
+      <g transform="translate(224,10)">
+        <rect class="sf" x="6" y="14" width="176" height="94" rx="7"/>
+        <g class="met">
+          <circle cx="20" cy="26" r="5"/><circle cx="42" cy="26" r="5"/><circle cx="64" cy="26" r="5"/><circle cx="86" cy="26" r="5"/><circle cx="108" cy="26" r="5"/><circle cx="130" cy="26" r="5"/><circle cx="152" cy="26" r="5"/><circle cx="170" cy="26" r="5"/>
+          <circle cx="20" cy="42" r="5"/><circle cx="42" cy="42" r="5"/><circle cx="64" cy="42" r="5"/><circle cx="86" cy="42" r="5"/><circle cx="108" cy="42" r="5"/><circle cx="130" cy="42" r="5"/><circle cx="152" cy="42" r="5"/><circle cx="170" cy="42" r="5"/>
+          <circle cx="20" cy="58" r="5"/><circle cx="42" cy="58" r="5"/><circle cx="64" cy="58" r="5"/><circle cx="86" cy="58" r="5"/><circle cx="108" cy="58" r="5"/><circle cx="130" cy="58" r="5"/><circle cx="152" cy="58" r="5"/><circle cx="170" cy="58" r="5"/>
+          <circle cx="20" cy="74" r="5"/><circle cx="42" cy="74" r="5"/><circle cx="64" cy="74" r="5"/><circle cx="86" cy="74" r="5"/><circle cx="108" cy="74" r="5"/><circle cx="130" cy="74" r="5"/><circle cx="152" cy="74" r="5"/><circle cx="170" cy="74" r="5"/>
+        </g>
+        <g class="s"><path d="M20 86 v18 M42 86 v18 M64 86 v18 M86 86 v18 M108 86 v18 M130 86 v18 M152 86 v18 M170 86 v18"/></g>
+        <text class="cap" x="94" y="132" text-anchor="middle">ANALOG</text>
+        <text class="lbl f-warn" x="94" y="149" text-anchor="middle">knob grid · no screen</text>
+        <text class="lbl" x="94" y="164" text-anchor="middle">one knob = one function</text>
+      </g>
+    </svg>
+    <div class="figcap"><b>Call it from ten feet away:</b> a big screen and a sparse surface means digital. A dense grid of knobs with no display means analog. Analog looks harder but it's simpler — every function has exactly one physical control, and nothing is buried in a menu.</div>
+  </div>
+
+  <div class="card L audio">
+    <h4>DI box</h4>
+    <p>Takes <b>unbalanced, high-impedance</b> signal and converts it to <b>balanced, low-impedance mic level</b>. That's the whole job — it makes a signal safe to run long distances into a mixer.</p>
+  </div>
+  <div class="card L audio">
+    <h4>PC DI box</h4>
+    <p>Same purpose, built for laptops. Has a mini stereo (3.5mm) cable attached that converts to XLR. This is your presenter's MacBook getting into the console.</p>
+  </div>
+  <div class="card L audio">
+    <h4>Stage box</h4>
+    <p>Takes a group of signals and sends them down a <b>snake</b>, usually to front of house.</p>
+  </div>
+  <div class="card L data">
+    <h4>Rio <span class="pill p-data">Dante</span></h4>
+    <p>Same function as a stage box, but passes signal over <b>ethernet using Dante</b> instead of a copper snake.</p>
+  </div>
+  <div class="card L data">
+    <h4>Dante</h4>
+    <p><b>D</b>igital <b>A</b>udio <b>N</b>etwork <b>T</b>hrough <b>E</b>thernet. Creates a network where any compatible device can see and talk to any other. One CAT cable replaces a snake.</p>
+  </div>
+  <div class="card L power">
+    <h4>Speakers</h4>
+    <p>A good speaker is measured by its ability to accurately reproduce <b>20 Hz – 20 kHz</b> and to limit distortion at high volume. Powered speakers need IEC.</p>
+  </div>
+
+  <h2>Signal Flow &amp; Processing</h2>
+
+  <div class="chain">
+    <span class="node">Input Source</span><span class="arrow a-audio">→</span>
+    <span class="node">Input Gain</span><span class="arrow a-audio">→</span>
+    <span class="node">EQ</span><span class="arrow a-audio">→</span>
+    <span class="node">Channel Level</span><span class="arrow a-audio">→</span>
+    <span class="node">Mixer Output</span><span class="arrow a-audio">→</span>
+    <span class="node">FOH Speaker</span>
+  </div>
+
+  <div class="card L audio">
+    <h4>Channel strip</h4>
+    <p>A single vertical unit on the console combining the mic preamp, EQ, compressor, and sometimes a gate — everything you need to shape one channel.</p>
+  </div>
+
+  <div class="card L audio">
+    <h4>Gain structure</h4>
+    <p>The goal: <b>highest output level without feedback or noise.</b></p>
+    <p>The technique: <b>set your fader to unity first, then slowly bring gain (trim) up</b> until you're at the right volume. Doing it the other way — cranking the fader to chase a weak input — is how you end up with a noise floor you can't fix later.</p>
+
+    <div class="key">
+      <b>The full procedure, in order:</b>
+      <ol class="steps" style="margin:10px 0 0">
+        <li><b>Input gain and channel fader all the way down.</b> Start from nothing.</li>
+        <li>Bring the <b>master fader up to unity</b> (unity = zero on the mixer).</li>
+        <li>Slowly bring the <b>individual channel fader to unity</b> — while talking into the mic.</li>
+        <li>Once the channel is at unity, <b>adjust input gain</b> to reach the level you want.</li>
+      </ol>
+      <p style="margin:12px 0 0;font-size:13.5px">Faders get set to a known reference. <b>Gain</b> is the knob that does the actual work. If you're reaching for the fader to fix volume, you skipped a step.</p>
+    </div>
+    <p>You're living between the <b>noise floor</b> and <b>clipping</b>. That gap is your dynamic range; the space above nominal is your <b>headroom</b>.</p>
+
+    <div class="fig">
+      <svg viewBox="0 0 420 220" role="img" aria-label="Gain structure: noise floor, nominal level, headroom, and clipping">
+        <rect x="150" y="18" width="60" height="26" fill="#f85149" opacity=".85"/>
+        <rect x="150" y="44" width="60" height="120" fill="#3fb950" opacity=".75"/>
+        <rect x="150" y="164" width="60" height="26" fill="#5c6773" opacity=".6"/>
+        <rect class="s" x="150" y="18" width="60" height="172" style="fill:none"/>
+
+        <path class="s" style="stroke:#e6edf3" d="M144 44 h72"/>
+        <path class="s" style="stroke:#e6edf3" d="M144 100 h72"/>
+        <path class="s" style="stroke:#e6edf3" d="M144 164 h72"/>
+
+        <text class="lbl f-power" x="138" y="32" text-anchor="end">CLIPPING</text>
+        <text class="lbl" x="138" y="46" text-anchor="end">max level</text>
+        <text class="cap f-audio" x="138" y="98" text-anchor="end">NOMINAL</text>
+        <text class="lbl" x="138" y="112" text-anchor="end">where you live</text>
+        <text class="lbl" x="138" y="162" text-anchor="end">NOISE FLOOR</text>
+        <text class="lbl" x="138" y="176" text-anchor="end">hiss lives here</text>
+
+        <text class="tag f-warn" x="224" y="70">HEADROOM</text>
+        <path class="lead c-warn" d="M214 66 L220 66"/>
+        <text class="tag f-audio" x="224" y="130">DYNAMIC RANGE</text>
+
+        <path class="lead c-warn" d="M300 70 L336 70"/>
+        <text class="tag f-warn" x="340" y="60">LEAVE</text>
+        <text class="tag f-warn" x="340" y="76">THIS SPACE</text>
+        <text class="lbl" x="340" y="94">a full room</text>
+        <text class="lbl" x="340" y="108">eats it later</text>
+        <text class="lbl f-audio" x="210" y="212" text-anchor="middle">Fader to unity FIRST → then trim up slowly into the green.</text>
+      </svg>
+      <div class="figcap"><b>Why the order matters:</b> chasing a weak input with the fader lifts the noise floor along with the signal. Setting trim properly raises the signal <i>above</i> the hiss. Same apparent volume, completely different mix — and only one of them survives a full room.</div>
+    </div>
+  </div>
+
+  <div class="card L audio">
+    <h4>EQ</h4>
+    <p>Boosts some frequencies and cuts others. Two jobs: get the best sound from the source, and <b>eliminate the frequencies causing feedback</b>.</p>
+    <p><b>Corporate technique:</b> don't excessively cut unless you're killing feedback. The target is <i>natural</i> — a CEO should sound like himself, not like a rock show.</p>
+  </div>
+
+  <div class="key">
+    <b>More inputs doesn't mean new rules.</b> You can fill every channel your mixer has and the principles don't change: source → path → processing → destination. Scale changes, flow doesn't.
+  </div>
+</section>
+<section class="panel" id="p-mixer">
+  <h2>Allen &amp; Heath Qu-16</h2>
+  <p class="lede">A 16-channel digital mixer with an analogue-style surface. Everything is recallable — including preamp gain, which is why a scene recall genuinely resets the whole desk and not just the faders.</p>
+
+  <div class="key">
+    <b>The one sentence that makes this desk make sense:</b> select a thing, then adjust it. Green <b>Sel</b> keys select channels. Blue <b>Mix</b> keys select busses. Whatever is selected is what the SuperStrip knobs and the touchscreen are editing. Every menu lives at a specific point in the signal chain.
+  </div>
+
+  <h3>Numbers to know cold</h3>
+  <table class="tbl">
+    <tr><th>Spec</th><th>Qu-16</th><th>Why it matters</th></tr>
+    <tr><td>Mono channels</td><td>16</td><td>Hard ceiling. Channel 17 doesn't exist.</td></tr>
+    <tr><td>Stereo channels</td><td>3 (ST1, ST2, ST3)</td><td>ST1/ST2 balanced TRS. ST3 unbalanced 3.5mm.</td></tr>
+    <tr><td>Sources to mix</td><td>24</td><td>16 mono + 3 stereo (6) + FX returns.</td></tr>
+    <tr><td>Mix busses</td><td>12</td><td>LR, Mono Mix 1–4, Stereo Mix 5-6 / 7-8 / 9-10.</td></tr>
+    <tr><td>Mix outputs</td><td>12 balanced XLR</td><td>Every bus has a socket. No patching for basic use.</td></tr>
+    <tr><td>FX engines</td><td>4 — but only <b>2</b> send busses</td><td>Engines 3 &amp; 4 must be inserted or fed Mix&gt;Return.</td></tr>
+    <tr><td>DCA Groups</td><td>4</td><td>Your substitute for audio subgroups.</td></tr>
+    <tr><td>SoftKeys</td><td>4</td><td>Fewest of any Qu. Choose carefully.</td></tr>
+    <tr><td>Scenes</td><td>100</td><td>Plus Safes, Filters, Libraries, Show files.</td></tr>
+    <tr><td>Gain range</td><td>-5 to +60 dB, 1 dB steps</td><td>Recallable. A scene physically moves your preamp.</td></tr>
+    <tr><td>Latency</td><td>1.2 ms XLR in to XLR out</td><td>0.7 ms XLR to AES.</td></tr>
+  </table>
+
+  <div class="card L power">
+    <h4>What the Qu-16 does NOT have <span class="pill p-power">read this first</span></h4>
+    <p>Knowing the gaps is more useful than knowing the features, because it tells you when advice you read online won't work on your desk.</p>
+    <p><b>No audio Groups (subgroups).</b> Use a DCA for level/mute control — but a DCA <b>carries no audio</b>, so you cannot EQ or compress it. If you truly need a processed submix of mics: send them to Mix 4, patch Mix 4 out into a spare input channel, mix that to LR. Costs a bus, an input and a cable.</p>
+    <p><b>No Matrix.</b> Use a spare Mix as your zone/broadcast/overflow feed, or use Alt Out.</p>
+    <p><b>Only 2 FX send busses.</b> Engines 3 and 4 have to be inserted or fed via Mix&gt;Return.</p>
+    <p><b>Only 4 SoftKeys.</b> Mute Group masters and Qu-Drive transport are worth more than Tap Tempo in a corporate room.</p>
+    <p><b>ST3 is unbalanced.</b> 3.5mm, 0 dBu nominal. On a long run or with a charging laptop it <b>will</b> hum. Use a DI, or take laptop audio into ST1/ST2 on balanced TRS.</p>
+  </div>
+
+  <h2>Signal Flow — the map of the whole desk</h2>
+  <p class="lede">Memorise this and every screen on the Qu-16 becomes an editor for one box in it. When something sounds wrong, walk the chain left to right and find the box doing it.</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 250" role="img" aria-label="Qu-16 input channel and mix master signal chains">
+      <text class="tag f-video" x="10" y="14">INPUT CHANNEL (CH1–16, ST1–3)</text>
+      <g>
+        <rect class="sf" x="10" y="22" width="60" height="26" rx="4"/><text class="lbl" x="40" y="39" text-anchor="middle">SOURCE</text>
+        <rect class="sf" x="76" y="22" width="64" height="26" rx="4"/><text class="lbl" x="108" y="34" text-anchor="middle">PREAMP</text><text class="lbl" x="108" y="44" text-anchor="middle" style="font-size:7.5px">pad·48V·gain</text>
+        <rect class="sf" x="146" y="22" width="48" height="26" rx="4"/><text class="lbl" x="170" y="39" text-anchor="middle">TRIM</text>
+        <rect class="sf" x="200" y="22" width="44" height="26" rx="4"/><text class="lbl" x="222" y="39" text-anchor="middle">HPF</text>
+        <rect class="sf" x="250" y="22" width="44" height="26" rx="4"/><text class="lbl" x="272" y="39" text-anchor="middle">GATE</text>
+        <rect class="sf" x="300" y="22" width="52" height="26" rx="4"/><text class="lbl" x="326" y="39" text-anchor="middle">INSERT</text>
+        <rect class="sf" x="358" y="22" width="52" height="26" rx="4"/><text class="lbl" x="384" y="39" text-anchor="middle">PEQ</text>
+      </g>
+      <path class="s c-audio" d="M410 48 v8 h-400 v8"/>
+      <g>
+        <rect class="sf" x="10" y="64" width="52" height="26" rx="4"/><text class="lbl" x="36" y="81" text-anchor="middle">COMP</text>
+        <rect class="sf" x="68" y="64" width="58" height="26" rx="4"/><text class="lbl" x="97" y="81" text-anchor="middle" style="font-size:9.5px">DELAY 85ms</text>
+        <rect class="sf" x="132" y="64" width="44" height="26" rx="4"/><text class="lbl" x="154" y="81" text-anchor="middle">MUTE</text>
+        <rect class="sf" x="182" y="64" width="46" height="26" rx="4"/><text class="lbl" x="205" y="81" text-anchor="middle">FADER</text>
+        <rect class="sf" x="234" y="64" width="40" height="26" rx="4"/><text class="lbl" x="254" y="81" text-anchor="middle">PAN</text>
+        <rect class="sf" x="280" y="64" width="130" height="26" rx="4" style="stroke:#bc8cff"/><text class="lbl f-sdi" x="345" y="81" text-anchor="middle">ASSIGN → LR / Mix</text>
+      </g>
+      <!-- taps -->
+      <path class="lead c-warn" d="M326 48 v18 M326 66 h-6"/>
+      <text class="lbl f-warn" x="10" y="112" style="font-size:10px">INSERT SEND = after Gate, before PEQ — what multitrack records</text>
+      <text class="lbl f-audio" x="10" y="128" style="font-size:10px">DIRECT OUT = global tap: post-Preamp / pre-EQ / post-EQ / post-Delay</text>
+
+      <path class="s" style="stroke:#2b3440" d="M10 142 h400"/>
+      <text class="tag f-sdi" x="10" y="164">MIX MASTER (Mix 1–10 and LR)</text>
+      <g>
+        <rect class="sf" x="10" y="172" width="48" height="26" rx="4"/><text class="lbl" x="34" y="189" text-anchor="middle">TRIM</text>
+        <rect class="sf" x="64" y="172" width="52" height="26" rx="4"/><text class="lbl" x="90" y="189" text-anchor="middle">INSERT</text>
+        <rect class="sf" x="122" y="172" width="46" height="26" rx="4"/><text class="lbl" x="145" y="189" text-anchor="middle">PEQ</text>
+        <rect class="sf" x="174" y="172" width="74" height="26" rx="4" style="stroke:#3fb950"/><text class="lbl f-audio" x="211" y="189" text-anchor="middle">GEQ 28-band</text>
+        <rect class="sf" x="254" y="172" width="46" height="26" rx="4"/><text class="lbl" x="277" y="189" text-anchor="middle">COMP</text>
+        <rect class="sf" x="306" y="172" width="52" height="26" rx="4"/><text class="lbl" x="332" y="189" text-anchor="middle">DELAY</text>
+        <rect class="sf" x="364" y="172" width="46" height="26" rx="4"/><text class="lbl" x="387" y="189" text-anchor="middle">OUT</text>
+      </g>
+      <path class="lead c-audio" d="M211 198 v12"/>
+      <text class="lbl f-audio" x="211" y="222" text-anchor="middle" style="font-size:10px">outputs get a GEQ — that's what Fader Flip throws at you</text>
+      <text class="lbl f-warn" x="211" y="240" text-anchor="middle" style="font-size:10px">The RTA always follows the PAFL source.</text>
+    </svg>
+    <div class="figcap"><b>Mental model:</b> a patchbay with a computer bolted to it. A "channel" is just a processing strip with a source on the front and bus assignments on the back. Change either end and the strip does something completely different.</div>
+  </div>
+
+  <h2>Gain Structure on a Qu</h2>
+  <div class="card L audio">
+    <h4>What the meter is actually telling you</h4>
+    <p><b>0 dB on the meter = -18 dBFS = +4 dBu at the XLR out.</b> When the meter reads 0, you still have <b>18 dB of headroom</b>. Zero is not the limit — it's the target.</p>
+    <p><b>Pk LED</b> lights at -3 dBFS. <b>Signal LED</b> (the lowest one) lights at -48 dBFS — if that isn't lighting, you have no signal, so check the patch before you touch gain.</p>
+  </div>
+
+  <ol class="steps">
+    <li><b>Kill the output first.</b> LR and mix masters down, or amps down. You're about to make loud mistakes on purpose.</li>
+    <li><b>PAFL the channel.</b> Now you're metering that channel, not the mix.</li>
+    <li><b>Set pad and phantom BEFORE gain.</b> 48V on for condensers and active DIs; off for dynamics and most wireless receivers. -20 dB pad for anything hot. Do this first and you only set gain once.</li>
+    <li><b>Make the source do its loudest realistic thing.</b> A paragraph at real volume and real distance — not a polite "check one two." Everyone gets louder with an audience.</li>
+    <li><b>Gain up until the meter averages 0 and peaks +6 to +9.</b> For speech in a live room, err low — averaging -6 to 0 is safer, because you're fighting feedback, not noise.</li>
+    <li><b>Set the HPF now, not later.</b> It cleans the meters and buys back headroom immediately.</li>
+    <li><b>Drop PAFL, fader to unity, build the mix.</b> If a fader ends up at -25 or +10, your gain is wrong — go back to step 5.</li>
+  </ol>
+
+  <div class="key">
+    <b>The rule:</b> gain sets <i>how much signal exists.</i> Faders set <i>how much of it you want.</i> If you're riding gain during a show, you've confused the two.
+  </div>
+
+  <h3>Gain starting points</h3>
+  <table class="tbl">
+    <tr><th>Source</th><th>Typical gain</th><th>HPF</th></tr>
+    <tr><td>Wireless handheld receiver (line)</td><td>+10 to +20 dB</td><td>100 Hz</td></tr>
+    <tr><td>Lectern condenser</td><td>+25 to +40 dB</td><td>100 Hz</td></tr>
+    <tr><td>Lavalier</td><td>+30 to +45 dB</td><td>120 Hz</td></tr>
+    <tr><td>Table / boundary mic</td><td>—</td><td>150 Hz</td></tr>
+    <tr><td>Laptop / program</td><td>Trim ±24 dB</td><td>off</td></tr>
+  </table>
+
+  <h2>Processing</h2>
+  <div class="card L audio">
+    <h4>HPF — the highest-value control on the desk, and it's free</h4>
+    <p>12 dB/octave, sweepable 20 Hz to 2 kHz. Roll off what the source doesn't produce. Male speech 80–100 Hz · female speech 100–120 Hz · lav 100–150 Hz · headset 120 Hz · boundary 120–150 Hz · music playback off or 30 Hz.</p>
+    <p><b>Technique:</b> raise it until the mic sounds thin, then back off one step.</p>
+  </div>
+  <div class="card L audio">
+    <h4>Gate</h4>
+    <p><b>Depth is the important control on a speech mic, not threshold.</b> Set depth to only <b>6–12 dB</b>. A gate that slams fully shut on a talking human sounds broken and chops word tails.</p>
+    <p>Fast attack (a few ms), hold 100–250 ms, release 200–400 ms. In a room with 6+ open mics, <b>use the AMM instead</b> — gates on speech are a blunt tool.</p>
+  </div>
+  <div class="card L audio">
+    <h4>PEQ — speech starting points</h4>
+    <p>4 bands, 20 Hz–20 kHz, ±15 dB. Bands 1 and 4 can be shelving.</p>
+    <p><b>Cut 200–350 Hz</b>, 3–6 dB wide — kills drywall boxiness. Almost always an improvement in a breakout room.<br>
+    <b>Cut 400–800 Hz</b>, 2–4 dB narrow — honky/nasal.<br>
+    <b>Boost 2–4 kHz</b>, 2–4 dB — intelligibility. Careful, feedback lives here too.<br>
+    <b>Cut 5–8 kHz</b>, 2–4 dB narrow — harsh sibilance.<br>
+    <b>Shelf cut above 10 kHz</b>, 2 dB — HVAC hiss and wireless hash.</p>
+    <p><b>Finding a problem frequency:</b> take one band, set it narrow (1/9 octave), boost hard (+12 dB), and sweep. The ugly spot jumps out. Then invert to a cut and widen slightly. <b>Cut to fix, boost to flatter</b> — and cutting keeps your headroom.</p>
+  </div>
+  <div class="card L audio">
+    <h4>Compressor — four types</h4>
+    <p><b>RMS Manual</b> — reacts to average energy, closer to how ears hear. <b>Your meeting-room default.</b><br>
+    <b>SlowOpto</b> — gentle, forgiving, very transparent. Presenter mics you want untouched.<br>
+    <b>Peak Manual</b> — tight and surgical. Transients, limiting, drums.<br>
+    <b>PunchBag</b> — aggressive and coloured. Never on a corporate panel.</p>
+    <p><b>Speech starting point:</b> RMS or SlowOpto, ratio 2.5:1–3:1, soft knee, attack 10–20 ms, release 200–400 ms, threshold set for <b>3–6 dB gain reduction on loud words and none on quiet ones.</b> Pumping means lengthen the release.</p>
+  </div>
+  <div class="card L audio">
+    <h4>GEQ — output channels only</h4>
+    <p>28 bands, constant 1/3 octave, 31 Hz–16 kHz, ±12 dB. Select the mix, press <b>GEQ Fader Flip</b>, and all 28 bands land on the physical faders with the RTA above them. This is how you ring out a room, and it's dramatically faster than the touchscreen.</p>
+    <p><b>Press it again to get your channel faders back before you forget.</b></p>
+  </div>
+  <div class="card L data">
+    <h4>Libraries — stop building from scratch</h4>
+    <p>Press <b>Fn</b> on any Processing block to open its Library. A <b>Channel Library</b> recalls the entire strip — gate, PEQ, comp, delay — in one shot. Turn on <b>Recall Preamp</b> if you want gain, pad, 48V and polarity to come with it.</p>
+    <p><b>Build a "SPEECH" channel library once and your room setup drops from twenty minutes to two.</b> Note: libraries do <b>not</b> include channel linking or ducker settings.</p>
+  </div>
+
+  <h3>Copy / Paste / Reset — learn this or waste hours</h3>
+  <p class="lede">All three work the same way: hold the key down, then press or touch a target. The target decides how much gets copied.</p>
+  <table class="tbl">
+    <tr><th>Hold + target</th><th>Scope</th></tr>
+    <tr><td>+ front panel Sel key</td><td>All processing for that channel — <b>but not the preamp</b></td></tr>
+    <tr><td>+ SuperStrip In key</td><td>Just that one block (e.g. just the PEQ)</td></tr>
+    <tr><td>+ SuperStrip USB key</td><td>The preamp (gain, pad, 48V, polarity)</td></tr>
+    <tr><td>+ channel Mix button</td><td>That channel's send levels, pan and assignments</td></tr>
+  </table>
+  <div class="key">
+    <b>Worked example:</b> copy CH2's PEQ to CH3, CH4 and CH5 — hold <b>Copy</b>, touch the PEQ block on CH2's Processing screen. Then hold <b>Paste</b> and press Sel on CH3, CH4, CH5 <i>all while still holding Paste.</i> Four channels EQ'd in about six seconds.<br><br>
+    Copy/Paste/Reset <b>never</b> touch channel linking or ducker settings. Those you set by hand.
+  </div>
+
+  <h2>Mixes and Routing</h2>
+  <div class="key" style="border-color:rgba(248,81,73,.4);background:rgba(248,81,73,.08)">
+    <b style="color:var(--power)">THE CLASSIC QU MISTAKE — commit this to memory:</b><br>
+    Press a blue <b>Mix</b> key and the faders <b>stop being channel levels.</b> They become <b>sends to that mix.</b> When you're done, press the Mix key off or select LR. Forgetting this and then "fixing the mix" on the faders is why the room went quiet.
+  </div>
+
+  <h3>The 12 busses and what they're for</h3>
+  <table class="tbl">
+    <tr><th>Bus</th><th>Type</th><th>Typical breakout use</th></tr>
+    <tr><td>LR</td><td>Stereo main</td><td>The room PA</td></tr>
+    <tr><td>Mix 1</td><td>Mono</td><td>Video-call send (mix-minus)</td></tr>
+    <tr><td>Mix 2</td><td>Mono</td><td>Presenter foldback / IEM</td></tr>
+    <tr><td>Mix 3</td><td>Mono</td><td>Assistive listening / hearing loop</td></tr>
+    <tr><td>Mix 4</td><td>Mono</td><td>Lobby, overflow, second zone</td></tr>
+    <tr><td>Mix 5-6</td><td>Stereo</td><td>Record feed or stereo zone</td></tr>
+    <tr><td>Mix 7-8</td><td>Stereo</td><td>Camera / streaming encoder</td></tr>
+    <tr><td>Mix 9-10</td><td>Stereo</td><td><b>Spare. Keep one bus spare, always.</b></td></tr>
+    <tr><td>Alt Out</td><td>Patchable TRS</td><td>Best spare output — has its own rotary</td></tr>
+    <tr><td>2TRK Out</td><td>Fixed LR post-fade</td><td>Pull the LR fader and the recording dies too</td></tr>
+  </table>
+
+  <h3>Assign and pre/post fade</h3>
+  <ol class="steps">
+    <li>Press the blue <b>Mix</b> key. The master strip becomes that mix's master.</li>
+    <li>Hold <b>Assign</b>, press the Sel keys you want in this mix. <b>Master strip Sel toggles all at once</b> — useful for starting from all-off.</li>
+    <li>Hold <b>PreFade</b> and press Sel keys. <b>Key lit = pre-fade.</b></li>
+    <li>Set the send tap point on the mix master Routing screen. Post-EQ (default) means the channel compressor doesn't affect the send.</li>
+    <li>Ride the sends on the faders — then <b>get back to LR.</b></li>
+  </ol>
+  <p class="lede"><b>Pre-fade</b> when it's a monitor or video-call send you want independent of the room mix. <b>Post-fade</b> when it's an FX send or an overflow feed that should follow the room.</p>
+
+  <div class="card L sdi">
+    <h4>DCA vs. Mute Group</h4>
+    <p><b>DCA (4)</b> — remote-controls the faders of assigned channels, and has its own mute. <b>Carries no audio</b>: no EQ, no compressor, no output socket.</p>
+    <p><b>Mute Group (4)</b> — mutes all assigned channels at once. Best use of your four SoftKeys.</p>
+    <p>Both live at <b>Routing &gt; Fn &gt; Mute/DCA</b>. In a breakout room: one DCA for all speech mics, one for program. Now you run the room with two faders.</p>
+  </div>
+
+  <h2>The AMM — the feature that makes a meeting room work</h2>
+  <p class="lede">Six open mics is roughly <b>8 dB worse</b> for feedback and room noise than one mic. The Automatic Mic Mixer claws that back by gain-sharing across CH1–16: whoever is talking gets the gain, everyone else gets pulled down, and total open-mic gain stays roughly constant.</p>
+
+  <ol class="steps">
+    <li><b>Mix master fader DOWN.</b> Non-negotiable — the AMM moves faders when you enable it.</li>
+    <li><b>Gain and gain-match every mic first</b> on PAFL. Consistency between mics matters more than absolute level — the algorithm is comparing them.</li>
+    <li><b>Setup &gt; Audio &gt; AMM</b>, turn on the speech channels. Faders jump to the "0" open position. Expect it, don't fight it.</li>
+    <li><b>Speech mics ONLY.</b> In: lectern, handhelds, lavs, boundary. Out: program audio, laptop, walk-in music, video-call return, anything musical. Put program in the AMM and it will duck your presenters every time a video plays.</li>
+    <li><b>Bring the master up slowly.</b> Listen for the ring. Stop below it.</li>
+    <li><b>Use a DCA as the master fader for the mics.</b></li>
+  </ol>
+
+  <div class="key" style="border-color:rgba(248,81,73,.4);background:rgba(248,81,73,.08)">
+    <b style="color:var(--power)">DO NOT ride individual AMM faders during the meeting.</b> You're fighting the algorithm and you will lose. Ride the DCA. If one person is genuinely too quiet, fix it with <b>gain or Trim</b> — not the fader.
+  </div>
+
+  <div class="card L audio">
+    <h4>Ducker</h4>
+    <p>Inserted into input channels; any Qu signal can be the trigger, taken from that channel's <b>Direct Out</b>. Classic breakout use: the lectern mic ducks the walk-in music. Presenter starts talking, music drops 15 dB by itself, no operator required.</p>
+    <p><b>Ducker settings are not saved in Channel Libraries and are not copied by Copy/Paste.</b> Set them by hand and write them down.</p>
+  </div>
+
+  <h2>Scenes, Safes and Shows</h2>
+  <div class="card L data">
+    <h4>The distinction that saves you</h4>
+    <p><b>Scene Safe</b> — protects <b>all</b> parameters of <b>one</b> channel or mix from <b>any</b> scene recall. Use on walk-in music and the presenter's own mic.</p>
+    <p><b>Global Filter</b> — blocks <b>selected parameter groups</b> across <b>all</b> channels for <b>every</b> recall. Classic use: block LR mix processing including GEQ, so your room tuning survives scene changes as the audience fills the room.</p>
+    <p><b>Show file</b> — everything: current settings, all 100 scenes, all libraries, all setup. <b>Only ever stored on a USB drive, never inside the mixer.</b> If you didn't make one, you don't have one.</p>
+  </div>
+
+  <div class="key" style="border-color:rgba(248,81,73,.4);background:rgba(248,81,73,.08)">
+    <b style="color:var(--power)">CRITICAL:</b> <b>Reset Mix Settings ignores the Global Filter and ignores channel Safes</b> — and it also resets the filter and clears every safe you had set. It is a real reset. Store a Scene first if you want to keep what's on the desk.
+  </div>
+
+  <h3>The scene workflow that saves your job</h3>
+  <ul class="chk">
+    <li><b>Scene 1 "RESET BOARD"</b> — your own zero: your patching, HPFs, comp defaults, DCA assignments, Custom Layer. Now "zero" means <i>your</i> zero.</li>
+    <li><b>Scene 2 "ROOM CHECK"</b> — after you gain and EQ the room. Your recovery point.</li>
+    <li><b>Scene 3+</b> — per segment: walk-in, panel, presentation, video call, Q&amp;A, walk-out.</li>
+    <li><b>Show file to USB at the end of every day.</b> A $8 USB stick is the difference between a five-minute recovery and a ruined event.</li>
+  </ul>
+
+  <div class="card L power">
+    <h4>The two resets</h4>
+    <p><b>Reset Mix Settings</b> — Scenes screen, hold 1–2 seconds, confirm. Clears everything storable in a scene. <b>Survives:</b> stored scenes, libraries, system preferences. <b>Use routinely</b> — before a show, after another operator has had the desk.</p>
+    <p><b>System Hard Reset</b> — hold touchscreen <b>Reset + Setup</b> together while powering up, at least 5 seconds through boot. Wipes <b>everything</b>: all scenes, all libraries, all permissions, all passwords. <b>Almost never.</b> This is not a troubleshooting step.</p>
+  </div>
+
+  <h2>Power Order</h2>
+  <div class="key" style="border-color:rgba(248,81,73,.4);background:rgba(248,81,73,.08)">
+    <b style="color:var(--power)">Mixer ON FIRST, amps and powered speakers ON LAST.</b><br>
+    <b style="color:var(--power)">Powering down: amps OFF FIRST, mixer off last.</b><br><br>
+    And always use <b>Home &gt; Shut Down</b> on the screen before the rear switch, so parameter storing and any USB transfer completes cleanly. Get this wrong and you get a thump that costs you a driver and your reputation in the room.
+  </div>
+
+  <h2>Troubleshooting — symptom to cause</h2>
+  <table class="tbl">
+    <tr><th>Symptom</th><th>Check in this order</th></tr>
+    <tr><td>No sound anywhere</td><td>Amps on? → LR fader up and unmuted? → <b>Is a Mix key still lit?</b> → Channel assigned to LR? → Mute Group or DCA muting it? → Source = Local?</td></tr>
+    <tr><td>One channel dead</td><td>PAFL it — signal at the channel? Yes = routing problem, no = input problem → Source page → 48V on for a condenser? → Both XLR and TRS in the same channel? → Gate depth too deep?</td></tr>
+    <tr><td>Quiet and noisy</td><td>Gain too low, fader pushed up to compensate. Re-gain properly.</td></tr>
+    <tr><td>Distortion</td><td>Pk LED lighting? Gain too high or needs the pad. PAFL tells you if it's before the fader.</td></tr>
+    <tr><td>Feedback / ringing</td><td>Fewer open mics (AMM) → HPF up → ring out with RTA+GEQ, <b>3–5 bands max</b> → check nobody boosted 2–4 kHz</td></tr>
+    <tr><td>Hum or buzz</td><td><b>Is it on ST3?</b> Suspect it first — it's unbalanced. → Laptop on a charger is the single most common cause → ground loops with the video system</td></tr>
+    <tr><td>Faders moved themselves</td><td>Normal. Scene recall, Mix key press, or GEQ Fader Flip all move motorised faders.</td></tr>
+    <tr><td>Fine in phones, wrong in room</td><td>You're listening to PAFL. Drop it.</td></tr>
+    <tr><td>Settings changing mid-show</td><td>Scene recalls overwriting you. Set Safes, or block those groups in the Global Filter.</td></tr>
+    <tr><td>Qu-Pad won't connect</td><td><b>App version must equal firmware version</b> → DHCP enabled? → Cat5 in the <b>Network</b> port, not dSNAKE? → router had time to broadcast?</td></tr>
+    <tr><td>Loud thump on power</td><td>Wrong power sequence. Mixer on first, off last. Amps on last, off first.</td></tr>
+  </table>
+</section>
+
+<section class="panel" id="p-sim">
+  <h2>Gain Structure Simulator</h2>
+  <p class="lede">Set the preamp gain and the channel fader. The desk reacts the way a real one would — including running out of fader when your gain is wrong.</p>
+
+  <div class="sim" id="simGain">
+    <div class="simrow">
+      <div class="simmeters">
+        <div class="mtr">
+          <div class="mtrbar">
+            <div class="mzone mclip"></div>
+            <div class="mzone mgood"></div>
+            <div class="mzone mnoise"></div>
+            <div class="mfill" id="gsChanFill"></div>
+            <div class="mtick" style="bottom:60.4%"><span>0</span></div>
+            <div class="mtick" style="bottom:71.2%"><span>+6</span></div>
+          </div>
+          <div class="mlbl">CHANNEL<br><span id="gsChanVal">0</span> dB</div>
+          <div class="pkled" id="gsPk">Pk</div>
+        </div>
+        <div class="mtr">
+          <div class="mtrbar">
+            <div class="mzone mclip"></div>
+            <div class="mzone mgood"></div>
+            <div class="mzone mnoise"></div>
+            <div class="mfill room" id="gsRoomFill"></div>
+            <div class="mtick" style="bottom:60.4%"><span>0</span></div>
+          </div>
+          <div class="mlbl">ROOM<br><span id="gsRoomVal">0</span> dB</div>
+        </div>
+      </div>
+
+      <div class="simctl">
+        <label class="slab">PREAMP GAIN <b id="gsGainV">+40 dB</b></label>
+        <input type="range" id="gsGain" min="-5" max="60" value="40" step="1">
+        <div class="srange"><span>-5</span><span>+60</span></div>
+
+        <label class="slab" style="margin-top:16px">CHANNEL FADER <b id="gsFadV">0 (unity)</b></label>
+        <input type="range" id="gsFad" min="-40" max="10" value="0" step="1">
+        <div class="srange"><span>-40</span><span>unity</span><span>+10</span></div>
+
+        <div class="row" style="margin:16px 0 0">
+          <button class="btn" id="gsQuiet">Soft talker</button>
+          <button class="btn" id="gsNorm">Normal</button>
+          <button class="btn" id="gsLoud">Room fills up</button>
+        </div>
+        <div class="srcnote" id="gsSrc">Source: presenter at normal volume, empty room</div>
+      </div>
+    </div>
+
+    <div class="verdict" id="gsVerdict"></div>
+    <div class="row" style="margin:14px 0 0">
+      <button class="btn pri" id="gsAuto">Show me the right answer</button>
+      <button class="btn" id="gsReset">Reset</button>
+    </div>
+  </div>
+
+  <div class="key">
+    <b>What this is teaching:</b> the fader's job is to sit at unity. If getting the room to the right volume forces the fader far from 0, your gain is wrong — that's the whole diagnostic. Try setting gain to +20 and then getting the room loud enough; watch the fader run out of travel.
+  </div>
+</section>
+
+<section class="panel" id="p-ops">
+  <h2>The 90-Second Card</h2>
+  <p class="lede">If you read nothing else on this tab, read this.</p>
+  <ol class="steps">
+    <li>Mixer ON. Amps and powered speakers ON <b>last</b>.</li>
+    <li>Recall Scene 1 "RESET BOARD", or hold <b>Reset Mix Settings</b> 2 seconds and confirm.</li>
+    <li>Confirm every channel <b>Source = Local</b>.</li>
+    <li><b>Name every channel</b> you're using. Six characters.</li>
+    <li>Gain each mic with PAFL: average 0 dB, peaks +6. Set HPF 100 Hz.</li>
+    <li>Turn on the <b>AMM</b> for speech mics. <b>Master fader DOWN first.</b></li>
+    <li>Build <b>DCA 1 = all mics, DCA 2 = all program.</b></li>
+    <li>Bring LR up slowly. Ring out with GEQ Fader Flip + RTA. <b>Max 3–5 cuts.</b></li>
+    <li>Video call? Build the mix-minus on Mix 1. <b>Do not skip the de-assign step.</b></li>
+    <li>Store a Scene. Then Lock Surface.</li>
+    <li>End of day: Show file to USB → <b>Home &gt; Shut Down</b> → rear switch. Amps OFF first.</li>
+  </ol>
+
+  <div class="key" style="border-color:rgba(248,81,73,.4);background:rgba(248,81,73,.08)">
+    <b style="color:var(--power)">THE THREE MISTAKES</b><br>
+    <b>1.</b> Leaving a blue Mix key lit and then "fixing the mix" on the faders — you're editing sends, not the room.<br>
+    <b>2.</b> Forgetting to de-assign the far-end return from the video-call send, which sends the remote participants their own voice back.<br>
+    <b>3.</b> Powering the amps before the mixer, or hitting the rear switch without Home &gt; Shut Down.
+  </div>
+
+  <h2>Walk the Room First</h2>
+  <p class="lede">Five minutes that saves an hour.</p>
+  <ul class="chk">
+    <li><b>Where are the speakers relative to where the mics will be?</b> Any mic in front of a speaker is a feedback machine. Move one of them — EQ will not save you.</li>
+    <li><b>How many open mics does the client actually need?</b> Every mic you talk them out of is 1–2 dB of gain before feedback, free.</li>
+    <li><b>Is there a video-conference system?</b> Codec box, room PC, or someone's laptop — this decides your entire video-call build.</li>
+    <li><b>What's the ceiling like?</b> Hard drywall and glass mean you'll be cutting 200–350 Hz and fighting reflections.</li>
+    <li><b>Where's the HVAC and is it on?</b> Rooms sound completely different once air handling kicks in and 40 bodies are seated.</li>
+    <li><b>Where will the presenter actually stand?</b> Not where the client says — where the lectern and screen are.</li>
+    <li><b>Assistive listening requirement?</b> That's a Mix bus you need to budget for.</li>
+    <li><b>Firmware version on the Home screen</b>, and does your iPad app match it?</li>
+  </ul>
+
+  <h2>Room Profiles</h2>
+  <div class="card L video">
+    <h4>Profile A — Simple room: 2 mics + a laptop</h4>
+    <p>CH1 <b>HH1</b>, CH2 <b>HH2</b> (wireless handhelds, HPF 100 Hz) · ST1 <b>LAPTOP</b> via DI · ST3 <b>BGM</b> walk-in music · LR out to powered speakers.</p>
+    <p>DCA 1 = mics, DCA 2 = program. <b>Two faders run the room.</b> SoftKey 1 = Mute Group 1 (all mics). Setup time once you've done it twice: about eight minutes.</p>
+  </div>
+
+  <div class="card L video">
+    <h4>Profile B — Standard corporate breakout: panel + lectern + playback</h4>
+    <table class="tbl" style="margin:8px 0 0">
+      <tr><th>Ch</th><th>Name</th><th>Source</th><th>HPF</th><th>AMM</th></tr>
+      <tr><td>1</td><td>LECT</td><td>Lectern gooseneck (condenser, <b>48V ON</b>)</td><td>100</td><td>Yes</td></tr>
+      <tr><td>2–3</td><td>HH1/HH2</td><td>Wireless handheld — roving / Q&amp;A</td><td>100</td><td>Yes</td></tr>
+      <tr><td>4–7</td><td>LAV1–4</td><td>Lav / bodypack — moderator + panel</td><td>120</td><td>Yes</td></tr>
+      <tr><td>8</td><td>TABL1</td><td>Table / boundary mic</td><td>150</td><td>Yes</td></tr>
+      <tr><td>9–12</td><td>—</td><td><b>Spare.</b> Somebody will add a mic 5 min out.</td><td>—</td><td>No</td></tr>
+      <tr><td>13</td><td>VCIN</td><td>Video-call far-end audio</td><td>80</td><td><b>NO</b></td></tr>
+      <tr><td>ST1</td><td>PGM</td><td>Program from switcher / room PC</td><td>off</td><td>No</td></tr>
+      <tr><td>ST2</td><td>LAPTP</td><td>Presenter laptop via DI</td><td>off</td><td>No</td></tr>
+      <tr><td>ST3</td><td>BGM</td><td>Walk-in music / Qu-Drive playback</td><td>off</td><td>No</td></tr>
+    </table>
+    <p style="margin-top:12px"><b>Outputs:</b> LR = HOUSE · Mix 1 = VCOUT (video call, PRE) · Mix 2 = FOLDB (foldback, PRE) · Mix 3 = ASSIS (assistive listening, PRE) · Mix 4 = OVRFL (overflow, POST) · Mix 5-6 = CAM (POST) · Mix 7-8 &amp; 9-10 spare.</p>
+    <p><b>The lectern is usually your loudest and most-fed-back channel.</b> Roving handhelds live <b>muted</b> between questions — every open mic is gain you're giving away.</p>
+  </div>
+
+  <h2>Mix-Minus for a Video Call</h2>
+  <div class="key" style="border-color:rgba(248,81,73,.4);background:rgba(248,81,73,.08)">
+    <b style="color:var(--power)">Why this exists:</b> if you send the far end a mix containing <b>their own audio</b>, they hear themselves back with the round-trip delay. That's the echo everybody blames on "the room being bad." <b>The Qu-16 has no acoustic echo cancellation — a correct mix-minus IS your echo control.</b>
+  </div>
+
+  <p class="lede"><b>The concept in one line:</b> send the far end everything in the room EXCEPT the far end. "Minus" means minus themselves.</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 272" role="img" aria-label="Mix-minus routing: far end into LR only, room mics to Mix 1, far end de-assigned from Mix 1">
+      <!-- room box -->
+      <rect class="sd" x="12" y="30" width="180" height="174" rx="10" style="stroke:#3fb950"/>
+      <text class="tag f-audio" x="102" y="50" text-anchor="middle">THE ROOM</text>
+      <rect class="sf" x="30" y="62" width="66" height="22" rx="4"/><text class="lbl" x="63" y="77" text-anchor="middle">MICS 1–8</text>
+      <rect class="sf" x="30" y="90" width="66" height="22" rx="4"/><text class="lbl" x="63" y="105" text-anchor="middle">PROGRAM</text>
+      <rect class="sf" x="30" y="170" width="66" height="24" rx="4" style="stroke:#58a6ff"/><text class="lbl f-video" x="63" y="186" text-anchor="middle">SPEAKERS</text>
+
+      <!-- mix1 -->
+      <rect class="sf" x="118" y="62" width="60" height="50" rx="5" style="stroke:#bc8cff"/>
+      <text class="lbl f-sdi" x="148" y="82" text-anchor="middle">MIX 1</text>
+      <text class="lbl f-sdi" x="148" y="96" text-anchor="middle">VCOUT</text>
+      <path class="s c-audio" d="M96 73 h20 M96 101 h8 v-24 h12"/>
+
+      <!-- far end -->
+      <rect class="sd" x="240" y="60" width="168" height="130" rx="10" style="stroke:#f0883e"/>
+      <text class="tag f-rf" x="324" y="82" text-anchor="middle">FAR END</text>
+      <rect class="sf" x="266" y="96" width="116" height="26" rx="4"/><text class="lbl" x="324" y="113" text-anchor="middle" style="font-size:10px">remote participants</text>
+
+      <!-- room -> far -->
+      <path class="s c-sdi" style="stroke-width:2.5" d="M178 80 h56"/>
+      <path class="f-sdi" d="M238 80 l-9 -5 v10 z"/>
+      <text class="lbl f-sdi" x="206" y="72" text-anchor="middle">send</text>
+
+      <!-- far -> room CH13 -->
+      <path class="s c-rf" style="stroke-width:2.5" d="M270 150 h-96 v-4"/>
+      <rect class="sf" x="114" y="128" width="68" height="24" rx="4" style="stroke:#f0883e"/>
+      <text class="lbl f-rf" x="148" y="144" text-anchor="middle" style="font-size:10px">CH13 VCIN</text>
+      <path class="s c-rf" d="M148 152 v18 h-52"/>
+      <path class="f-rf" d="M96 170 l9 -5 v10 z"/>
+
+      <!-- the forbidden path -->
+      <path class="hl c-power" style="stroke-width:2.5" d="M148 128 v-16"/>
+      <g transform="translate(148,120)">
+        <circle class="f-power" r="10" opacity=".2"/>
+        <path class="s c-power" style="stroke-width:2.5" d="M-5 -5 L5 5 M5 -5 L-5 5"/>
+      </g>
+      <path class="lead c-power" d="M148 130 v-8"/>
+
+      <text class="tag f-power" x="210" y="224" text-anchor="middle">CH13 MUST BE DE-ASSIGNED FROM MIX 1</text>
+      <text class="lbl f-audio" x="210" y="243" text-anchor="middle" style="font-size:10px">Far end hears the room. Far end does NOT hear itself.</text>
+      <text class="lbl f-warn" x="210" y="260" text-anchor="middle" style="font-size:10px">Ask them: "Can you hear yourself?" If yes — step 6 failed.</text>
+    </svg>
+    <div class="figcap"><b>One assignment is the entire trick.</b> CH13 goes to LR so the room hears the remote people. CH13 gets <b>de-assigned from Mix 1</b> so the remote people don't hear themselves. Everything else is ordinary routing.</div>
+  </div>
+
+  <h3>The build</h3>
+  <ol class="steps">
+    <li>Patch CH13, source = Local, name <b>VCIN</b>, HPF 80 Hz. Gain it on PAFL with the far end talking.</li>
+    <li><b>Assign CH13 to LR only</b> so the room hears the remote people. <b>Do not put CH13 in the AMM.</b></li>
+    <li>Press the blue <b>Mix 1</b> key. Name it <b>VCOUT</b>.</li>
+    <li>Hold <b>PreFade</b> and press the master strip Sel to set all channels pre-fade. Pre-fade means the far end keeps hearing the room even when you pull the LR fader.</li>
+    <li>Hold <b>Assign</b>, press Sel for CH1–8 (mics) and ST1/ST2/ST3 (program).</li>
+    <li><b>*** DE-ASSIGN CH13 FROM MIX 1 ***</b> — still holding Assign, press CH13 Sel until it's OFF. <b>This single step is the entire mix-minus. Verify it twice.</b></li>
+    <li><b>Also de-assign the FX returns</b> from Mix 1. Reverb down the line makes the far end think the connection is degraded.</li>
+    <li>Set Mix 1 level so it meters average 0 dB — then check the input meter <b>on the codec side.</b> The Qu outputs +4 dBu and many consumer inputs expect much less. Trim at the far device, not by gutting your mix.</li>
+    <li><b>GET OFF THE MIX 1 KEY.</b> Press it off or select LR.</li>
+    <li><b>Test with a real human:</b> "Can you hear yourself?" If yes, go back to step 6.</li>
+  </ol>
+
+  <h3>Video call — what the far end says vs. what's wrong</h3>
+  <table class="tbl">
+    <tr><th>They say</th><th>It's almost certainly</th></tr>
+    <tr><td>"I hear myself / there's an echo"</td><td><b>CH13 is still assigned to Mix 1.</b> De-assign it.</td></tr>
+    <tr><td>"You're very quiet"</td><td>Mix 1 output too low for the codec input, or mics not assigned to Mix 1</td></tr>
+    <tr><td>"You sound distant / roomy"</td><td>Mics too far from people, or reverb going down the send</td></tr>
+    <tr><td>"You cut in and out"</td><td>AMM is gating people off — mics gain-mismatched, or program audio is in the AMM stealing gain</td></tr>
+    <tr><td>"There's a hum"</td><td>Ground loop, almost always a charging laptop. DI it. Also suspect ST3.</td></tr>
+    <tr><td>Room can't hear the far end</td><td>CH13 not assigned to LR, muted, DCA down, or Source isn't Local</td></tr>
+  </table>
+
+  <h2>Getting Laptop Audio In Without Hum</h2>
+  <table class="tbl">
+    <tr><th>Rank</th><th>How</th><th>Verdict</th></tr>
+    <tr><td><b style="color:var(--audio)">Best</b></td><td>Laptop → DI or USB interface → ST1/ST2 balanced TRS</td><td>Balanced, ground-isolated, quiet</td></tr>
+    <tr><td>Good</td><td>3.5mm → dual-TRS cable → ST1/ST2</td><td>Fine on a short run, laptop unplugged</td></tr>
+    <tr><td>Convenient</td><td>3.5mm → ST3 mini jack</td><td>Unbalanced. <b>First thing to suspect when the room hums.</b></td></tr>
+    <tr><td><b style="color:var(--warn)">Smart</b></td><td>One labelled 3.5mm tail at the table, DI at your end, every adapter in a pouch taped to it</td><td>Solves the real problem — the four minutes lost hunting a dongle</td></tr>
+  </table>
+  <p class="lede"><b>Set level with Trim, not the laptop's volume slider.</b> Get the laptop to 80–90% and leave it, then use channel Trim (±24 dB). If the laptop volume drifts you have headroom in both directions.</p>
+
+  <h2>Ringing Out the Room</h2>
+  <ol class="steps">
+    <li>Select <b>LR</b> on the master strip, open the GEQ tab.</li>
+    <li><b>PAFL the mix.</b> The RTA follows the PAFL source — without this you're analysing the wrong signal.</li>
+    <li>Press <b>GEQ Fader Flip.</b> All 28 bands land on the physical faders.</li>
+    <li>Raise the mic level until you <b>just</b> start to hear a ring. Don't push into full feedback — you're finding the frequency, not damaging anything.</li>
+    <li>Read the <b>red dot on the RTA</b> and cut that band a few dB.</li>
+    <li><b>STOP AT 3–5 CUTS.</b> Past that you're destroying the tone of the whole system. If you need more than five, <b>the problem is physical.</b></li>
+    <li>Press GEQ Fader Flip again to get your channel faders back.</li>
+  </ol>
+
+  <div class="key" style="border-color:rgba(63,185,80,.35);background:rgba(63,185,80,.07)">
+    <b style="color:var(--audio)">The cheapest dB you will ever find:</b> fewer open mics, mics closer to mouths, and speakers in front of mics rather than behind them. Those three are worth more than any EQ you will ever do. <b>Ringing out is the last 10%, not the first.</b>
+  </div>
+
+  <h2>Running the Meeting — the operator loop</h2>
+  <p class="lede">Once doors open your job is small and repetitive. Do these things and nothing else.</p>
+  <table class="tbl">
+    <tr><th>Watch</th><th>Act</th></tr>
+    <tr><td><b>Is a blue Mix key lit?</b></td><td>Turn it off. <b>The number one live error on a Qu.</b></td></tr>
+    <tr><td>Meters on mic channels</td><td>Pinning Pk = somebody moved a mic. Adjust <b>gain</b>, not the fader — the AMM owns the fader.</td></tr>
+    <tr><td>A mic that shouldn't be open</td><td>Mute it. Roving handhelds live muted between questions.</td></tr>
+    <tr><td>Program audio starting</td><td>Watch the <b>first two seconds</b> of every video — that's where the level surprise lives.</td></tr>
+    <tr><td>The far end</td><td>Too loud in the room? DCA 3. Room too quiet to them? Mix 1 sends. <b>Never touch the LR fader to fix a call problem.</b></td></tr>
+    <tr><td>Room filling up</td><td>Bodies absorb highs. The room you tuned empty isn't the room you have now.</td></tr>
+    <tr><td>New mic handed to a presenter</td><td><b>Gain it on PAFL before it goes live.</b> Ten seconds now, or a squeal in front of 200 people.</td></tr>
+    <tr><td>A ring starting</td><td>Pull the offending channel, <b>not the LR fader.</b> Mid-meeting, mute is always the right first move.</td></tr>
+  </table>
+
+  <div class="key" style="border-color:rgba(248,81,73,.4);background:rgba(248,81,73,.08)">
+    <b style="color:var(--power)">THE PANIC MOVES:</b> SoftKey 1 mutes all mics. SoftKey 2 mutes all program. <b>Know which is which without looking.</b> If something is horribly wrong and you don't know why — hit the mic mute, fix it, unmute. <b>Nobody remembers three seconds of silence; everybody remembers feedback.</b>
+  </div>
+
+  <h2>Pre-Doors Checklist</h2>
+  <p class="lede">Tap to check off. Every box exists because skipping it has ruined somebody's show. Your progress saves on this device.</p>
+  <div class="row">
+    <span class="counter" id="ckCount"></span>
+    <button class="btn" id="ckReset" style="margin-left:auto">Clear all</button>
+  </div>
+  <div id="ckHost"></div>
+
+  <h2>Strike</h2>
+  <ul class="chk">
+    <li><b>Copy any recordings off the drive</b> before you do anything else</li>
+    <li><b>Write a Show file to USB</b> — even if you think you'll never use this room again. You will.</li>
+    <li><b>Note what you learned on the channel map:</b> where the 250 Hz cut had to be, which mic position fed back, which laptop hummed. <b>That sheet is worth more than the gear next time.</b></li>
+    <li>Amps and powered speakers <b>OFF FIRST</b></li>
+    <li><b>Home &gt; Shut Down</b> on the touchscreen — wait for it to complete</li>
+    <li><b>Only now</b>, the rear power switch</li>
+    <li>Cover the mixer if it's staying. Dust and liquid are what actually kill these desks.</li>
+    <li>Coil Cat5 loosely — stranded core survives coiling, but not kinks</li>
+  </ul>
+</section>
+
+<section class="panel" id="p-flow">
+<h2>Audio Room — Set Order</h2>
+  <p class="lede">This order exists so you never have to move something you already set. Follow it and you don't backtrack.</p>
+
+  <ol class="steps">
+    <li>Consider placement for your <b>tech table and speakers</b> based on the plot, or on preference if there's no plot.</li>
+    <li>Separate the gear. <b>Starting with speakers</b>, put them in place.</li>
+    <li>Set the tech table — <b>receivers and mixer</b> first.</li>
+    <li>Power the receivers and <b>connect the antennas</b>. Then plug them into the mixer, in the channel you want them to appear.</li>
+    <li>Connect XLR: <b>female into the receiver, male into the mixer</b>. The hardline shows up in that channel number.</li>
+    <li>Scan and set frequencies, then sync your mics.</li>
+    <li><b>Verify signal on the console.</b> Confirm the channel you plugged into is actually receiving before you go any further. Don't assume — look at the meter.</li>
+    <li>Power your speakers and connect them to the console with XLR. Two mains go to <b>Main L/R</b> based on placement; more than two speakers, or a recording feed, comes off <b>AUX sends</b>.</li>
+    <li>Set <b>gain structure</b> — everything down, master to unity, channel fader to unity while talking, then gain. Make noise.</li>
+  </ol>
+
+  <div class="key">
+    <b>Step 8 is the one people skip.</b> Verifying signal at the console before moving on means that when something breaks later, you already know the front half of the chain was good. Skip it and every future problem has twice the search space.
+  </div>
+
+  <h3>The five-step version to keep in your head</h3>
+  <ul class="chk">
+    <li>Set your speakers in place</li>
+    <li>Set your tech table</li>
+    <li>Power your speakers and tech table</li>
+    <li>Set your receivers and get signal to your mixer</li>
+    <li>Slowly bring your fader to unity, then set your gain structure</li>
+  </ul>
+
+  <div class="key" style="border-color:rgba(63,185,80,.35);background:rgba(63,185,80,.07)">
+    <b style="color:var(--audio)">KEEP IT SIMPLE.</b> There's a lot to think about — where gear goes, how long a cable you need, how to be efficient. The single most useful principle when you're standing in an empty room deciding where to start is to not over-engineer it. The simplest system that does the job is the one that fails least and strikes fastest.
+  </div>
+
+  <h2>Best Practices</h2>
+  <ul class="chk">
+    <li><b>Double-check your gear</b> before you set it — nothing broken, nothing missing</li>
+    <li>Make sure power is <b>easily accessible</b></li>
+    <li>Find the <b>cleanest cable path</b> possible</li>
+    <li><b>Label both ends</b> of every run so you can find the send you need instantly</li>
+    <li><b>Factory reset the mixer</b> and label channels to match your inputs</li>
+    <li><b>Don't rush the system.</b> Take your time and make it right the first time — a fast wrong setup costs more than a slow right one</li>
+  </ul>
+</section>
+
+<section class="panel" id="p-crew">
+<h2>Positions — Audio</h2>
+  <div class="card L audio">
+    <h4>A1 — Audio Engineer / Mixer</h4>
+    <p>Lead audio. Programs the mixer including all processing, determines <b>final</b> speaker positions, and live-mixes the show.</p>
+  </div>
+  <div class="card L audio">
+    <h4>A2 — Audio System Technician</h4>
+    <p>Sets and monitors receivers, <b>mics up presenters</b>, and sets up comms between all positions. This is the job with the most human contact and the most pressure right before doors.</p>
+  </div>
+  <div class="card L audio">
+    <h4>Audio Tech</h4>
+    <p>Sets equipment and establishes cable runs according to the plot, or according to how the A1 wants it.</p>
+  </div>
+
+  <h2>Client Interaction</h2>
+  <div class="key">
+    <b>The goal is minimal interaction while staying friendly and helpful.</b> You interact directly with the client only if your position calls for it. The lead does the most client contact and relays needs to the crew. There are exceptions, but responsibilities break down by position — stay in yours.
+  </div>
+  <p class="lede">Practical version: be warm, be brief, and route real questions to the lead. "Let me grab my A1 for you" is almost always the right answer to a client asking for a change.</p>
+</section>
+
+<section class="panel" id="p-drills">
+  <h2>Flashcards</h2>
+  <p class="lede">Tap the card to flip. Rate yourself honestly — "Got it" removes it from this pass, "Again" keeps it in rotation.</p>
+  <div class="row">
+    <span class="counter" id="fcCount"></span>
+    <button class="btn" id="fcShuffle" style="margin-left:auto">Shuffle</button>
+    <button class="btn" id="fcReset">Reset</button>
+  </div>
+  <div class="fcstage">
+    <div class="fc" id="fcCard">
+      <div class="fcface"><div class="fcq" id="fcQ"></div><div class="fchint">Tap to flip</div></div>
+      <div class="fcface fcback"><div class="fca" id="fcA"></div><div class="fchint">Tap to flip back</div></div>
+    </div>
+  </div>
+  <div class="row">
+    <button class="btn" id="fcAgain">Again</button>
+    <button class="btn pri" id="fcGot">Got it</button>
+  </div>
+
+  <h2>Quiz</h2>
+  <p class="lede">Explanations on every answer — including the ones you get right.</p>
+  <div id="quizHost"></div>
+
+  <h2>Signal Chain Builder</h2>
+  <p class="lede">Tap the pieces in the correct order. Wrong piece and it tells you immediately.</p>
+  <div id="chainHost"></div>
+</section>
+<section class="panel" id="p-scen">
+  <h2>Real-Gig Scenarios</h2>
+  <p class="lede">Think it through before you reveal. The answer matters less than the order you check things in.</p>
+  <div id="scnHost"></div>
+</section>
+<footer>
+  Audio Field Guide · Reference and drill tool for live event technicians<br>
+  Gear illustrations are simplified diagrams for identification, not manufacturer specifications.
+</footer>
+</div>
+
+<script>
+
+(function(){
+"use strict";
+
+/* ═══════════ safe storage ═══════════ */
+var mem={};
+var store={
+  get:function(k){try{return localStorage.getItem(k)}catch(e){return mem[k]||null}},
+  set:function(k,v){try{localStorage.setItem(k,v)}catch(e){mem[k]=v}}
+};
+
+/* ═══════════ tabs ═══════════ */
+var TABS=[["p-start", "Start"], ["p-cables", "Cables"], ["p-gear", "Mics & RF"], ["p-mixer", "Qu-16 Console"], ["p-sim", "Simulator"], ["p-ops", "Room Ops"], ["p-flow", "Workflow"], ["p-crew", "Crew"], ["p-drills", "Drills"], ["p-scen", "Scenarios"]];
+var nav=document.getElementById("nav");
+TABS.forEach(function(t,i){
+  var b=document.createElement("button");
+  b.textContent=t[1]; b.setAttribute("role","tab");
+  b.setAttribute("aria-selected", i===0?"true":"false");
+  b.onclick=function(){go(t[0])};
+  b.dataset.target=t[0];
+  nav.appendChild(b);
+});
+function go(id){
+  document.querySelectorAll(".panel").forEach(function(p){p.classList.toggle("on",p.id===id)});
+  nav.querySelectorAll("button").forEach(function(b){
+    b.setAttribute("aria-selected", b.dataset.target===id?"true":"false");
+    if(b.dataset.target===id && b.scrollIntoView){
+      try{b.scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"})}catch(e){}
+    }
+  });
+  try{window.scrollTo({top:0,behavior:"smooth"})}catch(e){window.scrollTo(0,0)}
+  store.set("audio_tab",id);
+}
+var saved=store.get("audio_tab");
+if(saved && document.getElementById(saved)) go(saved);
+
+/* ═══════════ flashcards ═══════════ */
+var CARDS=[
+["On an XLR, which end sends and which receives?","<b>Male sends, female receives.</b> So the female end plugs into the output of the source device; the male end goes into the input of the next device."],
+["What are the three XLR pins?","Pin 1 = shield/ground · Pin 2 = positive/hot · Pin 3 = negative/cold."],
+["Coax and SDI look identical. What's the difference?","The cable is effectively the same; the <b>signal</b> differs. Coax in audio carries <b>RF from antennas to receivers</b>. SDI carries <b>video</b>. Label both ends."],
+["What does a DI box do?","Takes <b>unbalanced, high-impedance</b> signal and converts it to <b>balanced, low-impedance mic level</b> so it can safely run long distances into a mixer."],
+["What's a PC DI box for?","Same job as a DI, built for laptops — a mini stereo (3.5mm) cable attached that converts to XLR."],
+["Which mic type is most common in corporate AV, and why?","<b>Dynamic.</b> Rugged, hard to overload, needs no external power, and better for vocals in live sound."],
+["A lavalier is usually which type of mic?","A <b>condenser</b>. Chosen for its small size and its ability to pick up clear vocals from the presenter."],
+["Where does a condenser mic perform best?","A <b>studio environment</b>. It's far more sensitive and picks up quiet sound — great for detail, a liability in a noisy live room."],
+["What does a transmitter actually do?","Takes the <b>electrical signal from the mic and converts it into a radio frequency (RF)</b>."],
+["What does a receiver do with the RF?","Takes in the encoded frequency and <b>converts it back to analog signal</b>, then sends it to the mixer over XLR."],
+["Whip antenna range vs. paddle antenna range?","Whips: about <b>75 feet</b>. Paddles: <b>200–300 feet</b>."],
+["What does an antenna distro do?","Captures signal with your paddle antennas and <b>distributes it to multiple receivers over coax</b> — so every receiver shares two well-placed paddles instead of fighting with its own whips."],
+["Correct order for setting a frequency?","1) Connect antennas, power up receiver · 2) Scan (group or channel) · 3) Push Enter to confirm and set · 4) Sync the mic — press Sync, hold transmitter <b>6 inches from the IR window</b>."],
+["Correct gain structure technique?","<b>Set your fader to unity first, then slowly bring gain (trim) up</b> until you reach the right volume. Goal: highest output without feedback or noise."],
+["What is a channel strip?","A single unit on the console combining <b>mic preamp, EQ, compressor, and sometimes a gate</b> — everything for shaping one channel."],
+["EQ philosophy for corporate AV?","Don't excessively cut frequencies <b>unless you're controlling feedback</b>. The target is natural — the presenter should sound like themselves."],
+["Audio signal flow, source to speaker?","Input Source → Input Gain → EQ → Channel Level → Mixer Output → Front of House Speaker."],
+["What is a stage box?","Takes a group of signals and sends them down a <b>snake cable</b>, usually to front of house."],
+["Rio vs. stage box?","Same function, different transport. A <b>Rio passes signal over ethernet using Dante</b> instead of a copper snake."],
+["What does DANTE stand for?","<b>D</b>igital <b>A</b>udio <b>N</b>etwork <b>T</b>hrough <b>E</b>thernet. Creates a network where compatible devices see and talk to each other."],
+["What's the point of a snake cable?","To <b>condense the number of cable runs</b> — one jacket instead of a dozen loose XLRs across the floor."],
+["What frequency range defines a good speaker?","Accurate output across <b>20 Hz – 20 kHz</b>, plus the ability to limit distortion at high volume."],
+["A1 responsibilities?","Lead audio: programs the mixer and all processing, determines <b>final</b> speaker positions, and live-mixes the show."],
+["A2 responsibilities?","Sets and monitors receivers, <b>mics up presenters</b>, and sets up comms between all positions."],
+["Audio Tech responsibilities?","Sets equipment and establishes cable runs per the plot, or per how the A1 wants it."],
+["Audio room set order, five steps?","1) Speakers in place · 2) Set tech table · 3) Power speakers and tech table · 4) Set receivers, get signal to mixer · 5) Set gain structure and make noise."],
+["What's the rule on client interaction?","<b>Minimal interaction while staying friendly and helpful.</b> Interact directly only if your position calls for it — the lead handles most client contact."],
+["What's the first principle of troubleshooting?","<b>Start at step one and work forward.</b> Retrace the signal flow to find where it breaks. Stay calm and focus on what <i>isn't</i> working."],
+["Which XLR end goes into the receiver?","The <b>female</b> end into the receiver, <b>male</b> into the mixer. The hardline then appears in that channel number."],
+["What does IEC power?","Active/powered speakers and other powered gear. First thing to check on a silent powered speaker."],
+["Besides audio, what else can XLR carry?","<b>48V phantom power</b> — sent back up the same cable to run condenser microphones."],
+["Which mics need phantom power?","<b>Condensers</b> (including lavs). Dynamics generate their own signal and need nothing. A dead condenser is very often just phantom left off."],
+["What's the full gain-setting procedure?","1) Input gain and channel fader <b>all the way down</b> · 2) Master fader up to <b>unity</b> · 3) Channel fader slowly to unity <b>while talking into the mic</b> · 4) Then adjust <b>input gain</b> for final level."],
+["What does 'unity' mean on a mixer?","<b>Zero</b> — the reference position where the fader is neither boosting nor cutting."],
+["SM57 vs SM58 — which is which?","<b>SM58</b>: big round ball grille, response shaped for <b>vocals</b>. <b>SM57</b>: small flat head, flatter response, for <b>instruments</b> — drums and guitar cabs."],
+["What's a polar pattern?","The <b>shape of what a microphone hears</b>. It determines how much of the room you pick up alongside your source."],
+["What pattern are most lavs, and why?","<b>Cardioid.</b> It rejects sound from the back and sides, so it picks up the presenter and not the room or the speakers."],
+["Name the six polar patterns.","Cardioid · Supercardioid · Hypercardioid · Omnidirectional · Lobar · Bidirectional."],
+["What does omnidirectional mean, and what's the risk?","It picks up <b>equally in all directions</b>. In a live room that means it hears your speakers too — the shortest path to feedback."],
+["How does a dynamic mic actually work?","Sound moves the <b>diaphragm</b> → which moves a <b>coil</b> inside a <b>magnetic core</b> → generating voltage → boosted by a <b>transformer</b> → out the XLR. It's a loudspeaker running backwards."],
+["Why does a dynamic mic need no external power?","It <b>generates its own signal</b> through induction. Nothing in the path needs to be electrically charged — which is also why it takes abuse so well."],
+["Cons of a dynamic mic?","<b>Less sensitive</b> — needs a louder source — and <b>not well suited to high frequencies.</b>"],
+["Cons of a condenser mic?","<b>Needs phantom power</b>, more likely to distort if used incorrectly, and <b>far more expensive.</b> Its sensitivity also makes it impractical in most corporate rooms."],
+["What's a frequency coordinator?","On big events, the person who <b>assigns you frequencies</b> based on the strongest open RF in the building. When there isn't one, you scan and assign yourself — but ask first on a large show."],
+["After setting frequencies, what's the step people skip?","<b>Verify signal on the console.</b> Confirm the channel you plugged into is actually receiving before moving on. It cuts every later problem's search space in half."],
+["Two mains vs. more than two speakers — where do they connect?","Two mains go to <b>Main L/R</b> based on placement. More than two speakers, or a recording feed, comes off the <b>AUX sends.</b>"],
+["Single most important principle when planning a setup?","<b>KEEP IT SIMPLE.</b> The simplest system that does the job fails least and strikes fastest."],
+["Qu-16: what happens when you press a blue Mix key?","The faders <b>stop being channel levels</b> and become <b>sends to that mix</b>. Press it off or select LR when done — this is the classic Qu mistake."],
+["Qu-16: what does 0 dB on the meter equal?","<b>-18 dBFS = +4 dBu</b> at the XLR out. You still have <b>18 dB of headroom</b>. Zero is the target, not the limit."],
+["Qu-16: how many mono channels, and how many sources reach the mix?","<b>16 mono channels</b>; <b>24 sources</b> to the mix (16 mono + 3 stereo + FX returns)."],
+["Qu-16: how many FX engines vs. FX send busses?","<b>4 engines but only 2 send busses.</b> Engines 3 and 4 must be inserted or fed via Mix&gt;Return."],
+["Qu-16: what is ST3 and why be suspicious of it?","An <b>unbalanced 3.5mm mini jack</b>, 0 dBu nominal. Convenient laptop input and the most likely source of hum — especially with a charging laptop."],
+["What does a DCA carry?","<b>No audio.</b> It remote-controls faders and mutes only. No EQ, no compressor, no output socket. A Qu-16 has DCAs and no audio Groups."],
+["Qu-16 input chain, in order?","Source → Preamp (pad/48V/gain) → Trim/Polarity → HPF → Gate → Insert → PEQ → Comp → Delay → Mute → Fader → Pan → Assign."],
+["Where does the Insert Send tap, and why there?","<b>After the Gate, before the PEQ.</b> Live mixing happens downstream, so nothing you do at the desk can ruin the recording."],
+["What extra processing do output channels get?","The <b>GEQ</b> — 28 bands, constant 1/3 octave, 31 Hz–16 kHz, ±12 dB. That's what GEQ Fader Flip throws onto the faders."],
+["What signal does the RTA follow?","The <b>PAFL source.</b> To analyse something, PAFL it."],
+["Describe the AMM in one sentence.","<b>Constant gain-sharing across CH1–16</b> that keeps total open-mic gain roughly constant — whoever talks gets the gain, everyone else gets pulled down."],
+["What goes in the AMM, and what never does?","<b>In:</b> speech mics only — lectern, handhelds, lavs, boundary. <b>Never:</b> program audio, laptop, music, the video-call far-end return."],
+["Correct AMM setup order?","Master fader DOWN → gain and gain-match each mic on PAFL → Setup &gt; Audio &gt; AMM, enable channels → bring master up slowly → use a <b>DCA</b> as the master fader."],
+["Mics are in the AMM and one is too quiet. What do you adjust?","<b>Gain or Trim — never the fader.</b> Riding individual AMM faders fights the algorithm and you lose."],
+["What is mix-minus, in one line?","Send the far end <b>everything in the room EXCEPT the far end.</b> Minus means minus themselves."],
+["The far end says 'I hear myself.' What's wrong?","<b>CH13 (the far-end return) is still assigned to Mix 1.</b> De-assign it. That single assignment IS the mix-minus."],
+["Does the Qu-16 have echo cancellation?","<b>No AEC.</b> Your mix-minus is your echo control. Get it wrong and the far end blames the room."],
+["Scene Safe vs. Global Filter?","<b>Safe</b> protects ALL parameters of ONE channel from ANY recall. <b>Global Filter</b> blocks SELECTED parameter groups across ALL channels for EVERY recall."],
+["Does Reset Mix Settings respect Safes and the Global Filter?","<b>No.</b> It ignores both — and it also resets the filter and clears every Safe you had set. Store a Scene first."],
+["Where are Show files stored?","<b>Only on a USB drive</b> in the Qu-Drive socket — never inside the mixer. It's your only complete backup, so if you didn't make one, you don't have one."],
+["Correct power order?","<b>Mixer ON first, amps ON last. Amps OFF first, mixer OFF last.</b> And always Home &gt; Shut Down before the rear switch."],
+["How many GEQ cuts when ringing out a room?","<b>3–5 maximum.</b> Past that you're destroying the system's tone. If you need more than five, the problem is physical — move a speaker or a mic."],
+["Cheapest gain-before-feedback you can get?","<b>Fewer open mics, mics closer to mouths, speakers in front of mics.</b> Worth more than any EQ. Ringing out is the last 10%, not the first."],
+["Gate depth on a speech mic?","Only <b>6–12 dB.</b> Depth matters more than threshold. A gate that slams fully shut on a talking human sounds broken and chops word tails."],
+["Which compressor type for a panel discussion?","<b>RMS Manual</b> (or SlowOpto for transparency). Never PunchBag on a corporate panel."],
+["How do you find a problem frequency?","Take one PEQ band, set it <b>narrow (1/9 oct)</b>, <b>boost +12 dB</b>, and sweep. The ugly spot jumps out. Then invert to a cut and widen slightly."],
+["Copy + a channel Sel key copies what — and what does it miss?","All related <b>processing</b> for that channel. It does <b>not</b> copy the preamp, and never copies channel linking or ducker settings."],
+["What's the fastest way to set up 8 identical speech mics?","Build one properly, store it as a <b>Channel Library</b> (\"SPEECH\"), then recall it. Or hold Copy + Paste across Sel keys — four channels in six seconds."]
+];
+var fcQueue=[],fcIdx=0,fcCard=document.getElementById("fcCard");
+function fcInit(sh){
+  fcQueue=CARDS.map(function(c,i){return i});
+  if(sh) fcQueue.sort(function(){return Math.random()-.5});
+  fcIdx=0;fcRender();
+}
+function fcRender(){
+  fcCard.classList.remove("flip");
+  var n=document.getElementById("fcCount");
+  if(!fcQueue.length){
+    document.getElementById("fcQ").innerHTML="All clear.";
+    document.getElementById("fcA").innerHTML="You've worked through the whole deck. Shuffle to run it again cold.";
+    n.textContent="0 left";return;
+  }
+  if(fcIdx>=fcQueue.length) fcIdx=0;
+  var c=CARDS[fcQueue[fcIdx]];
+  document.getElementById("fcQ").innerHTML=c[0];
+  document.getElementById("fcA").innerHTML=c[1];
+  n.textContent=fcQueue.length+" card"+(fcQueue.length===1?"":"s")+" left";
+}
+fcCard.onclick=function(){fcCard.classList.toggle("flip")};
+document.getElementById("fcGot").onclick=function(){
+  if(!fcQueue.length)return;
+  fcQueue.splice(fcIdx,1);fcRender();
+};
+document.getElementById("fcAgain").onclick=function(){
+  if(!fcQueue.length)return;
+  fcIdx=(fcIdx+1)%fcQueue.length;fcRender();
+};
+document.getElementById("fcShuffle").onclick=function(){fcInit(true)};
+document.getElementById("fcReset").onclick=function(){fcInit(false)};
+fcInit(true);
+
+/* ═══════════ quiz ═══════════ */
+var QS=[
+{q:"Correct gain structure technique?",
+  o:["Gain to unity, then bring the fader up","Fader to unity, then bring gain (trim) up slowly","Both at max, then cut with EQ","Fader at 75%, gain at 75%"],
+  a:1,e:"Fader to unity first, then trim up slowly. Chasing a weak input with the fader buries the signal in the noise floor and you can't fix it downstream."},
+{q:"A powered speaker is silent. Everything else in the system works. First check?",
+  o:["Rescan the receiver frequencies","IEC power and the XLR at both ends","Factory reset the mixer","Swap the speaker"],
+  a:1,e:"Start at step one and work forward. Physical layer first: is it powered, is the cable seated at BOTH ends. Frequency and console problems don't make one speaker silent while others work."},
+{q:"Which end of the XLR goes into the receiver?",
+  o:["Male","Female","Either","Depends on the mixer"],
+  a:1,e:"Female receives, male sends. Female into the receiver's output, male into the mixer's input. The hardline then appears in that channel number."},
+{q:"You need 8 wireless channels covering a 250 ft ballroom. What's the right RF setup?",
+  o:["Whip antennas on each receiver","Paddle antennas into an antenna distro feeding all receivers over coax","One paddle antenna on receiver 1, whips on the rest","Move the receivers closer to the stage"],
+  a:1,e:"Whips cover ~75 ft — nowhere near enough. Paddles cover 200–300 ft. The distro lets all eight receivers share those two well-placed paddles over coax."},
+{q:"What does DANTE stand for?",
+  o:["Digital Audio Network Through Ethernet","Digital Analog Network Transfer Engine","Direct Audio Network To Ethernet","Distributed Audio Node Transport"],
+  a:0,e:"Digital Audio Network Through Ethernet. It creates a network where any compatible device can see and communicate with any other — one CAT cable replacing a snake."},
+{q:"Presenter is in a sweatshirt with no waistband. What's the actual problem?",
+  o:["The mic won't work through fabric","No good placement point or pack anchor — plan extra time, tape, and a conversation","You need a dynamic mic instead","Sweatshirts block RF"],
+  a:1,e:"Wardrobe determines difficulty. Button-ups give easy access to good placement. Sweatshirts and dresses don't — the fix is planning and communication, not different gear."},
+{q:"Correct first step of the audio room set order?",
+  o:["Power everything up","Place tech table and speakers per the plot","Scan frequencies","Label your channels"],
+  a:1,e:"Placement first, based on the plot or preference. You set the things you can't easily move, then work backward. Everything else follows from where the speakers and table land."},
+{q:"What does a DI box do?",
+  o:["Boosts a weak signal","Converts unbalanced high-impedance to balanced low-impedance mic level","Splits one signal into two","Adds phantom power"],
+  a:1,e:"That conversion is the entire job — it makes a signal safe to run long distances into a mixer without picking up noise."},
+{q:"Which mic type needs no external power and is most common in corporate?",
+  o:["Condenser","Dynamic","Ribbon","Lavalier"],
+  a:1,e:"Dynamic. Rugged, hard to overload, no power needed, and better for live vocals — which is why it's the corporate default."},
+{q:"EQ approach for a CEO's keynote?",
+  o:["Heavy cuts to shape a modern vocal tone","Boost 5k hard for presence","Minimal cutting — only what's needed to kill feedback, keep it natural","Flat, never touch it"],
+  a:2,e:"Corporate target is natural. Don't excessively cut unless you're controlling feedback — the exec should sound like himself, not like a produced record."},
+{q:"What's the difference between a stage box and a Rio?",
+  o:["Nothing, different brands","A Rio passes signal over ethernet using Dante instead of a copper snake","A stage box is digital, a Rio is analog","A Rio only handles outputs"],
+  a:1,e:"Same function, different transport. Stage box → snake. Rio → ethernet/Dante."},
+{q:"Correct frequency-setting sequence?",
+  o:["Power up, scan, connect antennas, sync","Connect antennas, power up, scan, Enter to confirm, sync at 6 inches","Sync first, then scan","Scan, sync, then connect antennas"],
+  a:1,e:"Antennas FIRST — scanning without them gives you a garbage result. Then power, scan, Enter to set, then sync the transmitter about 6 inches from the IR window."},
+{q:"Who mics up the presenters?",
+  o:["A1","A2","Audio Tech","Stage Manager"],
+  a:1,e:"A2 sets and monitors receivers, mics presenters, and sets up comms. The A1 is at the console programming and mixing."},
+{q:"You grab a BNC cable off the cart. How do you know if it's coax for RF or SDI for video?",
+  o:["Coax is thicker","By the connector color","You often can't tell by looking — that's why you label both ends of every run","SDI is always black"],
+  a:2,e:"They're physically the same cable with the same connectors. Labeling both ends isn't busywork — it's the only reliable way to tell them apart under time pressure."},
+{q:"Best practice before you set any gear?",
+  o:["Power everything on to test","Double-check the gear for anything broken or missing","Label the channels","Set gain structure"],
+  a:1,e:"Check the gear first. Finding a dead receiver during your pre-check costs five minutes. Finding it during rehearsal costs the show."},
+{q:"A lav is plugged in, the pack is on, RF is strong — but there's no audio at the console. What's the most likely cause?",
+  o:["Bad frequency — rescan","Phantom power is off on that channel","The XLR is reversed","The speaker is muted"],
+  a:1,e:"A lav is a condenser, and condensers need 48V phantom power delivered over the XLR. Strong RF proves the radio link is fine, so the problem is downstream at the console. Check phantom before you touch anything else."},
+{q:"Correct order for setting levels on a channel?",
+  o:["Fader to unity, then gain up","Gain and fader down → master to unity → channel fader to unity while talking → then set gain","Gain to 50%, fader to taste","Master and channel both to unity, then gain"],
+  a:1,e:"Start from nothing so you can't surprise the room. Master up first gives you a known output reference. Then the channel fader reaches unity, and gain does the actual work of setting level."},
+{q:"You need to mic a podium. Which do you grab?",
+  o:["SM57","SM58","Either, they're identical","A condenser"],
+  a:1,e:"SM58 — the ball-grille one, with frequency response shaped specifically for vocals. The SM57's flat response and small head are built for instruments like drums and guitar cabs."},
+{q:"Why are most lavalier mics cardioid?",
+  o:["It's cheaper to manufacture","It rejects sound from the back and sides, picking up the presenter instead of the room","It picks up more bass","It doesn't need phantom power"],
+  a:1,e:"Cardioid rejects the rear and sides. On a live floor that means less room, less speaker bleed, and more gain before feedback — which is the whole game."},
+{q:"Which polar pattern is most likely to cause feedback in a live room?",
+  o:["Cardioid","Hypercardioid","Omnidirectional","Lobar"],
+  a:2,e:"Omni picks up equally in every direction — including your front-of-house speakers. Tighter patterns reject more of the room, which is exactly why they give you more gain before feedback."},
+{q:"You're on a large multi-room show. Do you just scan and take an open frequency?",
+  o:["Yes, scan and take whatever's clean","Ask whether there's a frequency coordinator first","Use the same frequencies as last time","Turn power down to avoid conflicts"],
+  a:1,e:"On big events a frequency coordinator assigns frequencies based on the strongest open RF across the whole building. Taking one yourself can kill another department's mic — and they'll have no idea why."},
+{q:"You have four speakers to feed from one console. Where do the extra two go?",
+  o:["Daisy-chain them off the mains","AUX sends","The monitor output","Split the Main L/R with a Y-cable"],
+  a:1,e:"Two mains go to Main L/R based on placement. Anything beyond that — extra speakers, a recording feed — comes off the AUX sends, where you can control the level independently."},
+{q:"A dynamic microphone works by...",
+  o:["A charged plate reacting to sound pressure","A diaphragm moving a coil inside a magnet, generating voltage","Converting light into signal","Amplifying with phantom power"],
+  a:1,e:"It's a loudspeaker running backwards — same induction coil, opposite direction. That's why it needs no external power and why it survives being dropped."},
+{q:"Mid-meeting on a Qu-16, the room suddenly gets quiet when you move a fader. What happened?",
+  o:["The amp went into protect","A blue Mix key is lit — you're editing sends, not the room","The AMM took over","Scene recall fired"],
+  a:1,e:"The number one live error on a Qu. Press a Mix key and the faders become sends to that mix. Always get back to LR when you're done."},
+{q:"The far end on a video call says they hear themselves echoing. What's the fix?",
+  o:["Turn down the room speakers","Add a gate to the far-end channel","De-assign CH13 (far-end return) from Mix 1","Increase the Mix 1 level"],
+  a:2,e:"That one de-assignment IS the mix-minus. The Qu-16 has no echo cancellation, so if the far end is in the send going back to them, they hear themselves with the round-trip delay."},
+{q:"You're enabling the AMM. What must be true before you turn it on?",
+  o:["All mics at unity","The mix master fader is DOWN","Phantom power is off","The GEQ is flat"],
+  a:1,e:"The AMM moves faders when you enable it. If the room is live when that happens, you get a very loud surprise in front of the client."},
+{q:"0 dB on the Qu-16 meter means what?",
+  o:["You're clipping — pull back","-18 dBFS, with 18 dB of headroom still above it","Maximum safe level","Unity gain on the fader"],
+  a:1,e:"Zero is the target, not the limit. The Pk LED doesn't light until -3 dBFS. Aim to average 0 and peak +6 to +9 — and err lower for speech, because feedback is the enemy, not noise."},
+{q:"Which of these should NEVER go into the AMM?",
+  o:["The lectern gooseneck","A panelist's lav","Program audio from the presenter's laptop","A roving handheld"],
+  a:2,e:"Speech mics only. Put program audio in the AMM and the algorithm will duck your presenters every single time a video plays."},
+{q:"You need an 'all mics' fader on a Qu-16 that you can also compress. What do you do?",
+  o:["Use a DCA — that's what it's for","Use an audio Group","Sacrifice a Mix bus, patch its output back into a spare input channel","Link all the mic channels"],
+  a:2,e:"A DCA carries no audio, so it can't be EQ'd or compressed. The Qu-16 has no audio Groups. The workaround costs you a bus, an input and a cable — but it's the only way to get a processed submix."},
+{q:"How many GEQ cuts should you make when ringing out a room?",
+  o:["As many as it takes","3 to 5 maximum","One per octave","At least 10 for a difficult room"],
+  a:1,e:"Past five you're destroying the tone of the whole system to chase a few dB. If you need more than five, the problem is physical — move a speaker or move a mic."},
+{q:"A channel on the Qu-16 is dead. You PAFL it and there IS signal. What does that tell you?",
+  o:["The preamp is bad","It's a routing problem, not an input problem","Phantom power is off","The cable is bad"],
+  a:1,e:"PAFL taps the channel directly. Signal there means everything upstream is fine — so check assignment to LR, mutes, DCA/Mute Group, and whether a Mix key is lit."},
+{q:"You're about to hit Reset Mix Settings. What survives it?",
+  o:["Nothing","Stored scenes, libraries, and system preferences","Your channel Safes","The Global Filter settings"],
+  a:1,e:"It clears everything storable in a scene and it ignores — then resets — your Safes and Global Filter. But stored scenes and libraries survive, which is why storing a Scene first is your safety net."},
+{q:"Room hums as soon as the presenter plugs in their laptop. First suspect?",
+  o:["The wireless receivers","ST3 — it's unbalanced — plus the laptop is on a charger","The GEQ","The AMM"],
+  a:1,e:"ST3 is an unbalanced 3.5mm input and a charging laptop is the single most common ground-loop source in a breakout room. A DI or isolation transformer solves it permanently."}
+];
+var qi=0,qScore=0,qHost=document.getElementById("quizHost");
+function qRender(){
+  if(qi>=QS.length){
+    var pct=Math.round(qScore/QS.length*100);
+    var msg = pct>=90?"Dialed in. You could run this material for someone else.":
+              pct>=75?"Solid. Clean up the misses and you're gig-ready.":
+              pct>=50?"Foundation's there. Run the flashcards, then come back.":
+                      "Go back through the reference tabs — then run this cold.";
+    qHost.innerHTML='<div class="qbox" style="text-align:center">'+
+      '<div class="score" style="color:'+(pct>=75?"var(--audio)":pct>=50?"var(--warn)":"var(--power)")+'">'+pct+'%</div>'+
+      '<p style="margin:0 0 4px;font-size:15px">'+qScore+' of '+QS.length+' correct</p>'+
+      '<p style="color:var(--dim);font-size:14px;margin:0 0 18px">'+msg+'</p>'+
+      '<button class="btn pri" id="qAgain">Run it again</button></div>';
+    document.getElementById("qAgain").onclick=function(){qi=0;qScore=0;QS.sort(function(){return Math.random()-.5});qRender()};
+    return;
+  }
+  var q=QS[qi];
+  var h='<div class="qbox"><div class="bar"><i style="width:'+(qi/QS.length*100)+'%"></i></div>'+
+        '<p style="color:var(--dim);font-size:12px;margin:10px 0 0;letter-spacing:.5px">QUESTION '+(qi+1)+' OF '+QS.length+'</p>'+
+        '<p class="qtext">'+q.q+'</p>';
+  q.o.forEach(function(o,i){h+='<button class="opt" data-i="'+i+'">'+o+'</button>'});
+  h+='<div id="qFoot"></div></div>';
+  qHost.innerHTML=h;
+  qHost.querySelectorAll(".opt").forEach(function(b){
+    b.onclick=function(){
+      var pick=+b.dataset.i;
+      qHost.querySelectorAll(".opt").forEach(function(x,i){
+        x.disabled=true;
+        if(i===q.a)x.classList.add("right");
+        else if(i===pick)x.classList.add("wrong");
+      });
+      if(pick===q.a)qScore++;
+      document.getElementById("qFoot").innerHTML=
+        '<p class="expl">'+q.e+'</p>'+
+        '<div class="row"><button class="btn pri" id="qNext" style="margin-left:auto">'+
+        (qi===QS.length-1?"See results":"Next")+'</button></div>';
+      document.getElementById("qNext").onclick=function(){qi++;qRender()};
+    };
+  });
+}
+qRender();
+
+/* ═══════════ chain builder ═══════════ */
+var CHAINS=[
+{t:"Audio signal flow — source to speaker",
+  s:["Input Source","Input Gain","EQ","Channel Level","Mixer Output","FOH Speaker"]},
+{t:"Wireless mic path — mouth to console",
+  s:["Microphone","Transmitter","RF through air","Antenna","Receiver","XLR","Mixer"]},
+{t:"Audio room set order",
+  s:["Place speakers","Set tech table","Power speakers & table","Set receivers → signal to mixer","Set gain structure"]},
+{t:"Setting a wireless frequency",
+  s:["Connect antennas","Power up receiver","Hit scan","Push Enter to set","Sync mic at IR window"]},
+{t:"Setting levels on a channel — exact order",
+  s:["Input gain all the way down","Channel fader all the way down","Master fader to unity","Channel fader to unity (while talking)","Adjust input gain to taste"]},
+{t:"Polar patterns — widest pickup to narrowest",
+  s:["Omnidirectional","Cardioid","Supercardioid","Hypercardioid","Lobar"]},
+{t:"Qu-16 input channel chain",
+  s:["Source","Preamp (pad/48V/gain)","Trim / Polarity","HPF","Gate","Insert","PEQ","Comp","Delay","Mute","Fader","Pan","Assign"]},
+{t:"Qu-16 gain procedure",
+  s:["Kill the output","PAFL the channel","Set pad + 48V","Source at loudest realistic level","Gain to avg 0 / peak +6","Set the HPF","Drop PAFL, fader to unity"]},
+{t:"Building a mix-minus for a video call",
+  s:["Patch CH13, name VCIN","Assign CH13 to LR only","Select Mix 1","Set Mix 1 pre-fade","Assign mics + program to Mix 1","DE-ASSIGN CH13 from Mix 1","Get off the Mix 1 key","Test: 'can you hear yourself?'"]},
+{t:"Breakout room power-up",
+  s:["Everything down and off","Connect dSNAKE (if used)","Mixer ON at rear switch","Amps / powered speakers ON","Set screen brightness"]},
+{t:"Ringing out a room",
+  s:["Select LR, open GEQ tab","PAFL the mix","Press GEQ Fader Flip","Raise level until it just rings","Read the red dot on the RTA","Cut that band a few dB","Stop at 3–5 cuts"]}
+];
+var ci=0,cHost=document.getElementById("chainHost");
+function cRender(){
+  var c=CHAINS[ci];
+  var shuffled=c.s.map(function(s,i){return {s:s,i:i}}).sort(function(){return Math.random()-.5});
+  var h='<div class="qbox"><p style="color:var(--dim);font-size:12px;margin:0;letter-spacing:.5px">CHAIN '+(ci+1)+' OF '+CHAINS.length+'</p>'+
+        '<p class="qtext" style="margin:8px 0 0">'+c.t+'</p>'+
+        '<div class="slots" id="cSlots"></div><div id="cToks">';
+  shuffled.forEach(function(o){h+='<button class="tok" data-i="'+o.i+'">'+o.s+'</button>'});
+  h+='</div><div class="row" id="cFoot"><button class="btn" id="cClear">Clear</button>'+
+     '<button class="btn" id="cSkip" style="margin-left:auto">Next chain</button></div></div>';
+  cHost.innerHTML=h;
+  var next=0;
+  cHost.querySelectorAll(".tok").forEach(function(b){
+    b.onclick=function(){
+      var want=+b.dataset.i;
+      if(want===next){
+        b.classList.add("used");
+        var n=document.createElement("span");
+        n.className="tok ok";n.textContent=b.textContent;
+        var sl=document.getElementById("cSlots");
+        if(next>0){var ar=document.createElement("span");ar.className="arrow";ar.textContent="→";sl.appendChild(ar)}
+        sl.appendChild(n);
+        next++;
+        if(next===c.s.length){
+          document.getElementById("cFoot").insertAdjacentHTML("afterbegin",
+            '<span style="color:var(--audio);font-weight:600;font-size:14px">Chain complete.</span>');
+        }
+      } else {
+        b.classList.add("no");
+        setTimeout(function(){b.classList.remove("no")},450);
+      }
+    };
+  });
+  document.getElementById("cClear").onclick=cRender;
+  document.getElementById("cSkip").onclick=function(){ci=(ci+1)%CHAINS.length;cRender()};
+}
+cRender();
+
+/* ═══════════ pre-doors checklist ═══════════ */
+var CK=[
+"Firmware version checked on Home screen. iPad app version matches.",
+"User Profile confirmed as Admin.",
+"Power sequence correct: mixer on, THEN amps.",
+"Board zeroed — Scene 1 template or Reset Mix Settings.",
+"Every channel Source = Local verified. Global USB Source set.",
+"Every channel and mix named. Stereo pairs linked.",
+"Every mic gained on PAFL and gain-matched to the others.",
+"Every mic HPF set — 100 / 120 / 150 Hz per source type.",
+"PEQ and comp applied from a Channel Library, not from scratch.",
+"AMM on for speech mics ONLY. Master fader was down when you enabled it.",
+"DCA 1 = mics. DCA 2 = program. Both tested.",
+"Mute Group 1 = all mics, on SoftKey 1. Tested.",
+"All four SoftKeys assigned and Applied.",
+"Custom Layer built and physically labelled.",
+"Monitor / foldback mix built and set pre-fade.",
+"Assistive listening feed built and confirmed audible on a receiver.",
+"VIDEO CALL: CH13 assigned to LR.",
+"VIDEO CALL: CH13 DE-ASSIGNED from Mix 1. Verified twice.",
+"VIDEO CALL: FX returns de-assigned from Mix 1.",
+"VIDEO CALL: tested with a live human who confirmed they cannot hear themselves.",
+"Program audio level set with the presenter's actual loudest content.",
+"Room rung out. No more than 5 GEQ cuts.",
+"Walked the room and listened from three seats, not just the desk.",
+"Scene stored and named.",
+"Safes set on channels you'll keep touching.",
+"Global Filter blocking LR processing / GEQ.",
+"Show file written to USB.",
+"Recording test pass completed on the actual drive (if recording).",
+"NO BLUE MIX KEY IS LIT. You are looking at LR.",
+"Phones on, PAFL cleared, faders where you want them at doors."
+];
+var ckHost=document.getElementById("ckHost");
+if(ckHost){
+  var ckState={};
+  try{ckState=JSON.parse(store.get("audio_ck")||"{}")}catch(e){ckState={}}
+  var ckCount=document.getElementById("ckCount");
+  function ckSave(){store.set("audio_ck",JSON.stringify(ckState))}
+  function ckTally(){
+    var n=CK.filter(function(_,i){return ckState[i]}).length;
+    ckCount.textContent=n+" of "+CK.length+" complete";
+    ckCount.style.color = n===CK.length ? "var(--audio)" : "var(--dim)";
+  }
+  CK.forEach(function(t,i){
+    var d=document.createElement("div");
+    d.className="ckitem";
+    d.style.cssText="text-align:left;display:flex;gap:11px;align-items:flex-start;padding:11px 13px;margin-bottom:7px";
+    var vc = /VIDEO CALL|NO BLUE MIX/.test(t);
+    d.innerHTML='<span class="ckbox" style="flex:0 0 auto;width:19px;height:19px;border-radius:5px;'+
+      'border:1.5px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:800;margin-top:1px"></span>'+
+      '<span class="cktxt" style="font-size:13.5px;line-height:1.5'+(vc?';color:var(--warn);font-weight:600':'')+'">'+t+'</span>';
+    function paint(){
+      var on=!!ckState[i];
+      var box=d.querySelector(".ckbox"), tx=d.querySelector(".cktxt");
+      box.textContent = on?"✓":"";
+      box.style.background = on?"var(--audio)":"transparent";
+      box.style.borderColor = on?"var(--audio)":"var(--line)";
+      box.style.color = on?"#08130b":"transparent";
+      tx.style.opacity = on?".45":"1";
+      tx.style.textDecoration = on?"line-through":"none";
+      d.style.borderColor = on?"var(--line)":(vc?"rgba(227,179,65,.35)":"var(--line)");
+    }
+    d.onclick=function(){ckState[i]=!ckState[i];paint();ckSave();ckTally()};
+    paint();
+    ckHost.appendChild(d);
+  });
+  ckTally();
+  document.getElementById("ckReset").onclick=function(){
+    ckState={};ckSave();
+    ckHost.querySelectorAll(".ckitem").forEach(function(d){
+      var b=d.querySelector(".ckbox"),t=d.querySelector(".cktxt");
+      b.textContent="";b.style.background="transparent";b.style.borderColor="var(--line)";
+      t.style.opacity="1";t.style.textDecoration="none";
+    });
+    ckTally();
+  };
+}
+
+/* ═══════════ connector ID drill ═══════════ */
+document.querySelectorAll(".idgrid .idcard").forEach(function(c){
+  var nm=c.querySelector(".nm");
+  if(!nm) return;
+  c.onclick=function(){
+    var on=c.classList.toggle("open");
+    nm.textContent = on ? "" : "?";
+    nm.style.display = on ? "none" : "block";
+  };
+});
+
+/* ═══════════ scenarios ═══════════ */
+var SCN=[
+{w:"Hotel ballroom · 45 min to doors",
+  q:"You're the A2. You've scanned and set eight frequencies. Twenty minutes later, channel 4 is dropping out intermittently while the other seven are rock solid. The room has filled with about 200 people since your scan.",
+  a:"<b>Don't rescan first.</b> Check physical before RF: is the transmitter's antenna kinked or tucked under the pack, is the pack's battery low, is the lav cable strained at the connector.<br><br>If physical checks out, the likely cause is the room itself — 200 bodies absorb RF and a frequency that was clean in an empty room can now be marginal. <b>Rescan channel 4 only</b>, with the room populated. Also confirm your paddles are still up and clear — someone may have set a pipe-and-drape or a stack of chairs in front of them.<br><br><b>Order matters:</b> physical → battery → antenna path → rescan. Rescanning first hides a bad cable and you'll chase it again during the show."},
+{w:"Load-in · 6:00am call",
+  q:"You arrive and the plot shows the tech table at the back of the room, 180 feet from the stage. You need audio from two stage-side wireless receivers and video to a projector at the stage. What's your cable plan?",
+  a:"<b>Audio:</b> The receivers belong at the tech table, not the stage — RF travels through the air, so put the receivers where you can monitor them and run <b>paddle antennas</b> toward the stage. 180 ft is well inside paddle range (200–300 ft). Receivers → mixer over short XLR at the table. No 180 ft audio run needed at all.<br><br><b>Video:</b> 180 ft kills HDMI at 50 ft. Switcher → HDMI → converter → <b>SDI for the 180 ft run</b> → converter → HDMI → projector.<br><br><b>Then:</b> find the cleanest cable path, label both ends of every run, and confirm power is accessible at both the table and the stage before you commit to the route.<br><br><b>The insight:</b> the answer to a long run is rarely a long cable. It's putting the gear in the right place and choosing a transport that survives the distance."},
+{w:"Breakout room · client is standing there",
+  q:"You're the Audio Tech. The client asks you directly to add a second wireless handheld for Q&A, right now, ten minutes before their session. Your A1 is in the main ballroom.",
+  a:"<b>Be friendly, be brief, and route it.</b> 'Absolutely — let me get my A1 on it right away.' Then get on comms.<br><br>Why you don't just do it: an added channel needs a frequency coordinated against everything else running in the building, a channel on the console, gain set, and the A1 needs to know it exists so it's not muted or unassigned when someone talks into it. A handheld you quietly patch in is a handheld that feeds back or stays dead on air.<br><br><b>The principle:</b> minimal interaction while remaining friendly and helpful. Your position doesn't own that decision — but 'no' isn't your answer either. Route it fast and warmly."},
+{w:"General session · pre-show",
+  q:"You set your gain structure an hour ago with the room empty and it sounded great. Doors open, 400 people file in, and the same settings now sound thin and the presenter is asking to be turned up.",
+  a:"An empty room is reflective and bass-heavy; a full room absorbs. Your empty-room mix was flattered by reflections that 400 bodies just soaked up.<br><br><b>Don't just push the fader.</b> Work the structure: confirm your <b>gain/trim</b> is still giving you a healthy input level, then adjust. If you set trim conservatively you have headroom to work with — this is exactly why gain structure matters.<br><br>Watch feedback as you come up. Room absorption changed your feedback threshold too, usually in your favor, but the mic position relative to the speakers hasn't changed.<br><br><b>The lesson:</b> always leave yourself headroom at set-up. A mix with no room to move is a mix that fails the moment conditions change — and conditions always change."},
+{w:"Strike · 11:00pm",
+  q:"Show's over. Everyone's tired and the truck is waiting. What separates a professional strike from a sloppy one?",
+  a:"<b>Power down in reverse order</b> — amps and powered speakers off before sources, so you don't send a thump through the system.<br><br><b>Coil cable properly</b> (over-under) and keep your labels on. The next crew — possibly you — inherits whatever you do here. A snake coiled wrong is a snake with a broken conductor in six months.<br><br><b>Account for every piece.</b> Small converters, IR sync windows, antenna mounts, and power bricks are what go missing. They're also the exact items whose absence kills a load-in.<br><br><b>The principle from the deck applies in reverse:</b> don't rush your system. Rushing strike is how gear goes missing and how you get hurt at the end of a fourteen-hour day."}
+];
+var sh=document.getElementById("scnHost");
+SCN.forEach(function(s,i){
+  var d=document.createElement("div");
+  d.className="scn";
+  d.innerHTML='<div class="setting">'+s.w+'</div><p class="q">'+s.q+'</p>'+
+    '<button class="btn" data-i="'+i+'">How would you work it?</button>'+
+    '<div class="reveal">'+s.a+'</div>';
+  sh.appendChild(d);
+  var btn=d.querySelector("button"),rev=d.querySelector(".reveal");
+  btn.onclick=function(){
+    var on=rev.classList.toggle("on");
+    btn.textContent=on?"Hide":"How would you work it?";
+  };
+});
+
+})();
+
+/* ═══════════ gain structure simulator ═══════════ */
+(function(){
+  var host=document.getElementById("simGain"); if(!host) return;
+  var SRC={quiet:-8, norm:0, loud:-6};   // effective source level at the capsule
+  var SRCTXT={quiet:"Source: soft talker, leaning away from the mic",
+              norm:"Source: presenter at normal volume, empty room",
+              loud:"Source: room is full — bodies absorb, effective level drops"};
+  var src="norm";
+  var gain=document.getElementById("gsGain"), fad=document.getElementById("gsFad");
+  var MIN=-40, MAX=12, SPAN=MAX-MIN;              // meter scale
+  function pos(db){ return Math.max(0,Math.min(100,(db-MIN)/SPAN*100)); }
+
+  function render(){
+    var g=+gain.value, f=+fad.value, s=SRC[src];
+    var chan = s + g - 40;          // calibrated: normal source at +40 gain = 0 on the meter
+    var room = chan + f;            // fader scales it to the room
+    var pk = chan >= 9;
+
+    document.getElementById("gsGainV").textContent = (g>=0?"+":"")+g+" dB";
+    document.getElementById("gsFadV").textContent  = f===0 ? "0 (unity)" : (f>0?"+":"")+f;
+    document.getElementById("gsChanVal").textContent = (chan>=0?"+":"")+chan.toFixed(0);
+    document.getElementById("gsRoomVal").textContent = (room>=0?"+":"")+room.toFixed(0);
+    document.getElementById("gsSrc").textContent = SRCTXT[src];
+
+    var cf=document.getElementById("gsChanFill");
+    cf.style.height = pos(chan)+"%";
+    cf.className = "mfill" + (pk?" hot":"");
+    document.getElementById("gsRoomFill").style.height = pos(room)+"%";
+    document.getElementById("gsPk").className = "pkled" + (pk?" on":"");
+
+    // verdict
+    var v=document.getElementById("gsVerdict"), cls="ok", head="", body="";
+    if(pk){
+      cls="bad"; head="Clipping";
+      body="The channel is peaking into the red before the fader even sees it. No fader move fixes this — <b>pull the preamp gain down.</b> Distortion here is baked into everything downstream, including the recording.";
+    } else if(room < -6){
+      cls="warn"; head="Too quiet in the room";
+      body= f>=9
+        ? "The fader is nearly maxed and it's still not loud enough. <b>That's the tell: your gain is too low.</b> Bring the preamp up — chasing level with the fader lifts the noise floor along with the signal."
+        : "Bring the room up. If you find yourself pushing the fader well past unity to get there, stop and raise the gain instead.";
+    } else if(f <= -18){
+      cls="warn"; head="Fader buried";
+      body="The room level is fine, but the fader is sitting at "+f+". <b>Faders live around unity.</b> A fader down at "+f+" means the preamp is doing too much — pull gain back and bring the fader up toward 0. You have no room to ride it down if someone gets loud.";
+    } else if(f >= 8){
+      cls="warn"; head="Fader stretched";
+      body="You're at "+(f>0?"+":"")+f+" on the fader. It works right now, but you've got almost no travel left. Raise the preamp gain and bring the fader back to unity.";
+    } else if(chan >= 4 && chan < 9){
+      cls="ok"; head="Good — riding the top of the target";
+      body="Channel is averaging "+chan.toFixed(0)+", fader near unity. That's a healthy signal. For <b>speech in a live room</b> you might err a touch lower — feedback is the enemy, not noise.";
+    } else if(chan <= -12){
+      cls="warn"; head="Weak into the console";
+      body="The channel is only reading "+chan.toFixed(0)+". The room may be loud enough, but you're working close to the noise floor and you'll hear hiss when nobody's talking. Raise the gain.";
+    } else {
+      cls="ok"; head="Dialed in";
+      body="Channel averaging around 0, fader at "+(f===0?"unity":f)+". This is the target — meter near 0, headroom above it, fader where you can ride it in either direction.";
+    }
+    v.className="verdict "+cls;
+    v.innerHTML="<b>"+head+"</b>"+body;
+  }
+
+  gain.oninput=render; fad.oninput=render;
+  document.getElementById("gsQuiet").onclick=function(){src="quiet";render()};
+  document.getElementById("gsNorm").onclick =function(){src="norm"; render()};
+  document.getElementById("gsLoud").onclick =function(){src="loud"; render()};
+  document.getElementById("gsAuto").onclick=function(){
+    // solve for chan ≈ 0 with fader at unity
+    gain.value = 40 - SRC[src]; fad.value = 0; render();
+  };
+  document.getElementById("gsReset").onclick=function(){
+    gain.value=40; fad.value=0; src="norm"; render();
+  };
+  render();
+})();
+
+</script>
+</body>
+</html>
