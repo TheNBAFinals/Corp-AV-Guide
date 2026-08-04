@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lighting Field Guide</title>
+<meta name="description" content="Lighting for live events: fixtures, DMX, power and distro, consoles, atmospherics and rig workflow.">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="theme-color" content="#0d1117">
+<style>
+
+:root{
+  --bg:#0d1117; --bg2:#161b22; --bg3:#1c2430; --line:#2b3440;
+  --txt:#e6edf3; --dim:#8b98a5; --dimmer:#5c6773;
+  /* signal color code — used everywhere, consistently */
+  --audio:#3fb950;    /* XLR / analog audio — GREEN */
+  --rf:#f0883e;       /* RF / wireless / coax — ORANGE */
+  --video:#58a6ff;    /* HDMI / video — BLUE */
+  --sdi:#bc8cff;      /* SDI / BNC — PURPLE */
+  --power:#f85149;    /* IEC / power — RED */
+  --data:#39d0d8;     /* CAT / Dante / network — CYAN */
+  --warn:#e3b341;
+  --radius:14px;
+  font-synthesis:none;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--txt);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+a{color:var(--video)}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px 80px}
+
+/* ---------- header ---------- */
+header{
+  background:linear-gradient(160deg,#161b22 0%,#0d1117 100%);
+  border-bottom:1px solid var(--line);padding:28px 16px 22px;
+}
+header .inner{max-width:900px;margin:0 auto}
+h1{margin:0 0 6px;font-size:26px;letter-spacing:-.5px;line-height:1.2}
+.sub{color:var(--dim);font-size:14px;margin:0}
+.badge{display:inline-block;font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--rf);border:1px solid var(--rf);border-radius:99px;padding:3px 10px;margin-bottom:10px;font-weight:600}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:50;background:rgba(13,17,23,.94);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav .navinner{display:flex;gap:4px;max-width:900px;margin:0 auto;padding:8px 12px}
+nav button{
+  flex:0 0 auto;background:transparent;border:1px solid transparent;color:var(--dim);
+  font:600 13px/1 inherit;padding:9px 13px;border-radius:99px;cursor:pointer;white-space:nowrap;transition:.15s}
+nav button:hover{color:var(--txt);background:var(--bg2)}
+nav button[aria-selected="true"]{background:var(--bg3);color:var(--txt);border-color:var(--line)}
+
+/* ---------- panels ---------- */
+.panel{display:none;animation:fade .25s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2{font-size:20px;margin:30px 0 4px;letter-spacing:-.3px}
+h2:first-child{margin-top:26px}
+h3{font-size:15px;margin:22px 0 8px;color:var(--txt)}
+.lede{color:var(--dim);margin:0 0 18px;font-size:14.5px}
+
+/* ---------- cards ---------- */
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 18px;margin:12px 0}
+.card h4{margin:0 0 6px;font-size:15.5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card p{margin:0;color:var(--dim);font-size:14.5px}
+.card p+p{margin-top:8px}
+.card.L{border-left:3px solid var(--line)}
+.card.audio{border-left-color:var(--audio)} .card.rf{border-left-color:var(--rf)}
+.card.video{border-left-color:var(--video)} .card.sdi{border-left-color:var(--sdi)}
+.card.power{border-left-color:var(--power)} .card.data{border-left-color:var(--data)}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+
+.pill{font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;
+  padding:3px 8px;border-radius:5px;white-space:nowrap}
+.p-audio{background:rgba(63,185,80,.15);color:var(--audio)}
+.p-rf{background:rgba(240,136,62,.15);color:var(--rf)}
+.p-video{background:rgba(88,166,255,.15);color:var(--video)}
+.p-sdi{background:rgba(188,140,255,.15);color:var(--sdi)}
+.p-power{background:rgba(248,81,73,.15);color:var(--power)}
+.p-data{background:rgba(57,208,216,.15);color:var(--data)}
+
+/* ---------- key callout ---------- */
+.key{background:rgba(227,179,65,.08);border:1px solid rgba(227,179,65,.3);
+  border-radius:10px;padding:12px 14px;margin:14px 0;font-size:14px}
+.key b{color:var(--warn)}
+
+/* ---------- legend ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 4px}
+.legend span{font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:6px}
+
+/* ---------- signal chain visual ---------- */
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:14px 0}
+.node{background:var(--bg3);border:1px solid var(--line);border-radius:9px;
+  padding:8px 12px;font-size:13px;font-weight:600}
+.arrow{color:var(--dimmer);font-size:14px;font-weight:700}
+.arrow.a-audio{color:var(--audio)} .arrow.a-rf{color:var(--rf)}
+.arrow.a-video{color:var(--video)} .arrow.a-sdi{color:var(--sdi)}
+
+/* ---------- figures ---------- */
+.fig{background:#090d12;border:1px solid var(--line);border-radius:11px;
+  padding:16px 12px 12px;margin:14px 0}
+.fig svg{display:block;width:100%;height:auto;max-width:430px;margin:0 auto}
+.figcap{font-size:12px;color:var(--dimmer);text-align:center;margin-top:10px;line-height:1.55}
+.figcap b{color:var(--dim)}
+svg .s{fill:none;stroke:#8b98a5;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+svg .sf{fill:#1c2430;stroke:#8b98a5;stroke-width:2;stroke-linejoin:round}
+svg .sd{fill:#0d1117;stroke:#5c6773;stroke-width:1.5}
+svg .met{fill:#3f4a57;stroke:#8b98a5;stroke-width:1.5}
+svg .gold{fill:#c9a227}
+svg .hl{fill:none;stroke-width:2;stroke-dasharray:5 4}
+svg .lead{stroke-width:1.4;fill:none}
+svg text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+svg .lbl{font-size:11px;font-weight:600;fill:#8b98a5}
+svg .num{font-size:10px;font-weight:700;fill:#0d1117}
+svg .tag{font-size:11.5px;font-weight:800;letter-spacing:.5px}
+svg .cap{font-size:12px;font-weight:700;fill:#e6edf3}
+.c-audio{stroke:#3fb950} .f-audio{fill:#3fb950}
+.c-rf{stroke:#f0883e} .f-rf{fill:#f0883e}
+.c-video{stroke:#58a6ff} .f-video{fill:#58a6ff}
+.c-sdi{stroke:#bc8cff} .f-sdi{fill:#bc8cff}
+.c-power{stroke:#f85149} .f-power{fill:#f85149}
+.c-data{stroke:#39d0d8} .f-data{fill:#39d0d8}
+.c-warn{stroke:#e3b341} .f-warn{fill:#e3b341}
+
+/* ---------- connector ID drill ---------- */
+.idgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.idcard{background:var(--bg2);border:1px solid var(--line);border-radius:11px;padding:12px;
+  cursor:pointer;text-align:center;transition:.15s}
+.idcard:hover{border-color:var(--dimmer)}
+.idcard svg{width:100%;height:auto;max-width:130px}
+.idcard .nm{font-size:12.5px;font-weight:700;margin-top:8px}
+.idcard .rv{font-size:11.5px;color:var(--dim);margin-top:5px;display:none;line-height:1.5}
+.idcard.open .rv{display:block}
+.idcard.open{border-color:var(--rf)}
+.ckitem{background:var(--bg2);border:1px solid var(--line);border-radius:11px;cursor:pointer;transition:.15s}
+.ckitem:hover{border-color:var(--dimmer)}
+
+/* ---------- ordered steps ---------- */
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:14px 0}
+ol.steps li{counter-increment:s;position:relative;padding:12px 14px 12px 48px;
+  background:var(--bg2);border:1px solid var(--line);border-radius:10px;margin-bottom:8px;font-size:14.5px}
+ol.steps li::before{content:counter(s);position:absolute;left:14px;top:11px;
+  width:22px;height:22px;border-radius:50%;background:var(--bg3);border:1px solid var(--line);
+  color:var(--rf);font-size:12px;font-weight:700;display:grid;place-items:center}
+
+ul.chk{list-style:none;padding:0;margin:12px 0}
+ul.chk li{padding:9px 12px 9px 32px;position:relative;font-size:14.5px;color:var(--dim);
+  border-bottom:1px solid var(--line)}
+ul.chk li:last-child{border-bottom:none}
+ul.chk li::before{content:"▸";position:absolute;left:12px;color:var(--audio);font-weight:700}
+
+/* ---------- table ---------- */
+.tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;display:block;overflow-x:auto}
+.tbl th,.tbl td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl th{color:var(--dim);font-size:11.5px;text-transform:uppercase;letter-spacing:.6px}
+
+/* ---------- buttons ---------- */
+.btn{background:var(--bg3);border:1px solid var(--line);color:var(--txt);
+  font:600 14px/1 inherit;padding:11px 18px;border-radius:9px;cursor:pointer;transition:.15s}
+.btn:hover{border-color:var(--dimmer)}
+.btn.pri{background:var(--audio);border-color:var(--audio);color:#08130b}
+.btn.pri:hover{filter:brightness(1.1)}
+.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:14px 0}
+
+/* ---------- flashcards ---------- */
+.fcstage{perspective:1200px;margin:16px 0}
+.fc{position:relative;min-height:190px;cursor:pointer;transition:transform .5s;
+  transform-style:preserve-3d}
+.fc.flip{transform:rotateY(180deg)}
+.fcface{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:var(--radius);border:1px solid var(--line);background:var(--bg2);
+  padding:24px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.fcback{transform:rotateY(180deg);background:var(--bg3)}
+.fcq{font-size:18px;font-weight:600;line-height:1.4}
+.fca{font-size:15px;color:var(--dim);line-height:1.6}
+.fchint{position:absolute;bottom:12px;left:0;right:0;text-align:center;
+  font-size:11px;color:var(--dimmer);letter-spacing:.5px;text-transform:uppercase}
+.counter{font-size:13px;color:var(--dim);font-variant-numeric:tabular-nums}
+
+/* ---------- quiz ---------- */
+.qbox{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:16px 0}
+.qtext{font-size:16.5px;font-weight:600;margin:0 0 16px;line-height:1.45}
+.opt{display:block;width:100%;text-align:left;background:var(--bg3);border:1px solid var(--line);
+  color:var(--txt);font:15px/1.45 inherit;padding:13px 15px;border-radius:10px;margin-bottom:9px;
+  cursor:pointer;transition:.15s}
+.opt:hover:not(:disabled){border-color:var(--dimmer)}
+.opt.right{border-color:var(--audio);background:rgba(63,185,80,.12)}
+.opt.wrong{border-color:var(--power);background:rgba(248,81,73,.12)}
+.opt:disabled{cursor:default}
+.expl{font-size:14px;color:var(--dim);border-left:3px solid var(--rf);
+  padding:2px 0 2px 12px;margin:14px 0 0}
+.bar{height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;margin:6px 0 0}
+.bar i{display:block;height:100%;background:var(--audio);width:0;transition:width .3s}
+.score{font-size:44px;font-weight:800;letter-spacing:-2px;margin:6px 0}
+
+/* ---------- chain builder ---------- */
+.slots{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:12px;
+  background:var(--bg2);border:1px dashed var(--line);border-radius:12px;margin:12px 0;align-items:center}
+.slots:empty::before{content:"Tap the pieces below in order…";color:var(--dimmer);font-size:13.5px}
+.tok{background:var(--bg3);border:1px solid var(--line);border-radius:8px;padding:9px 13px;
+  font-size:13.5px;font-weight:600;cursor:pointer;transition:.15s}
+.tok:hover{border-color:var(--dimmer)}
+.tok.used{opacity:.25;pointer-events:none}
+.tok.ok{border-color:var(--audio);color:var(--audio)}
+.tok.no{border-color:var(--power);color:var(--power)}
+
+/* ---------- scenario ---------- */
+.scn{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--rf);
+  border-radius:var(--radius);padding:18px;margin:14px 0}
+.scn .setting{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--rf);
+  font-weight:700;margin-bottom:8px}
+.scn .q{font-size:15px;margin:0 0 12px;line-height:1.55}
+.reveal{display:none;border-top:1px solid var(--line);margin-top:14px;padding-top:14px;
+  font-size:14.5px;color:var(--dim);line-height:1.65}
+.reveal.on{display:block}
+.reveal b{color:var(--txt)}
+
+footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
+  color:var(--dimmer);font-size:12.5px;text-align:center;line-height:1.7}
+@media(max-width:520px){
+  h1{font-size:22px} .wrap{padding:0 13px 70px} .card{padding:14px 15px}
+  .score{font-size:38px}
+}
+
+/* ---------- simulators ---------- */
+.sim{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin:14px 0}
+.simrow{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start}
+.simmeters{display:flex;gap:16px;flex:0 0 auto}
+.mtr{width:64px;text-align:center;position:relative}
+.mtrbar{position:relative;height:230px;width:34px;margin:0 auto;border-radius:5px;
+  overflow:hidden;background:#05080b;border:1px solid var(--line)}
+.mzone{position:absolute;left:0;right:0}
+.mclip{top:0;height:26%;background:rgba(248,81,73,.16)}
+.mgood{top:26%;height:52%;background:rgba(63,185,80,.12)}
+.mnoise{bottom:0;height:22%;background:rgba(92,103,115,.16)}
+.mfill{position:absolute;left:3px;right:3px;bottom:0;border-radius:3px;
+  background:linear-gradient(180deg,#3fb950,#2a7f38);transition:height .12s}
+.mfill.room{background:linear-gradient(180deg,#58a6ff,#2b6cb8)}
+.mfill.hot{background:linear-gradient(180deg,#f85149,#a4322c)}
+.mtick{position:absolute;left:0;right:0;height:1px;background:rgba(230,237,243,.45)}
+.mtick span{position:absolute;right:-24px;top:-7px;font-size:9.5px;color:var(--dim);font-weight:700}
+.mlbl{font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--dim);margin-top:9px;line-height:1.5}
+.mlbl span{color:var(--txt);font-size:13px;font-variant-numeric:tabular-nums}
+.pkled{position:absolute;top:-19px;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:800;
+  padding:2px 7px;border-radius:4px;border:1px solid var(--line);color:var(--dimmer);letter-spacing:.5px}
+.pkled.on{background:var(--power);border-color:var(--power);color:#fff}
+.simctl{flex:1 1 250px;min-width:230px}
+.slab{display:block;font-size:11px;font-weight:700;letter-spacing:.7px;color:var(--dim);margin-bottom:7px}
+.slab b{float:right;color:var(--txt);font-variant-numeric:tabular-nums;letter-spacing:0}
+.simctl input[type=range]{width:100%;accent-color:var(--audio);height:26px}
+.srange{display:flex;justify-content:space-between;font-size:10px;color:var(--dimmer);margin-top:-2px}
+.srcnote{margin-top:10px;font-size:12px;color:var(--dimmer)}
+.verdict{margin-top:16px;border-left:3px solid var(--line);padding:11px 14px;
+  background:var(--bg3);border-radius:0 9px 9px 0;font-size:14px;line-height:1.6}
+.verdict b{display:block;margin-bottom:4px;font-size:13px;letter-spacing:.4px;text-transform:uppercase}
+.verdict.ok{border-left-color:var(--audio)} .verdict.ok b{color:var(--audio)}
+.verdict.warn{border-left-color:var(--warn)} .verdict.warn b{color:var(--warn)}
+.verdict.bad{border-left-color:var(--power)} .verdict.bad b{color:var(--power)}
+@media(max-width:520px){.simrow{gap:16px}.mtrbar{height:180px;width:30px}.mtr{width:56px}}
+
+/* ---------- rig builder ---------- */
+.rigwrap{background:#05080b;border:1px solid var(--line);border-radius:11px;padding:8px;overflow-x:auto}
+.rigwrap svg{width:100%;min-width:520px;height:auto;display:block}
+.fx{cursor:pointer}
+.fxbody{fill:#1c2430;stroke:#5c6773;stroke-width:2}
+.fx.sel .fxbody{stroke:#3fb950;stroke-width:2.5}
+.fx.dead .fxbody{stroke:#f85149;fill:#2a1416}
+.fx.flick .fxbody{stroke:#e3b341;stroke-dasharray:4 3}
+.fxlbl{font-size:10px;font-weight:700;fill:#8b98a5}
+.fxnum{font-size:11px;font-weight:800;fill:#e6edf3}
+.dxline{fill:none;stroke:#bc8cff;stroke-width:2.5;stroke-linecap:round}
+.dxline.bad{stroke:#f85149;stroke-dasharray:5 4}
+.uni{height:26px;border-radius:5px;background:#05080b;border:1px solid var(--line);
+  position:relative;overflow:hidden;margin-bottom:10px}
+.uni i{position:absolute;top:0;bottom:0;border-right:1px solid rgba(13,17,23,.8)}
+.addrlist{font-size:12px;color:var(--dim);line-height:1.9;font-variant-numeric:tabular-nums;
+  max-height:190px;overflow-y:auto}
+.addrlist b{color:var(--txt)}
+.addrlist .over{color:var(--power)}
+
+/* ---------- wall sim ---------- */
+.pn{cursor:pointer}
+.pnb{fill:#141a21;stroke:#3a4652;stroke-width:1.5}
+.pn.on .pnb{fill:#16241a;stroke:#3fb950;stroke-width:2}
+.pn.p1 .pnb{stroke:#3fb950} .pn.p2 .pnb{stroke:#58a6ff}
+.pn.p3 .pnb{stroke:#f0883e} .pn.p4 .pnb{stroke:#bc8cff}
+.pn.dead .pnb{fill:#2a1416;stroke:#f85149}
+.pnn{font-size:10px;font-weight:700;fill:#8b98a5}
+.lwline{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.lwline.c1{stroke:#3fb950}.lwline.c2{stroke:#58a6ff}.lwline.c3{stroke:#f0883e}.lwline.c4{stroke:#bc8cff}
+.lwline.bk{stroke:#39d0d8;stroke-dasharray:5 4;stroke-width:2}
+.wallprev{background:#05080b;border:1px solid var(--line);border-radius:9px;padding:10px;
+  display:grid;gap:2px;margin-bottom:12px;min-height:110px;align-content:center}
+.wallprev span{background:#1c2430;border:1px solid #2b3440;border-radius:2px;aspect-ratio:1}
+.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.statgrid div{background:var(--bg3);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+.statgrid b{display:block;font-size:10px;letter-spacing:.6px;color:var(--dimmer);text-transform:uppercase}
+.statgrid span{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+
+.homelink{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--dim);
+  text-decoration:none;margin-bottom:12px;padding:5px 11px;border:1px solid var(--line);
+  border-radius:99px;transition:.15s}
+.homelink:hover{color:var(--txt);border-color:var(--dimmer)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <a class="homelink" href="../">← All guides</a>
+    <div class="badge" style="color:var(--warn);border-color:var(--warn)">Live Events · Lighting</div>
+    <h1>Lighting Field Guide</h1>
+    <p class="sub">Fixtures, DMX, power, consoles and rig workflow — built to drill, not to read. Works offline.</p>
+  </div>
+</header>
+
+<nav role="tablist"><div class="navinner" id="nav"></div></nav>
+
+<div class="wrap">
+<section class="panel on" id="p-start">
+  <h2>How to use this</h2>
+  <p class="lede">Read the reference tabs once. Then live in the <b>Simulators</b>, <b>Drills</b> and <b>Scenarios</b> — that is where it sticks.</p>
+  <div class="key">
+    <b>The idea underneath all of lighting:</b> a console sends numbers, a cable carries them, and a fixture turns its number into light. Every fault is one of those three failing. <b>Is it addressed right, is it cabled right, is it powered right</b> — in that order, every time.
+  </div>
+  <h3>Color code</h3>
+  <div class="legend">
+    <span class="pill p-sdi">DMX · Data</span>
+    <span class="pill p-power">Mains · Distro</span>
+    <span class="pill p-warn">Conventionals</span>
+    <span class="pill p-audio">LED · Movers</span>
+    <span class="pill p-data">Network · Art-Net</span>
+  </div>
+  <h3>What's in here</h3>
+  <div class="grid">
+    <div class="card L warn"><h4>Fixtures</h4><p>Conventionals, LED, movers, blinders, followspots — and how to read a spec sheet.</p></div>
+    <div class="card L sdi"><h4>DMX &amp; Cable</h4><p>Addressing, universes, daisy chains, terminators, wireless, and every cable type.</p></div>
+    <div class="card L audio"><h4>Simulators</h4><p>Cable a rig yourself and watch it fail properly. Plus an address calculator.</p></div>
+    <div class="card L power"><h4>Power</h4><p>Distro, dimmers, load maths, and where your job stops.</p></div>
+    <div class="card L video"><h4>Consoles</h4><p>The five stages every desk follows, and the families you will meet.</p></div>
+    <div class="card L data"><h4>Haze &amp; Workflow</h4><p>Atmospherics, the fire alarm conversation, and set order.</p></div>
+  </div>
+  <div class="key" style="border-color:rgba(227,179,65,.3);background:rgba(227,179,65,.06)">
+    <b style="color:var(--warn)">Save this to your phone.</b> Share → Add to Home Screen. Opens like an app and works with no signal.
+  </div>
+</section>
+
+<section class="panel" id="p-fixtures">
+  <h2>Fixture Families</h2>
+  <p class="lede">Every fixture on a truck is doing one of four jobs: <b>a hard-edged beam you can shape</b>, <b>a soft wash of colour</b>, <b>a narrow shaft you can see in the air</b>, or <b>raw output at the audience</b>. Learn the four jobs and the model names stop mattering.</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 210" role="img" aria-label="Four fixture jobs: profile, wash, beam, blinder">
+      <g transform="translate(14,16)">
+        <path class="sf" d="M14 20 h44 v34 h-44 z"/><rect class="met" x="58" y="26" width="12" height="22" rx="2"/>
+        <path class="f-warn" opacity=".35" d="M70 30 L128 12 L128 62 L70 44 z"/>
+        <path class="s c-warn" d="M70 30 L128 12 M70 44 L128 62"/>
+        <text class="cap" x="60" y="88" text-anchor="middle">PROFILE / LEKO</text>
+        <text class="lbl" x="60" y="103" text-anchor="middle">hard edge, shutters,</text>
+        <text class="lbl" x="60" y="116" text-anchor="middle">gobo, framing</text>
+      </g>
+      <g transform="translate(224,16)">
+        <path class="sf" d="M14 20 h44 v34 h-44 z"/><rect class="met" x="58" y="24" width="14" height="26" rx="2"/>
+        <path class="f-audio" opacity=".28" d="M72 24 L166 -4 L166 74 L72 50 z"/>
+        <text class="cap" x="80" y="88" text-anchor="middle">WASH</text>
+        <text class="lbl" x="80" y="103" text-anchor="middle">soft, wide, no edge —</text>
+        <text class="lbl" x="80" y="116" text-anchor="middle">colour on a surface</text>
+      </g>
+      <path class="s" style="stroke:#2b3440" d="M14 138 h392"/>
+      <g transform="translate(14,146)">
+        <path class="sf" d="M14 14 h40 v28 h-40 z"/><rect class="met" x="54" y="20" width="10" height="16" rx="2"/>
+        <path class="f-video" opacity=".5" d="M64 24 L150 20 L150 36 L64 32 z"/>
+        <text class="cap" x="60" y="58" text-anchor="middle">BEAM</text>
+      </g>
+      <g transform="translate(224,146)">
+        <rect class="sf" x="14" y="14" width="60" height="28" rx="3"/>
+        <g class="f-warn" opacity=".75"><circle cx="27" cy="22" r="5"/><circle cx="44" cy="22" r="5"/><circle cx="61" cy="22" r="5"/>
+          <circle cx="27" cy="34" r="5"/><circle cx="44" cy="34" r="5"/><circle cx="61" cy="34" r="5"/></g>
+        <path class="f-warn" opacity=".18" d="M74 4 L160 -6 L160 62 L74 52 z"/>
+        <text class="cap" x="80" y="58" text-anchor="middle">BLINDER / STROBE</text>
+      </g>
+    </svg>
+    <div class="figcap"><b>Beam angle is the whole personality of a fixture.</b> Narrow = you see the shaft in the air and it punches a long throw. Wide = you see the light on the surface and nothing in between. Everything else is refinement.</div>
+  </div>
+
+  <h3>Conventionals — no motors, no electronics</h3>
+  <div class="card L warn">
+    <h4>Ellipsoidal / Leko / Profile <span class="pill p-warn">hard edge</span></h4>
+    <p>The workhorse of theatre and corporate. A lens tube with <b>four shutters</b>, a <b>gobo slot</b>, and an <b>iris</b> option. Cuts a crisp shape you can shape off a podium, a banner, or a doorway.</p>
+    <p><b>The number on the side is the beam angle</b> — a 19° is a tight long throw, a 36° is a medium, a 50° covers wide and close. <b>Source Four</b> is the model name you'll hear most; the barrel is interchangeable so the same body becomes any angle.</p>
+    <p><b>Focus:</b> run the lens tube in/out for edge (sharp vs. soft), rotate the barrel to line the shutters up with what you're cutting.</p>
+  </div>
+  <div class="card L warn">
+    <h4>PAR can</h4>
+    <p>A sealed lamp in a tube. No shutters, no focus — the <b>lamp itself</b> determines the beam. Oval-shaped output you aim by <b>rotating the lamp</b> in the can. Cheap, rugged, and it's what colour-washes rock stages for fifty years running. PAR64 is the standard size; LED PARs have largely replaced them for corporate.</p>
+  </div>
+  <div class="card L warn">
+    <h4>Fresnel</h4>
+    <p>Stepped lens, <b>soft-edged</b> output, and a knob that slides the lamp to go <b>spot to flood</b>. No shutters — you shape it with barn doors. The soft edge means adjacent fixtures blend invisibly, which is why they light film and TV sets.</p>
+  </div>
+  <div class="card L warn">
+    <h4>Cyc lights / striplights / borderlights</h4>
+    <p>Long asymmetric fixtures that wash a <b>cyclorama or backdrop evenly from top to bottom</b>. Asymmetric reflector throws more light at the far part of the cloth so the wash doesn't hot-spot at the top. Usually in 3 or 4 colour circuits.</p>
+  </div>
+
+  <h3>LED fixtures</h3>
+  <div class="card L audio">
+    <h4>LED wash / zoom <span class="pill p-audio">the corporate default</span></h4>
+    <p>An array of multi-colour emitters with a <b>motorised zoom</b>. The Artfox <b>Solar</b> and <b>Beam Wash</b> families are typical: 19 × 40 W RGBW, zoom roughly <b>4° to 60°</b>. One fixture covers tight beam through wide wash.</p>
+    <p><b>Colour mixing:</b> RGBW adds white for pastels and better skin tone. RGBWA adds amber. Reading a spec, more emitter colours means better colour rendering and a higher price.</p>
+    <p><b>Pixel / ring control</b> means each LED — or each concentric ring — addresses individually, so the fixture becomes an effects device, not just a light. That's what "Ring" in a model name usually signals.</p>
+  </div>
+  <div class="card L audio">
+    <h4>LED PAR / static wash</h4>
+    <p>No pan/tilt, no zoom or a manual one. Uplighting a ballroom, washing drape, colouring a set piece. Cheap enough to deploy in dozens, and battery-powered versions exist for anywhere you can't run cable.</p>
+  </div>
+  <div class="card L power">
+    <h4>Blinder / strobe <span class="pill p-power">at the audience</span></h4>
+    <p>Raw output pointed at the crowd. Traditional blinders are 2, 4 or 8 <b>PAR-64 lamps in a cluster</b>; modern ones are <b>COB LED</b> panels with individual cell control and a strobe engine.</p>
+    <p><b>Handle with judgment.</b> A blinder hit is an effect, not a look. And warn anyone with photosensitivity concerns — strobe is a genuine medical trigger, and most venues require signage.</p>
+  </div>
+
+  <h3>Moving lights</h3>
+  <p class="lede">Every moving light is a conventional fixture with motors on the yoke and a colour/beam system inside. The trade names describe <b>what the optics do</b>, not who makes it.</p>
+
+  <table class="tbl">
+    <tr><th>Type</th><th>Optics</th><th>What it's for</th></tr>
+    <tr><td><b style="color:var(--warn)">Spot</b></td><td>Hard edge, gobo wheels, iris, sometimes framing shutters</td><td>Projected texture, breakups, aerial gobos, key light</td></tr>
+    <tr><td><b style="color:var(--audio)">Wash</b></td><td>Soft edge, zoom, no gobos</td><td>Colour on people and surfaces, stage washes</td></tr>
+    <tr><td><b style="color:var(--video)">Beam</b></td><td>Very narrow fixed angle, tiny lens</td><td>Aerial shafts you see in haze. Useless as a light on people.</td></tr>
+    <tr><td><b style="color:var(--sdi)">Hybrid</b></td><td>All three in one body — beam / spot / wash modes</td><td>When you can only afford one fixture per position</td></tr>
+    <tr><td><b style="color:var(--rf)">Profile</b></td><td>Spot plus <b>framing shutters</b></td><td>Cutting light off a screen, a wall, a person's edge</td></tr>
+  </table>
+
+  <div class="card L sdi">
+    <h4>Reading a moving light spec sheet</h4>
+    <p><b>Light source</b> — discharge lamp (the "R" numbers: 14R, 18R, 20R = lamp wattage class) or LED. Discharge is brighter per dollar and hotter; LED is dimmable to zero, instant-on, and colour-stable.</p>
+    <p><b>CMY</b> — cyan/magenta/yellow flags that slide in to subtract colour. Continuous mixing, any shade. <b>Colour wheel</b> — fixed dichroic filters that snap to a colour. Most fixtures have both.</p>
+    <p><b>CTO</b> — colour temperature orange. Warms a cold source down toward tungsten so it matches conventionals.</p>
+    <p><b>Gobo wheels</b> — <i>rotating</i> gobos can spin and index; <i>static</i> ones just snap in. "9 rotating + 1 open" means nine patterns plus a clear position.</p>
+    <p><b>Prism</b> — splits the beam into multiple images. 3-facet, 8-facet, linear, circular. Rotates.</p>
+    <p><b>Frost</b> — diffusion that softens a hard edge toward a wash.</p>
+    <p><b>Animation wheel</b> — a moving texture plate for fire, water, cloud effects.</p>
+    <p><b>IP rating</b> — IP65 means it lives outside in the rain. IP20 means it does not.</p>
+  </div>
+
+  <div class="key">
+    <b>The one thing to check before you hang anything:</b> the <b>DMX channel count and mode</b>. The same fixture might be 16 channels in basic mode and 45 in extended. Hang forty of them in the wrong mode and your patch, your addressing, and your universe count are all wrong. <b>Confirm the mode with the LD before you address the first fixture.</b>
+  </div>
+
+  <h3>Followspots</h3>
+  <div class="card L warn">
+    <h4>Running a spot</h4>
+    <p><b>The controls:</b> iris (beam size), douser (fade in/out without changing the iris), colour boomerang (flip-in colour frames), and the focus knob for edge.</p>
+    <p><b>Pick-up:</b> you're told a <b>size</b> (head, head-and-shoulders, waist, full body) and a <b>colour frame</b>. Set the iris before you open the douser — never hunt for the size with the light live on the artist.</p>
+    <p><b>Framing the body:</b> keep the person centred with a little more room above the head than below the feet. Lead their movement slightly rather than chasing it.</p>
+    <p><b>Comms is the job.</b> You're on headset taking calls from the spot caller. Acknowledge every call, and if you lose your pickup, say so immediately — silence is worse than a mistake.</p>
+    <p><b>Remote followspot systems</b> (Follow-Me and similar) put a camera and a tracker on the rig and let one operator drive moving lights as spots from front of house. 4Wall carries both the fader and mouse consoles for it.</p>
+  </div>
+
+  <h3>Effects</h3>
+  <ul class="chk">
+    <li><b>Blacklight / UV</b> — makes white and fluorescent materials glow. Popular for themed events and glow-paint activations.</li>
+    <li><b>Lasers</b> — a separate discipline with real regulation. In the US, laser shows over audiences require a <b>variance</b>, and audience-scanning has strict power limits. Never operate one you haven't been trained on.</li>
+    <li><b>Strobes</b> — the medical caution applies. Signage and a heads-up to the client.</li>
+    <li><b>Mirror balls, gobo rotators, effect wheels</b> — mechanical texture, still very much in use.</li>
+  </ul>
+</section>
+<section class="panel" id="p-dmx">
+  <h2>DMX — how fixtures actually get told what to do</h2>
+  <p class="lede">DMX512 is a one-way conversation. The console talks, every fixture listens, and nothing ever talks back. Understand that sentence and most DMX problems explain themselves.</p>
+
+  <div class="key">
+    <b>The whole protocol in four facts:</b><br>
+    <b>1.</b> A <b>universe</b> is <b>512 channels</b>. That's the hard ceiling.<br>
+    <b>2.</b> Each fixture claims a <b>block of consecutive channels</b> starting at its <b>address</b>.<br>
+    <b>3.</b> Data travels <b>in one direction down a daisy chain</b> — out of the console, into fixture 1, out of fixture 1, into fixture 2, and so on.<br>
+    <b>4.</b> The <b>last fixture in the chain needs a terminator</b>, or the signal reflects back up the line and corrupts everything.
+  </div>
+
+  <h3>Addressing — the part people get wrong</h3>
+  <div class="fig">
+    <svg viewBox="0 0 420 200" role="img" aria-label="DMX addressing: fixtures claim consecutive channel blocks">
+      <text class="tag f-audio" x="10" y="14">UNIVERSE 1 — 512 CHANNELS</text>
+      <rect class="sd" x="10" y="22" width="400" height="30" rx="4"/>
+      <rect class="f-audio" opacity=".45" x="12" y="24" width="70" height="26"/>
+      <rect class="f-video" opacity=".45" x="84" y="24" width="70" height="26"/>
+      <rect class="f-sdi" opacity=".45" x="156" y="24" width="70" height="26"/>
+      <rect class="f-warn" opacity=".45" x="228" y="24" width="70" height="26"/>
+      <text class="lbl" x="47" y="41" text-anchor="middle" style="fill:#e6edf3">1–16</text>
+      <text class="lbl" x="119" y="41" text-anchor="middle" style="fill:#e6edf3">17–32</text>
+      <text class="lbl" x="191" y="41" text-anchor="middle" style="fill:#e6edf3">33–48</text>
+      <text class="lbl" x="263" y="41" text-anchor="middle" style="fill:#e6edf3">49–64</text>
+      <text class="lbl" x="354" y="41" text-anchor="middle">…free…</text>
+      <text class="lbl" x="47" y="66" text-anchor="middle">FIX 1</text>
+      <text class="lbl" x="119" y="66" text-anchor="middle">FIX 2</text>
+      <text class="lbl" x="191" y="66" text-anchor="middle">FIX 3</text>
+      <text class="lbl" x="263" y="66" text-anchor="middle">FIX 4</text>
+      <text class="lbl f-audio" x="10" y="92">16-channel fixtures → addresses 1, 17, 33, 49, 65 …</text>
+
+      <path class="s" style="stroke:#2b3440" d="M10 106 h400"/>
+      <text class="tag f-power" x="10" y="128">THE OVERLAP MISTAKE</text>
+      <rect class="sd" x="10" y="136" width="400" height="28" rx="4"/>
+      <rect class="f-audio" opacity=".45" x="12" y="138" width="70" height="24"/>
+      <rect class="f-power" opacity=".55" x="48" y="138" width="70" height="24"/>
+      <text class="lbl" x="47" y="153" text-anchor="middle" style="fill:#e6edf3">1–16</text>
+      <text class="lbl" x="96" y="153" text-anchor="middle" style="fill:#e6edf3">9–24</text>
+      <path class="hl c-power" d="M48 134 h34 v32 h-34 z"/>
+      <text class="lbl f-power" x="10" y="184">Overlapping blocks — both fixtures respond to channels 9–16. They move together and you cannot separate them.</text>
+    </svg>
+    <div class="figcap"><b>The maths you actually do on a floor:</b> next address = this address + this fixture's channel count. A 16-channel fixture at 1 puts the next one at 17. Get the channel count wrong and every fixture after it is wrong too.</div>
+  </div>
+
+  <div class="card L audio">
+    <h4>How many fixtures fit in a universe?</h4>
+    <p><b>512 ÷ channel count.</b> A 16-channel wash → 32 fixtures. A 45-channel extended-mode moving light → 11 fixtures. That's why mode matters so much: switching modes can double your universe count and your node requirement.</p>
+    <p><b>Fixtures can share an address deliberately.</b> Ten uplights all at 001 will do exactly the same thing forever, which is often what you want — one channel block controls the whole colour wash. Just know you're doing it on purpose.</p>
+  </div>
+
+  <h2>DMX Cable</h2>
+  <div class="card L sdi">
+    <h4>5-pin vs. 3-pin</h4>
+    <p><b>5-pin XLR is the DMX standard.</b> Pins 1/2/3 carry the data; 4/5 are a spare pair that almost nothing uses. Professional fixtures and consoles use 5-pin.</p>
+    <p><b>3-pin DMX exists</b> on cheaper fixtures and looks <b>exactly like an audio XLR</b>. It is not one — and this is the mistake that matters.</p>
+  </div>
+
+  <div class="key" style="border-color:rgba(248,81,73,.4);background:rgba(248,81,73,.08)">
+    <b style="color:var(--power)">Never run DMX on mic cable.</b> They fit. They will even appear to work on a short run with a couple of fixtures. But mic cable is <b>~60 Ω</b> and DMX needs <b>110–120 Ω</b> impedance. The mismatch causes reflections, and you get the classic symptom: <b>fixtures flickering, dropping out, or twitching randomly</b> — usually the ones furthest down the chain, usually only once the room is full and you're in show.<br><br>
+    It's the hardest fault to find because it's intermittent and the cable "works." Use real DMX cable, and keep your DMX and audio XLR visibly different — different colour, different tape, different case.
+  </div>
+
+  <h3>The terminator</h3>
+  <div class="card L power">
+    <h4>What it is and why it matters</h4>
+    <p>A <b>120 Ω resistor</b> in a male XLR shell, plugged into the <b>DMX OUT of the last fixture in the chain</b>. It absorbs the signal at the end of the line so it doesn't bounce back up the cable and collide with incoming data.</p>
+    <p><b>Symptom of a missing terminator:</b> intermittent flicker and random behaviour that gets worse with longer runs and more fixtures. Short chains often work fine without one — which is exactly why people stop bothering, right up until the show where it doesn't.</p>
+    <p><b>Terminate every chain, every time.</b> It costs nothing and removes an entire category of fault from your night.</p>
+  </div>
+
+  <h3>Daisy chain rules</h3>
+  <ul class="chk">
+    <li><b>32 devices maximum</b> per chain. Past that the signal degrades — use a <b>splitter/opto-isolator</b> to start a fresh branch.</li>
+    <li><b>~300 m / 1000 ft total run</b> is the practical limit for a chain.</li>
+    <li><b>Out to In, always.</b> DMX OUT of the console → DMX IN of fixture 1. OUT of fixture 1 → IN of fixture 2. There is no such thing as a DMX "loop back to the console."</li>
+    <li><b>No Y-splits.</b> Never split DMX passively with a Y-cable. Use a powered <b>opto-splitter</b> — it isolates each branch electrically, so one bad fixture or shorted cable can't take out the whole rig.</li>
+    <li><b>One universe per chain.</b> A chain carries one universe. Multiple universes need multiple runs, or a node with multiple ports.</li>
+  </ul>
+
+  <div class="card L data">
+    <h4>Opto-splitters — the piece that saves shows</h4>
+    <p>A splitter takes one DMX input and gives you <b>4, 8 or more electrically isolated outputs</b>. Two reasons to use one:</p>
+    <p><b>1. Topology.</b> A rig laid out as a star from a splitter is far easier to troubleshoot than one long snake — you can lose one branch instead of everything.</p>
+    <p><b>2. Isolation.</b> "Opto" means the input and outputs are optically coupled with no electrical connection. A fixture that fails and shorts its data line kills its own branch and nothing else. On a long daisy chain, that same fault kills every fixture downstream of it.</p>
+  </div>
+
+  <h2>Networked Lighting Control</h2>
+  <div class="card L data">
+    <h4>Art-Net and sACN</h4>
+    <p>Once you're past a few universes, running physical DMX from the console stops making sense. Instead the console sends <b>many universes over ethernet</b> to <b>nodes</b> out in the rig, and each node converts back to physical DMX at the truss.</p>
+    <p><b>Art-Net</b> and <b>sACN (E1.31)</b> are the two protocols. sACN is the more modern one and handles large systems better. Both ride on standard Cat5e/Cat6.</p>
+    <p><b>Nodes</b> — ETC Net3 gateways, ProPlex IQ, MA NPUs. Each has some number of physical DMX ports, and you assign a universe to each port. That assignment is the thing people forget: a node with the wrong universe on a port looks exactly like a dead cable.</p>
+    <p><b>Keep the lighting network separate.</b> Its own switch, its own subnet, no internet, no video traffic. Lighting data is time-critical and shares badly.</p>
+  </div>
+
+  <div class="card L rf">
+    <h4>Wireless DMX</h4>
+    <p>A transmitter at the console end and receivers at fixtures you can't cable to. Common on <b>battery uplights, set pieces, moving props, and anywhere a cable would be seen or tripped over</b>.</p>
+    <p><b>What to know:</b></p>
+    <p>• It runs in the <b>2.4 GHz</b> band — the same space as WiFi, comms, and everyone's phone. A full room degrades it, exactly like wireless mics.<br>
+    • Transmitter and receivers must be on the <b>same universe and the same RF channel/ID</b>, and you generally <b>pair</b> them before the show.<br>
+    • It carries the universe wirelessly; <b>fixture addressing is unchanged</b> — you still address each fixture normally.<br>
+    • <b>Line of sight matters.</b> Get the transmitter up and out, not behind a road case.<br>
+    • <b>Always cable anything you can cable.</b> Wireless DMX is for the fixtures where cable is genuinely impossible, not a shortcut to save a cable run.</p>
+  </div>
+
+  <h2>Cable Reference</h2>
+  <table class="tbl">
+    <tr><th>Cable</th><th>Carries</th><th>Limits</th></tr>
+    <tr><td><span class="pill p-sdi">5-pin XLR</span></td><td>DMX512 data, one universe</td><td>32 devices, ~1000 ft, needs 110–120 Ω, terminate the end</td></tr>
+    <tr><td><span class="pill p-sdi">3-pin XLR (DMX)</span></td><td>Same data, cheaper fixtures</td><td>Same limits — and <b>looks identical to mic cable.</b> Label it.</td></tr>
+    <tr><td><span class="pill p-data">Cat5e / Cat6</span></td><td>Art-Net / sACN — many universes</td><td>100 m per run; use a switch or fibre past that</td></tr>
+    <tr><td><span class="pill p-power">Socapex (SOCA)</span></td><td><b>6 dimmer circuits</b> in one 19-pin connector</td><td>Heavy. Breaks out to 6 Edison/stage pin via a fan-out</td></tr>
+    <tr><td><span class="pill p-power">True1 / powerCON</span></td><td>Mains to a fixture, <b>link-through</b> to the next</td><td>Check the max fixtures per run in the fixture manual</td></tr>
+    <tr><td><span class="pill p-power">Edison</span></td><td>Standard 120 V mains</td><td>15 A or 20 A per circuit — know which</td></tr>
+    <tr><td><span class="pill p-power">Cam-lok</span></td><td>Feeder — service into a distro</td><td>Colour-coded per leg. <b>Licensed electrician territory.</b></td></tr>
+    <tr><td><span class="pill p-warn">Stage pin (2P&amp;G)</span></td><td>Dimmed 120 V to conventionals</td><td>Theatre standard. Not interchangeable with Edison.</td></tr>
+  </table>
+
+  <div class="key">
+    <b>The habit that separates working techs from the rest:</b> <b>DMX and power never share a jacket, and ideally not a cable path.</b> Run them on opposite sides of the truss. Mains next to data induces noise into the data, and the symptom — intermittent flicker — looks exactly like every other DMX fault. Rule it out by construction instead of chasing it at 11pm.
+  </div>
+</section>
+<section class="panel" id="p-sim">
+  <h2>DMX Rig Builder</h2>
+  <p class="lede">Cable the rig yourself. Tap the console output, then tap fixtures in the order you want the chain to run. The rig reacts the way a real one would — including failing quietly in the ways real ones do.</p>
+
+  <div class="sim" id="dmxSim">
+    <div class="row" style="margin:0 0 12px">
+      <span class="counter" id="dxJob"></span>
+      <button class="btn" id="dxNext" style="margin-left:auto">New rig</button>
+      <button class="btn" id="dxClear">Clear cable</button>
+    </div>
+
+    <div class="rigwrap">
+      <svg id="dxSvg" viewBox="0 0 660 300" role="img" aria-label="Interactive DMX rig — tap the console then fixtures to build a chain"></svg>
+    </div>
+
+    <div class="row" style="margin:12px 0 0">
+      <button class="btn" id="dxTerm">Add terminator</button>
+      <button class="btn" id="dxSplit">Insert opto-splitter</button>
+      <button class="btn pri" id="dxRun" style="margin-left:auto">Run the show</button>
+    </div>
+
+    <div class="verdict" id="dxVerdict"></div>
+  </div>
+
+  <div class="key">
+    <b>What it's drilling.</b> Out-to-In direction, the 32-device ceiling, terminating the end of every chain, when a splitter earns its place, and why a long single snake is a bad topology even when it technically works.
+  </div>
+
+  <h2>Address Calculator</h2>
+  <p class="lede">The maths you do standing on a ladder with a phone in your teeth. Set the channel count and how many fixtures, and see where the universe runs out.</p>
+
+  <div class="sim" id="addrSim">
+    <div class="simrow">
+      <div class="simctl">
+        <label class="slab">CHANNELS PER FIXTURE <b id="acChV">16</b></label>
+        <input type="range" id="acCh" min="1" max="64" value="16" step="1">
+        <div class="srange"><span>1</span><span>64</span></div>
+
+        <label class="slab" style="margin-top:16px">HOW MANY FIXTURES <b id="acNV">12</b></label>
+        <input type="range" id="acN" min="1" max="60" value="12" step="1">
+        <div class="srange"><span>1</span><span>60</span></div>
+
+        <label class="slab" style="margin-top:16px">START ADDRESS <b id="acSV">1</b></label>
+        <input type="range" id="acS" min="1" max="401" value="1" step="1">
+        <div class="srange"><span>1</span><span>401</span></div>
+      </div>
+      <div class="simctl">
+        <div class="uni" id="acBar"></div>
+        <div class="addrlist" id="acList"></div>
+      </div>
+    </div>
+    <div class="verdict" id="acVerdict"></div>
+  </div>
+</section>
+<section class="panel" id="p-power">
+  <h2>Power — Distro and Dimmers</h2>
+
+  <div class="key" style="border-color:rgba(248,81,73,.4);background:rgba(248,81,73,.08)">
+    <b style="color:var(--power)">Scope, before anything else.</b> Tying in to building service, landing cam-lok, and anything on the line side of a distro is <b>licensed electrician work</b>. As a hand you plug into distro that somebody qualified has already energised, you run cable, and you load circuits correctly. Know the whole picture so you're useful and safe — but <b>know where your job stops.</b>
+  </div>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 200" role="img" aria-label="Power chain from service through distro to fixtures">
+      <rect class="sf" x="10" y="70" width="66" height="46" rx="5" style="stroke:#f85149"/>
+      <text class="lbl f-power" x="43" y="90" text-anchor="middle">SERVICE</text>
+      <text class="lbl" x="43" y="104" text-anchor="middle" style="font-size:9px">company switch</text>
+      <path class="s c-power" style="stroke-width:3" d="M76 93 h34"/>
+      <text class="lbl f-power" x="93" y="86" text-anchor="middle" style="font-size:9px">cam-lok</text>
+
+      <rect class="sf" x="110" y="58" width="80" height="70" rx="5" style="stroke:#e3b341"/>
+      <text class="lbl f-warn" x="150" y="78" text-anchor="middle">DISTRO</text>
+      <text class="lbl" x="150" y="92" text-anchor="middle" style="font-size:9px">breakers</text>
+      <text class="lbl" x="150" y="105" text-anchor="middle" style="font-size:9px">+ metering</text>
+
+      <path class="s c-warn" d="M190 78 h40 M190 93 h40 M190 108 h40"/>
+      <rect class="sd" x="230" y="66" width="74" height="24" rx="4"/>
+      <text class="lbl" x="267" y="81" text-anchor="middle" style="font-size:9.5px">SOCA → 6 ckt</text>
+      <rect class="sd" x="230" y="96" width="74" height="24" rx="4"/>
+      <text class="lbl" x="267" y="111" text-anchor="middle" style="font-size:9.5px">Edison drops</text>
+
+      <path class="s" style="stroke:#5c6773" d="M304 78 h30 M304 108 h30"/>
+      <g class="met"><rect x="334" y="62" width="26" height="20" rx="3"/><rect x="366" y="62" width="26" height="20" rx="3"/>
+        <rect x="334" y="98" width="26" height="20" rx="3"/><rect x="366" y="98" width="26" height="20" rx="3"/></g>
+      <text class="lbl" x="363" y="136" text-anchor="middle">fixtures</text>
+
+      <text class="tag f-power" x="10" y="164">LICENSED ELECTRICIAN</text>
+      <path class="hl c-power" d="M6 40 h188 v130 h-188 z"/>
+      <text class="tag f-audio" x="230" y="164">YOUR SIDE OF THE LINE</text>
+      <path class="hl c-audio" d="M226 40 h188 v130 h-188 z"/>
+    </svg>
+    <div class="figcap">Everything left of the distro output is somebody else's ticket. Everything right of it is the job you'll actually be doing — and doing it correctly is what keeps the left side from becoming a problem.</div>
+  </div>
+
+  <h3>Distro</h3>
+  <div class="card L warn">
+    <h4>What a distro does</h4>
+    <p>Takes one large service feed and <b>breaks it into many protected circuits</b>. A road-case distro will typically give you a mix of <b>Socapex</b> outputs (6 circuits each) and individual <b>Edison</b> or stage-pin outlets, each on its own breaker, usually with <b>metering</b> per leg.</p>
+    <p><b>Read the meters.</b> Three-phase service means three legs, and you want the load roughly even across them. Badly unbalanced legs are how you trip a main with plenty of apparent capacity left.</p>
+  </div>
+
+  <div class="card L power">
+    <h4>Load maths you should be able to do in your head</h4>
+    <p><b>Watts ÷ Volts = Amps.</b> At 120 V:</p>
+    <p>• A 1000 W fixture ≈ <b>8.3 A</b><br>
+    • A 575 W Source Four ≈ <b>4.8 A</b><br>
+    • A 300 W LED wash ≈ <b>2.5 A</b></p>
+    <p><b>Derate to 80%.</b> A 20 A circuit is good for a <b>continuous</b> 16 A. A 15 A circuit is good for 12 A. Lighting runs for hours, so it counts as continuous.</p>
+    <p><b>So:</b> a 20 A circuit holds <b>three</b> 575 W lekos comfortably (14.4 A), not four (19.2 A — over the derate and one bump from tripping).</p>
+    <p><b>LED changed the arithmetic.</b> A truss of LED washes might pull less than one circuit of old PAR cans. But LED power supplies have <b>inrush current</b> at switch-on that can trip a breaker even when the running load is tiny — which is why you stagger power-up on a big LED rig instead of throwing one switch.</p>
+  </div>
+
+  <h3>Dimmers</h3>
+  <div class="card L warn">
+    <h4>What dimming is and when it applies</h4>
+    <p>A dimmer rack takes constant power and <b>varies the voltage</b> to a conventional fixture, controlled by DMX. One DMX channel per dimmer circuit — dimmer 1 is channel 1, dimmer 24 is channel 24. Simple and unchanged for decades.</p>
+    <p><b>The critical distinction:</b> <b>never plug an LED fixture, a moving light, or anything with a power supply into a dimmed circuit.</b> They need constant power and they control their own intensity over DMX. A dimmed circuit will damage them or make them behave erratically.</p>
+    <p>That's why distros and dimmer racks have <b>switched (constant) circuits</b> as well as dimmed ones — sometimes called "hot" or "non-dim." Intelligent fixtures go there. Confirm which is which before you plug anything in.</p>
+  </div>
+
+  <div class="key">
+    <b>The corporate reality:</b> most breakout and ballroom work now is <b>all LED and all non-dim</b>. You'll see dimmer racks on theatre, TV and older house rigs. Knowing the distinction still matters, because the day you plug a $6,000 moving light into a dimmer is the day you find out.
+  </div>
+
+  <h3>Cable practice that keeps you employed</h3>
+  <ul class="chk">
+    <li><b>Label both ends of every run.</b> Same rule as audio, same reason.</li>
+    <li><b>Power and data on opposite sides of the truss.</b> Induced noise into DMX is an invisible fault.</li>
+    <li><b>Service loops at every fixture.</b> Enough slack that a focus or a trim change doesn't strain a connector.</li>
+    <li><b>Safety cable on everything that flies.</b> No exceptions, no "it's only up for an hour."</li>
+    <li><b>Tie cable off to the truss</b> — not hanging on the connector. The connector is not a load-bearing device.</li>
+    <li><b>Dress runs so a road case can roll past.</b> If a cable has to cross a walk path, it goes under matting or up and over.</li>
+    <li><b>Coil over-under.</b> Stranded copper survives coiling; it does not survive kinks.</li>
+  </ul>
+</section>
+
+<section class="panel" id="p-console">
+  <h2>Consoles</h2>
+  <p class="lede">Every lighting console does the same five things in the same order. Learn that order once and any desk becomes navigable — you're just hunting for where <i>this</i> manufacturer put each step.</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 130" role="img" aria-label="The five stages every lighting console follows">
+      <g>
+        <rect class="sf" x="8" y="34" width="72" height="40" rx="6" style="stroke:#58a6ff"/>
+        <text class="lbl f-video" x="44" y="52" text-anchor="middle">PATCH</text>
+        <text class="lbl" x="44" y="65" text-anchor="middle" style="font-size:8.5px">fixture → address</text>
+        <path class="s c-audio" d="M80 54 h18"/><path class="f-audio" d="M100 54 l-7 -4 v8 z"/>
+
+        <rect class="sf" x="102" y="34" width="66" height="40" rx="6" style="stroke:#3fb950"/>
+        <text class="lbl f-audio" x="135" y="52" text-anchor="middle">GROUPS</text>
+        <text class="lbl" x="135" y="65" text-anchor="middle" style="font-size:8.5px">select fast</text>
+        <path class="s c-audio" d="M168 54 h18"/><path class="f-audio" d="M188 54 l-7 -4 v8 z"/>
+
+        <rect class="sf" x="190" y="34" width="70" height="40" rx="6" style="stroke:#bc8cff"/>
+        <text class="lbl f-sdi" x="225" y="52" text-anchor="middle">PALETTES</text>
+        <text class="lbl" x="225" y="65" text-anchor="middle" style="font-size:8.5px">colour · position</text>
+        <path class="s c-audio" d="M260 54 h18"/><path class="f-audio" d="M280 54 l-7 -4 v8 z"/>
+
+        <rect class="sf" x="282" y="34" width="58" height="40" rx="6" style="stroke:#e3b341"/>
+        <text class="lbl f-warn" x="311" y="52" text-anchor="middle">CUES</text>
+        <text class="lbl" x="311" y="65" text-anchor="middle" style="font-size:8.5px">record looks</text>
+        <path class="s c-audio" d="M340 54 h18"/><path class="f-audio" d="M360 54 l-7 -4 v8 z"/>
+
+        <rect class="sf" x="362" y="34" width="50" height="40" rx="6" style="stroke:#f0883e"/>
+        <text class="lbl f-rf" x="387" y="52" text-anchor="middle">PLAY</text>
+        <text class="lbl" x="387" y="65" text-anchor="middle" style="font-size:8.5px">GO</text>
+      </g>
+      <text class="lbl f-warn" x="210" y="104" text-anchor="middle">Every console. Every brand. Only the button names change.</text>
+      <text class="lbl" x="210" y="120" text-anchor="middle" style="font-size:10px">Patch wrong and nothing downstream can be right.</text>
+    </svg>
+    <div class="figcap"><b>Patch is the foundation.</b> If the console thinks fixture 12 is a 16-channel wash and it's actually a 24-channel one in extended mode, every parameter after channel 16 lands on the wrong thing — and the symptom looks like a broken fixture, not a patch error.</div>
+  </div>
+
+  <h3>The families you'll meet</h3>
+  <table class="tbl">
+    <tr><th>Family</th><th>Desks</th><th>Where you'll see it</th></tr>
+    <tr><td><b style="color:var(--sdi)">MA Lighting</b></td><td>grandMA3 Full/Light, grandMA2 Full/Light/Ultra, dot2, onPC + Command Wing, NPU</td><td>Concert, festival, arena, big corporate. The touring standard.</td></tr>
+    <tr><td><b style="color:var(--video)">ETC Eos</b></td><td>Eos Ti, Gio @5, Ion Xe, Element, ColorSource, ETCnomad Puck</td><td>Theatre, broadcast, houses of worship, most permanent installs.</td></tr>
+    <tr><td><b style="color:var(--warn)">High End / Hog</b></td><td>Full Boar 4, Road Hog 4, HedgeHog 4X</td><td>Concert and club touring. Fast, busking-friendly.</td></tr>
+    <tr><td><b style="color:var(--audio)">Avolites</b></td><td>Arena, Tiger Touch</td><td>Heavy in the UK and EU; club and festival work.</td></tr>
+    <tr><td><b style="color:var(--rf)">Small-format</b></td><td>Vari-Lite FLX S24, Leprecon LP-624, ColorSource 20</td><td>Corporate breakouts, small houses, one-person calls.</td></tr>
+  </table>
+
+  <div class="card L data">
+    <h4>Tracking vs. non-tracking — the concept that trips people</h4>
+    <p><b>Tracking</b> (Eos, grandMA) means a value stays as it is until something explicitly changes it. Record cue 1 with channel 5 at full and it's still at full in cue 8 unless you changed it. This makes cue lists compact and edits propagate forward — powerful, and occasionally surprising.</p>
+    <p><b>Non-tracking</b> records every value in every cue. Simpler to reason about, much heavier to edit.</p>
+    <p><b>Why you care as an assistant:</b> when the LD says "that change tracked forward," they mean an edit rippled into later cues. It's not a fault.</p>
+  </div>
+
+  <div class="card L audio">
+    <h4>Palettes — where the time savings live</h4>
+    <p>A <b>palette</b> stores a parameter value <i>by reference</i> instead of by number. A position palette called "PODIUM" holds a pan/tilt for every fixture. Cues then reference the palette rather than raw numbers.</p>
+    <p><b>The payoff:</b> the podium moves six feet at rehearsal. You update <b>one palette</b> and every cue that references it follows. Without palettes you'd re-record every cue by hand.</p>
+    <p><b>The assistant's job is often exactly this</b> — updating position palettes after a set change while the LD keeps working.</p>
+  </div>
+
+  <div class="key">
+    <b>If you're handed a desk you've never seen:</b> find the <b>patch</b>, find <b>groups</b>, find how to <b>select a fixture and get a parameter on an encoder</b>. Those three get you useful. Everything else can be learned while the LD talks.
+  </div>
+</section>
+
+<section class="panel" id="p-atmos">
+  <h2>Haze and Fog</h2>
+  <p class="lede">Beams don't exist until there's something in the air to catch them. Atmospherics aren't decoration — for a beam-heavy rig they're the difference between a light show and a bunch of expensive fixtures pointing at nothing.</p>
+
+  <div class="grid">
+    <div class="card L data">
+      <h4>Hazer</h4>
+      <p>Produces a <b>fine, even, long-hanging suspension</b> that fills a room invisibly and reveals every beam. You should not be able to see "haze" — you should just see the light.</p>
+      <p><b>Run it early and low.</b> Build a base level well before doors and top it up gently. Chasing haze after the room fills never looks right and always looks obvious.</p>
+    </div>
+    <div class="card L warn">
+      <h4>Fogger</h4>
+      <p>Produces <b>visible clouds</b> that dissipate. This is an effect you see — a blast for a reveal, low fog for a floor look. Different job entirely from haze.</p>
+      <p><b>Low-lying fog</b> needs the fluid chilled (dry ice, CO₂, or a chiller unit) or it just rises and becomes room fog.</p>
+    </div>
+  </div>
+
+  <div class="key" style="border-color:rgba(248,81,73,.4);background:rgba(248,81,73,.08)">
+    <b style="color:var(--power)">The fire alarm conversation happens before the fluid goes in.</b> Haze and fog set off smoke detection. In any hotel, convention centre or venue this means:<br><br>
+    • <b>Notify the venue and get approval in writing.</b><br>
+    • Detection in the affected zone may need to be <b>isolated by the venue's fire safety officer</b> — never by you, never by the LD.<br>
+    • Some venues require a <b>fire watch</b> posted while detection is bypassed.<br>
+    • Understand it may simply be <b>refused</b>, and the design has to survive that answer.<br><br>
+    An accidental evacuation of a 2,000-person conference is a career event. Ask early, get it in writing, and never assume the last crew's arrangement carries over.
+  </div>
+
+  <ul class="chk">
+    <li><b>Water-based fluid</b> is standard for most venues; <b>oil-based</b> hangs longer but is banned in many rooms and leaves residue. Check what the venue allows before you load fluid.</li>
+    <li><b>HVAC is your enemy.</b> Air handling strips haze fast. Ask whether it can be reduced during the show — often it can.</li>
+    <li><b>Point the output away from people and away from intakes.</b> Nobody wants a face full of it, and an intake distributes it everywhere except where you wanted it.</li>
+    <li><b>Fluid is consumable and specific.</b> Wrong fluid clogs the machine. Bring the right one and bring spare.</li>
+    <li><b>Hazers need warm-up.</b> Power them early — they're not instant.</li>
+  </ul>
+</section>
+
+<section class="panel" id="p-flow">
+  <h2>Lighting Call — Set Order</h2>
+  <p class="lede">Same principle as every other department: place what you can't easily move, then work backward.</p>
+
+  <ol class="steps">
+    <li><b>Read the plot.</b> Fixture types, positions, quantities, universe assignments, addresses. If there's no plot, get the LD's intent before you touch a case.</li>
+    <li><b>Truss on the deck.</b> Hang fixtures while the truss is at working height — <b>never</b> reach up to a flown truss to hang.</li>
+    <li><b>Hang and safety.</b> Clamp to the truss, <b>safety cable through the fixture yoke and around the truss chord</b>, every fixture, no exceptions.</li>
+    <li><b>Address at the deck.</b> Set every fixture's address and mode while you can reach the display. Doing this in the air costs ten times as long.</li>
+    <li><b>Cable the truss.</b> Power one side, DMX the other. Service loops. Tie it off. Terminate the end of each chain.</li>
+    <li><b>Power up and prove it</b> before the truss leaves the ground. Every fixture strikes, every fixture responds to its address. <b>A fixture that doesn't work on the deck is free to fix; at trim it's a lift call.</b></li>
+    <li><b>Trim.</b> Fly to height, level it, mark the trim.</li>
+    <li><b>Focus.</b> Fixture by fixture with the LD. Conventionals get shuttered and sharpened; movers get positions recorded into palettes.</li>
+    <li><b>Patch and cue.</b> LD's world — you're supporting: running a lamp, holding a focus, updating a palette.</li>
+    <li><b>Note everything</b> on the plot. What changed, what's dead, what got re-addressed. The next call is you.</li>
+  </ol>
+
+  <div class="key">
+    <b>Step 6 is the one that separates crews.</b> Proving the rig at deck height costs twenty minutes. Discovering a dead fixture at trim costs a lift, a stopped rehearsal, and a conversation with the production manager. Test everything before it flies.
+  </div>
+
+  <h2>Positions</h2>
+  <div class="card L warn">
+    <h4>LD — Lighting Designer</h4>
+    <p>Owns the look. Draws the plot, chooses fixtures and positions, sits at the console, builds and calls the cues.</p>
+  </div>
+  <div class="card L warn">
+    <h4>L1 — Lead / Master Electrician</h4>
+    <p>Owns execution of the plot. Runs the crew, makes the practical calls on hang and power, and is the LD's counterpart on the floor.</p>
+  </div>
+  <div class="card L warn">
+    <h4>L2 — Lighting System Tech / Board Op</h4>
+    <p>Sets up and tests the control system, patches, and often runs the desk under the LD's direction. On corporate, frequently the person actually pressing GO.</p>
+  </div>
+  <div class="card L warn">
+    <h4>Lighting Tech / Electrician</h4>
+    <p>Hangs, cables, addresses, focuses, strikes. Where most calls start, and where you learn whether someone can be trusted with the next step up.</p>
+  </div>
+  <div class="card L warn">
+    <h4>Followspot Operator</h4>
+    <p>On a spot, on headset, taking calls. Discussed in the Fixtures tab.</p>
+  </div>
+</section>
+
+<section class="panel" id="p-drills">
+  <h2>Flashcards</h2>
+  <p class="lede">Tap the card to flip. Rate yourself honestly — "Got it" removes it from this pass, "Again" keeps it in rotation.</p>
+  <div class="row">
+    <span class="counter" id="fcCount"></span>
+    <button class="btn" id="fcShuffle" style="margin-left:auto">Shuffle</button>
+    <button class="btn" id="fcReset">Reset</button>
+  </div>
+  <div class="fcstage">
+    <div class="fc" id="fcCard">
+      <div class="fcface"><div class="fcq" id="fcQ"></div><div class="fchint">Tap to flip</div></div>
+      <div class="fcface fcback"><div class="fca" id="fcA"></div><div class="fchint">Tap to flip back</div></div>
+    </div>
+  </div>
+  <div class="row">
+    <button class="btn" id="fcAgain">Again</button>
+    <button class="btn pri" id="fcGot">Got it</button>
+  </div>
+
+  <h2>Quiz</h2>
+  <p class="lede">Explanations on every answer — including the ones you get right.</p>
+  <div id="quizHost"></div>
+
+  <h2>Signal Chain Builder</h2>
+  <p class="lede">Tap the pieces in the correct order. Wrong piece and it tells you immediately.</p>
+  <div id="chainHost"></div>
+</section>
+<section class="panel" id="p-scen">
+  <h2>Real-Gig Scenarios</h2>
+  <p class="lede">Think it through before you reveal. The answer matters less than the order you check things in.</p>
+  <div id="scnHost"></div>
+</section>
+<footer>
+  Lighting Field Guide · Reference and drill tool for live event technicians<br>
+  Gear illustrations are simplified diagrams for identification, not manufacturer specifications.
+</footer>
+</div>
+
+<script>
+
+(function(){
+"use strict";
+
+/* ═══════════ safe storage ═══════════ */
+var mem={};
+var store={
+  get:function(k){try{return localStorage.getItem(k)}catch(e){return mem[k]||null}},
+  set:function(k,v){try{localStorage.setItem(k,v)}catch(e){mem[k]=v}}
+};
+
+/* ═══════════ tabs ═══════════ */
+var TABS=[["p-start", "Start"], ["p-fixtures", "Fixtures"], ["p-dmx", "DMX & Cable"], ["p-sim", "Simulators"], ["p-power", "Power"], ["p-console", "Consoles"], ["p-atmos", "Haze & Fog"], ["p-flow", "Workflow"], ["p-drills", "Drills"], ["p-scen", "Scenarios"]];
+var nav=document.getElementById("nav");
+TABS.forEach(function(t,i){
+  var b=document.createElement("button");
+  b.textContent=t[1]; b.setAttribute("role","tab");
+  b.setAttribute("aria-selected", i===0?"true":"false");
+  b.onclick=function(){go(t[0])};
+  b.dataset.target=t[0];
+  nav.appendChild(b);
+});
+function go(id){
+  document.querySelectorAll(".panel").forEach(function(p){p.classList.toggle("on",p.id===id)});
+  nav.querySelectorAll("button").forEach(function(b){
+    b.setAttribute("aria-selected", b.dataset.target===id?"true":"false");
+    if(b.dataset.target===id && b.scrollIntoView){
+      try{b.scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"})}catch(e){}
+    }
+  });
+  try{window.scrollTo({top:0,behavior:"smooth"})}catch(e){window.scrollTo(0,0)}
+  store.set("lighting_tab",id);
+}
+var saved=store.get("lighting_tab");
+if(saved && document.getElementById(saved)) go(saved);
+
+/* ═══════════ flashcards ═══════════ */
+var CARDS=[
+["How many channels in a DMX universe?","<b>512.</b> That is the hard ceiling. More fixtures than fit means another universe — another physical run or another node port."],
+["How do you work out the next fixture address?","<b>Current address + this fixture's channel count.</b> A 16-channel fixture at 1 puts the next at 17."],
+["Why does a DMX chain need a terminator?","A <b>120 Ω resistor</b> in the last fixture's DMX OUT absorbs the signal so it does not reflect back up the line and corrupt incoming data. Symptom of missing one: intermittent flicker on the far end."],
+["Max devices on one DMX chain?","<b>32.</b> Past that use an opto-splitter to branch."],
+["Why can you not run DMX on mic cable?","Mic cable is ~60 Ω; DMX needs <b>110–120 Ω</b>. The mismatch causes reflections — random flicker and dropouts that are nearly impossible to trace because the cable appears to work."],
+["5-pin vs 3-pin DMX?","<b>5-pin is the professional standard</b> (pins 1/2/3 carry data, 4/5 spare). 3-pin appears on cheaper fixtures and <b>looks identical to audio XLR</b> — label it."],
+["What does an opto-splitter do, and why bother?","Splits one DMX input into several <b>electrically isolated</b> outputs. A fixture that shorts its data line kills its own branch only, not the whole rig."],
+["Can you split DMX with a Y-cable?","<b>No.</b> Passive splits cause reflections. Use a powered opto-splitter."],
+["Art-Net and sACN — what are they?","Protocols for sending <b>many DMX universes over ethernet</b> to nodes out in the rig, which convert back to physical DMX at the truss."],
+["What does a node do?","Converts networked lighting data back to physical DMX. Each port gets a universe assigned — and <b>a port set to the wrong universe looks exactly like a dead cable</b>."],
+["Main limitation of wireless DMX?","It shares <b>2.4 GHz</b> with WiFi and everyone's phone, so a full room degrades it. Line of sight matters. Cable anything you can cable."],
+["Ellipsoidal / Leko — what makes it distinctive?","<b>Hard edge</b> plus <b>four shutters</b> to cut the beam to a shape, a gobo slot, and interchangeable barrels for beam angle."],
+["What does the number on a Source Four barrel mean?","<b>Beam angle.</b> 19° = tight long throw, 36° = medium, 50° = wide and close."],
+["Fresnel vs ellipsoidal?","<b>Fresnel</b>: soft edge, spot-to-flood knob, shaped with barn doors. <b>Ellipsoidal</b>: hard edge, shutters, gobos. Fresnels blend invisibly, which is why film uses them."],
+["Spot vs beam vs wash?","<b>Spot</b> = hard edge with gobos. <b>Wash</b> = soft edge with zoom, no gobos. <b>Beam</b> = very narrow fixed angle for aerial shafts in haze."],
+["What is a hybrid moving light?","One body that does <b>beam, spot and wash</b> modes. What you buy when you can only afford one fixture per position."],
+["What does a profile moving light add over a spot?","<b>Framing shutters</b> — so you can cut light off a screen, a wall, or a person's edge."],
+["CMY vs colour wheel?","<b>CMY</b> = cyan/magenta/yellow flags that slide in for continuous mixing, any shade. <b>Colour wheel</b> = fixed dichroic filters that snap to a colour. Most fixtures have both."],
+["What does CTO do?","<b>Colour temperature orange.</b> Warms a cold source toward tungsten so it matches conventional fixtures."],
+["What does a prism do?","Splits the beam into multiple images — 3-facet, 8-facet, linear, circular. Usually rotates."],
+["What does IP65 mean on a fixture?","It can live <b>outside in the rain</b>. IP20 cannot."],
+["What must you confirm before addressing a single fixture?","The <b>DMX mode and channel count</b>. The same fixture can be 16 channels in basic mode and 45 in extended — get it wrong and every address after it is wrong too."],
+["Watts to amps at 120 V?","<b>Watts ÷ Volts = Amps.</b> A 1000 W fixture ≈ 8.3 A; a 575 W Source Four ≈ 4.8 A."],
+["What is the 80% derate rule?","A circuit run continuously should carry no more than <b>80% of its rating</b>. A 20 A circuit = 16 A continuous. Lighting runs for hours, so it counts."],
+["How many 575 W lekos on a 20 A circuit?","<b>Three.</b> 3 × 4.8 A = 14.4 A, inside the 16 A derate. Four would be 19.2 A — over the limit and one bump from tripping."],
+["What does a Socapex cable carry?","<b>Six dimmer circuits</b> in one 19-pin connector. Breaks out to six Edison or stage-pin via a fan-out."],
+["Never plug what into a dimmed circuit?","<b>LED fixtures, moving lights, anything with a power supply.</b> They need constant power and control their own intensity over DMX. A dimmed circuit damages them."],
+["Why do big LED rigs get staggered power-up?","LED power supplies have <b>inrush current</b> at switch-on that can trip a breaker even when the running load is small."],
+["The five stages every lighting console follows?","<b>Patch → Groups → Palettes → Cues → Playback.</b> Only the button names change between brands."],
+["What is a palette and why does it save the day?","A stored parameter value referenced by name rather than number. The podium moves — you update <b>one position palette</b> and every cue that references it follows."],
+["What does tracking mean on a console?","A value <b>stays as it is until something explicitly changes it</b>. Edits propagate forward into later cues. Eos and grandMA track."],
+["Haze vs fog?","<b>Haze</b> = fine invisible suspension that reveals beams. <b>Fog</b> = visible clouds as an effect. Different jobs entirely."],
+["When do you talk to the venue about haze?","<b>Before the fluid goes in.</b> Haze sets off smoke detection — the venue's fire safety officer isolates detection, never you, and some venues simply refuse."],
+["Why run haze early?","Build a base level well before doors. Chasing haze after the room fills never looks right and always looks obvious."],
+["Where do you address fixtures — deck or trim?","<b>At the deck</b>, while you can reach the display. Addressing in the air costs ten times as long."],
+["What is the step people skip before flying a truss?","<b>Power up and prove every fixture.</b> A dead fixture at deck height is free to fix; at trim it is a lift call and a stopped rehearsal."],
+["Safety cable — when?","<b>Every fixture that flies, every time.</b> Through the yoke and around the truss chord. No exceptions."],
+["What does the L1 do?","<b>Lead / Master Electrician.</b> Owns execution of the plot, runs the crew, makes practical calls on hang and power."],
+["Followspot — set the iris before or after opening the douser?","<b>Before.</b> Never hunt for your size with the light live on the artist."],
+["Why keep power and DMX on opposite sides of the truss?","Mains next to data <b>induces noise into the data</b>, and the symptom — intermittent flicker — looks like every other DMX fault. Rule it out by construction."]
+];
+var fcQueue=[],fcIdx=0,fcCard=document.getElementById("fcCard");
+function fcInit(sh){
+  fcQueue=CARDS.map(function(c,i){return i});
+  if(sh) fcQueue.sort(function(){return Math.random()-.5});
+  fcIdx=0;fcRender();
+}
+function fcRender(){
+  fcCard.classList.remove("flip");
+  var n=document.getElementById("fcCount");
+  if(!fcQueue.length){
+    document.getElementById("fcQ").innerHTML="All clear.";
+    document.getElementById("fcA").innerHTML="You've worked through the whole deck. Shuffle to run it again cold.";
+    n.textContent="0 left";return;
+  }
+  if(fcIdx>=fcQueue.length) fcIdx=0;
+  var c=CARDS[fcQueue[fcIdx]];
+  document.getElementById("fcQ").innerHTML=c[0];
+  document.getElementById("fcA").innerHTML=c[1];
+  n.textContent=fcQueue.length+" card"+(fcQueue.length===1?"":"s")+" left";
+}
+fcCard.onclick=function(){fcCard.classList.toggle("flip")};
+document.getElementById("fcGot").onclick=function(){
+  if(!fcQueue.length)return;
+  fcQueue.splice(fcIdx,1);fcRender();
+};
+document.getElementById("fcAgain").onclick=function(){
+  if(!fcQueue.length)return;
+  fcIdx=(fcIdx+1)%fcQueue.length;fcRender();
+};
+document.getElementById("fcShuffle").onclick=function(){fcInit(true)};
+document.getElementById("fcReset").onclick=function(){fcInit(false)};
+fcInit(true);
+
+/* ═══════════ quiz ═══════════ */
+var QS=[
+{q:"You have 40 fixtures at 16 channels each. How many universes?",
+  o:["One — 40 fixtures is fine","Two — 512 ÷ 16 = 32 per universe","Four","Depends on the console"],
+  a:1,e:"512 ÷ 16 = 32 fixtures per universe. Forty fixtures needs two universes — which means a second physical DMX run or a second node port, and that has to be planned before you cable."},
+{q:"Fixtures at the far end of a long chain flicker intermittently. Everything is addressed correctly. First suspect?",
+  o:["Console fault","No terminator, or mic cable used instead of DMX cable","Wrong universe","Bad power"],
+  a:1,e:"Both produce exactly this symptom — reflections on the data line hitting the far end hardest. Terminate the chain and confirm you are on real 110–120 Ω DMX cable, not audio XLR."},
+{q:"How many 575 W Source Fours on a 20 A circuit?",
+  o:["Two","Three","Four","Five"],
+  a:1,e:"575 W ÷ 120 V = 4.8 A each. Derate to 80% and a 20 A circuit gives you 16 A continuous. Three is 14.4 A — comfortable. Four is 19.2 A, over the derate."},
+{q:"A brand new LED moving light behaves erratically and its output flickers. It is on a house dimmer rack circuit. What happened?",
+  o:["Bad fixture","It is plugged into a dimmed circuit instead of a constant one","Wrong DMX address","Needs a firmware update"],
+  a:1,e:"Intelligent fixtures need constant power and control their own intensity over DMX. A dimmed circuit varies the voltage feeding the power supply — erratic behaviour at best, damage at worst. Move it to a non-dim / hot circuit."},
+{q:"Your rig is 45 fixtures on one long DMX daisy chain. What is wrong?",
+  o:["Nothing if it works","Over the 32-device limit — split it with an opto-splitter","Too much power draw","You need a bigger console"],
+  a:1,e:"DMX tops out at 32 devices per chain. Past that the signal degrades and the far end gets unreliable. An opto-splitter also isolates branches, so one bad fixture cannot take out the whole rig."},
+{q:"The LD says the fixture mode is 45 channels, not 16. You already addressed 20 fixtures at 16-channel spacing. What now?",
+  o:["Leave it, the console will sort it out","Re-address every fixture — spacing and universe count both change","Only change the first one","Change it on the console patch only"],
+  a:1,e:"At 45 channels you fit 11 per universe, not 32. Every address and your entire universe plan is wrong. This is why confirming the mode before you address the first fixture matters so much."},
+{q:"Client asks for haze in a hotel ballroom. What happens first?",
+  o:["Load fluid and start hazing early","Get written venue approval and let their fire officer isolate detection","Just aim it away from the detectors","Use less fluid"],
+  a:1,e:"Haze sets off smoke detection. Approval in writing, the venue isolates their own system, and some venues will refuse outright — the design has to survive that answer. Never bypass detection yourself."},
+{q:"Two fixtures always move together no matter what you do at the console. Most likely cause?",
+  o:["Broken pan motor","Overlapping DMX addresses","Bad cable","Console fault"],
+  a:1,e:"If fixture 1 is at address 1 with 16 channels and fixture 2 got addressed at 9, they share channels 9–16 and cannot be separated. Check the addressing maths before you suspect hardware."},
+{q:"Best moment to discover a dead fixture?",
+  o:["At focus","On the deck before the truss flies","At trim","During rehearsal"],
+  a:1,e:"On the deck it is a swap that costs minutes. At trim it is a lift, a stopped room, and a conversation with the PM. Power up and prove every fixture before anything leaves the ground."},
+{q:"You are handed a console you have never seen. What three things do you find first?",
+  o:["The GO button, the fader, the display","Patch, groups, and how to select a fixture and get a parameter on an encoder","The manual","Cue list and submasters"],
+  a:1,e:"Those three make you immediately useful. Patch is the foundation — everything downstream depends on it — and being able to select a fixture and move a parameter means you can execute anything the LD asks while you learn the rest."}
+];
+var qi=0,qScore=0,qHost=document.getElementById("quizHost");
+function qRender(){
+  if(qi>=QS.length){
+    var pct=Math.round(qScore/QS.length*100);
+    var msg = pct>=90?"Dialed in. You could run this material for someone else.":
+              pct>=75?"Solid. Clean up the misses and you're gig-ready.":
+              pct>=50?"Foundation's there. Run the flashcards, then come back.":
+                      "Go back through the reference tabs — then run this cold.";
+    qHost.innerHTML='<div class="qbox" style="text-align:center">'+
+      '<div class="score" style="color:'+(pct>=75?"var(--audio)":pct>=50?"var(--warn)":"var(--power)")+'">'+pct+'%</div>'+
+      '<p style="margin:0 0 4px;font-size:15px">'+qScore+' of '+QS.length+' correct</p>'+
+      '<p style="color:var(--dim);font-size:14px;margin:0 0 18px">'+msg+'</p>'+
+      '<button class="btn pri" id="qAgain">Run it again</button></div>';
+    document.getElementById("qAgain").onclick=function(){qi=0;qScore=0;QS.sort(function(){return Math.random()-.5});qRender()};
+    return;
+  }
+  var q=QS[qi];
+  var h='<div class="qbox"><div class="bar"><i style="width:'+(qi/QS.length*100)+'%"></i></div>'+
+        '<p style="color:var(--dim);font-size:12px;margin:10px 0 0;letter-spacing:.5px">QUESTION '+(qi+1)+' OF '+QS.length+'</p>'+
+        '<p class="qtext">'+q.q+'</p>';
+  q.o.forEach(function(o,i){h+='<button class="opt" data-i="'+i+'">'+o+'</button>'});
+  h+='<div id="qFoot"></div></div>';
+  qHost.innerHTML=h;
+  qHost.querySelectorAll(".opt").forEach(function(b){
+    b.onclick=function(){
+      var pick=+b.dataset.i;
+      qHost.querySelectorAll(".opt").forEach(function(x,i){
+        x.disabled=true;
+        if(i===q.a)x.classList.add("right");
+        else if(i===pick)x.classList.add("wrong");
+      });
+      if(pick===q.a)qScore++;
+      document.getElementById("qFoot").innerHTML=
+        '<p class="expl">'+q.e+'</p>'+
+        '<div class="row"><button class="btn pri" id="qNext" style="margin-left:auto">'+
+        (qi===QS.length-1?"See results":"Next")+'</button></div>';
+      document.getElementById("qNext").onclick=function(){qi++;qRender()};
+    };
+  });
+}
+qRender();
+
+/* ═══════════ chain builder ═══════════ */
+var CHAINS=[
+{t:"DMX signal path — console to fixture",
+  s:["Console DMX OUT","Cable","Fixture 1 DMX IN","Fixture 1 DMX OUT","Fixture 2 DMX IN","… up to 32 devices","Terminator in last OUT"]},
+{t:"Networked lighting path",
+  s:["Console","Ethernet (Art-Net / sACN)","Network switch","Node","Universe assigned to a port","Physical DMX to truss","Fixtures"]},
+{t:"Lighting call — set order",
+  s:["Read the plot","Truss on the deck","Hang + safety cable","Address at the deck","Cable power and DMX","Power up and prove it","Trim","Focus","Patch and cue"]},
+{t:"Power path — service to fixture",
+  s:["Building service","Cam-lok feeder","Distro","Breaker","Socapex","Fan-out","Fixture"]},
+{t:"Setting a followspot pickup",
+  s:["Take the call on headset","Set the colour frame","Set the iris to the called size","Find the artist with the douser closed","Open the douser","Acknowledge the call"]}
+];
+var ci=0,cHost=document.getElementById("chainHost");
+function cRender(){
+  var c=CHAINS[ci];
+  var shuffled=c.s.map(function(s,i){return {s:s,i:i}}).sort(function(){return Math.random()-.5});
+  var h='<div class="qbox"><p style="color:var(--dim);font-size:12px;margin:0;letter-spacing:.5px">CHAIN '+(ci+1)+' OF '+CHAINS.length+'</p>'+
+        '<p class="qtext" style="margin:8px 0 0">'+c.t+'</p>'+
+        '<div class="slots" id="cSlots"></div><div id="cToks">';
+  shuffled.forEach(function(o){h+='<button class="tok" data-i="'+o.i+'">'+o.s+'</button>'});
+  h+='</div><div class="row" id="cFoot"><button class="btn" id="cClear">Clear</button>'+
+     '<button class="btn" id="cSkip" style="margin-left:auto">Next chain</button></div></div>';
+  cHost.innerHTML=h;
+  var next=0;
+  cHost.querySelectorAll(".tok").forEach(function(b){
+    b.onclick=function(){
+      var want=+b.dataset.i;
+      if(want===next){
+        b.classList.add("used");
+        var n=document.createElement("span");
+        n.className="tok ok";n.textContent=b.textContent;
+        var sl=document.getElementById("cSlots");
+        if(next>0){var ar=document.createElement("span");ar.className="arrow";ar.textContent="→";sl.appendChild(ar)}
+        sl.appendChild(n);
+        next++;
+        if(next===c.s.length){
+          document.getElementById("cFoot").insertAdjacentHTML("afterbegin",
+            '<span style="color:var(--audio);font-weight:600;font-size:14px">Chain complete.</span>');
+        }
+      } else {
+        b.classList.add("no");
+        setTimeout(function(){b.classList.remove("no")},450);
+      }
+    };
+  });
+  document.getElementById("cClear").onclick=cRender;
+  document.getElementById("cSkip").onclick=function(){ci=(ci+1)%CHAINS.length;cRender()};
+}
+cRender();
+
+/* ═══════════ pre-doors checklist ═══════════ */
+var CK=[];
+var ckHost=document.getElementById("ckHost");
+if(ckHost){
+  var ckState={};
+  try{ckState=JSON.parse(store.get("lighting_ck")||"{}")}catch(e){ckState={}}
+  var ckCount=document.getElementById("ckCount");
+  function ckSave(){store.set("lighting_ck",JSON.stringify(ckState))}
+  function ckTally(){
+    var n=CK.filter(function(_,i){return ckState[i]}).length;
+    ckCount.textContent=n+" of "+CK.length+" complete";
+    ckCount.style.color = n===CK.length ? "var(--audio)" : "var(--dim)";
+  }
+  CK.forEach(function(t,i){
+    var d=document.createElement("div");
+    d.className="ckitem";
+    d.style.cssText="text-align:left;display:flex;gap:11px;align-items:flex-start;padding:11px 13px;margin-bottom:7px";
+    var vc = /VIDEO CALL|NO BLUE MIX/.test(t);
+    d.innerHTML='<span class="ckbox" style="flex:0 0 auto;width:19px;height:19px;border-radius:5px;'+
+      'border:1.5px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:800;margin-top:1px"></span>'+
+      '<span class="cktxt" style="font-size:13.5px;line-height:1.5'+(vc?';color:var(--warn);font-weight:600':'')+'">'+t+'</span>';
+    function paint(){
+      var on=!!ckState[i];
+      var box=d.querySelector(".ckbox"), tx=d.querySelector(".cktxt");
+      box.textContent = on?"✓":"";
+      box.style.background = on?"var(--audio)":"transparent";
+      box.style.borderColor = on?"var(--audio)":"var(--line)";
+      box.style.color = on?"#08130b":"transparent";
+      tx.style.opacity = on?".45":"1";
+      tx.style.textDecoration = on?"line-through":"none";
+      d.style.borderColor = on?"var(--line)":(vc?"rgba(227,179,65,.35)":"var(--line)");
+    }
+    d.onclick=function(){ckState[i]=!ckState[i];paint();ckSave();ckTally()};
+    paint();
+    ckHost.appendChild(d);
+  });
+  ckTally();
+  document.getElementById("ckReset").onclick=function(){
+    ckState={};ckSave();
+    ckHost.querySelectorAll(".ckitem").forEach(function(d){
+      var b=d.querySelector(".ckbox"),t=d.querySelector(".cktxt");
+      b.textContent="";b.style.background="transparent";b.style.borderColor="var(--line)";
+      t.style.opacity="1";t.style.textDecoration="none";
+    });
+    ckTally();
+  };
+}
+
+/* ═══════════ connector ID drill ═══════════ */
+document.querySelectorAll(".idgrid .idcard").forEach(function(c){
+  var nm=c.querySelector(".nm");
+  if(!nm) return;
+  c.onclick=function(){
+    var on=c.classList.toggle("open");
+    nm.textContent = on ? "" : "?";
+    nm.style.display = on ? "none" : "block";
+  };
+});
+
+/* ═══════════ scenarios ═══════════ */
+var SCN=[
+{w:"Ballroom load-in · truss is about to fly",
+  q:"You have hung and addressed 24 LED washes on a truss at deck height. The L1 says fly it. What do you do before you say yes?",
+  a:"<b>Power it up and put every fixture through its paces on the deck.</b> Every fixture strikes, every fixture responds to its own address, pan and tilt sweep, colour changes, no flicker.<br><br><b>Then check the things that only fail later:</b> every safety cable through yoke and chord, every power and DMX connector fully seated with a service loop, cable tied to the truss and not hanging off connectors, terminator in the last fixture.<br><br><b>Why it matters:</b> at deck height a dead fixture is a two-minute swap. At trim it is a lift, a cleared floor, a stopped rehearsal, and a very visible delay. The twenty minutes you spend proving the rig on the ground is the cheapest twenty minutes of the day.<br><br><b>The tell of an experienced hand:</b> they test before they fly without being asked."},
+{w:"Corporate general session · 30 min to doors",
+  q:"Six fixtures at the end of one truss are flickering and occasionally dropping to black. The other eighteen on the same truss are rock solid. Everything was fine at focus two hours ago.",
+  a:"<b>The pattern is the diagnosis.</b> Faults that affect only the far end of a chain are data-line reflection problems, not fixture problems.<br><br><b>Check in this order:</b><br><b>1. Terminator</b> — is it still in the last fixture's OUT? These get knocked out or borrowed constantly.<br><b>2. Cable type</b> — did someone patch a run with mic cable when they ran short? It fits, it works at focus, and it fails when it matters.<br><b>3. Device count</b> — has anything been added to this chain since focus? Over 32 and the far end gets marginal.<br><b>4. Cable path</b> — has a power run been moved to lie alongside the DMX?<br><br><b>What changed between focus and now</b> is your best clue. Something did. Ask the crew.<br><br><b>Do not start re-addressing fixtures.</b> They were right two hours ago. Addressing does not cause flicker — it causes wrong behaviour, which is a different symptom."},
+{w:"Small breakout · you are the only LX",
+  q:"Twelve LED uplights around a ballroom, one small console, and the client wants them all to change colour together on your cue. What is the simplest way to build it?",
+  a:"<b>Address them all identically.</b> Set every uplight to the same DMX address — say 001. They all receive the same channel block and do exactly the same thing, forever.<br><br><b>Why this is right and not lazy:</b> the client asked for one colour everywhere, changing together. One channel block does that with one fader. Twelve separate addresses would give you twelve things to keep in sync for zero benefit.<br><br><b>When you would not do this:</b> the moment anyone wants a chase, a split colour, or one section different from another. Then each fixture needs its own address and you need the universe space for it.<br><br><b>Ask before you address, not after.</b> &ldquo;Do you ever want these to do different things?&rdquo; costs ten seconds and decides your entire patch.<br><br><b>The broader lesson:</b> shared addressing is a legitimate tool, not a mistake — as long as you chose it deliberately."}
+];
+var sh=document.getElementById("scnHost");
+SCN.forEach(function(s,i){
+  var d=document.createElement("div");
+  d.className="scn";
+  d.innerHTML='<div class="setting">'+s.w+'</div><p class="q">'+s.q+'</p>'+
+    '<button class="btn" data-i="'+i+'">How would you work it?</button>'+
+    '<div class="reveal">'+s.a+'</div>';
+  sh.appendChild(d);
+  var btn=d.querySelector("button"),rev=d.querySelector(".reveal");
+  btn.onclick=function(){
+    var on=rev.classList.toggle("on");
+    btn.textContent=on?"Hide":"How would you work it?";
+  };
+});
+
+})();
+
+/* ═══════════ gain structure simulator ═══════════ */
+(function(){
+  var host=document.getElementById("simGain"); if(!host) return;
+  var SRC={quiet:-8, norm:0, loud:-6};   // effective source level at the capsule
+  var SRCTXT={quiet:"Source: soft talker, leaning away from the mic",
+              norm:"Source: presenter at normal volume, empty room",
+              loud:"Source: room is full — bodies absorb, effective level drops"};
+  var src="norm";
+  var gain=document.getElementById("gsGain"), fad=document.getElementById("gsFad");
+  var MIN=-40, MAX=12, SPAN=MAX-MIN;              // meter scale
+  function pos(db){ return Math.max(0,Math.min(100,(db-MIN)/SPAN*100)); }
+
+  function render(){
+    var g=+gain.value, f=+fad.value, s=SRC[src];
+    var chan = s + g - 40;          // calibrated: normal source at +40 gain = 0 on the meter
+    var room = chan + f;            // fader scales it to the room
+    var pk = chan >= 9;
+
+    document.getElementById("gsGainV").textContent = (g>=0?"+":"")+g+" dB";
+    document.getElementById("gsFadV").textContent  = f===0 ? "0 (unity)" : (f>0?"+":"")+f;
+    document.getElementById("gsChanVal").textContent = (chan>=0?"+":"")+chan.toFixed(0);
+    document.getElementById("gsRoomVal").textContent = (room>=0?"+":"")+room.toFixed(0);
+    document.getElementById("gsSrc").textContent = SRCTXT[src];
+
+    var cf=document.getElementById("gsChanFill");
+    cf.style.height = pos(chan)+"%";
+    cf.className = "mfill" + (pk?" hot":"");
+    document.getElementById("gsRoomFill").style.height = pos(room)+"%";
+    document.getElementById("gsPk").className = "pkled" + (pk?" on":"");
+
+    // verdict
+    var v=document.getElementById("gsVerdict"), cls="ok", head="", body="";
+    if(pk){
+      cls="bad"; head="Clipping";
+      body="The channel is peaking into the red before the fader even sees it. No fader move fixes this — <b>pull the preamp gain down.</b> Distortion here is baked into everything downstream, including the recording.";
+    } else if(room < -6){
+      cls="warn"; head="Too quiet in the room";
+      body= f>=9
+        ? "The fader is nearly maxed and it's still not loud enough. <b>That's the tell: your gain is too low.</b> Bring the preamp up — chasing level with the fader lifts the noise floor along with the signal."
+        : "Bring the room up. If you find yourself pushing the fader well past unity to get there, stop and raise the gain instead.";
+    } else if(f <= -18){
+      cls="warn"; head="Fader buried";
+      body="The room level is fine, but the fader is sitting at "+f+". <b>Faders live around unity.</b> A fader down at "+f+" means the preamp is doing too much — pull gain back and bring the fader up toward 0. You have no room to ride it down if someone gets loud.";
+    } else if(f >= 8){
+      cls="warn"; head="Fader stretched";
+      body="You're at "+(f>0?"+":"")+f+" on the fader. It works right now, but you've got almost no travel left. Raise the preamp gain and bring the fader back to unity.";
+    } else if(chan >= 4 && chan < 9){
+      cls="ok"; head="Good — riding the top of the target";
+      body="Channel is averaging "+chan.toFixed(0)+", fader near unity. That's a healthy signal. For <b>speech in a live room</b> you might err a touch lower — feedback is the enemy, not noise.";
+    } else if(chan <= -12){
+      cls="warn"; head="Weak into the console";
+      body="The channel is only reading "+chan.toFixed(0)+". The room may be loud enough, but you're working close to the noise floor and you'll hear hiss when nobody's talking. Raise the gain.";
+    } else {
+      cls="ok"; head="Dialed in";
+      body="Channel averaging around 0, fader at "+(f===0?"unity":f)+". This is the target — meter near 0, headroom above it, fader where you can ride it in either direction.";
+    }
+    v.className="verdict "+cls;
+    v.innerHTML="<b>"+head+"</b>"+body;
+  }
+
+  gain.oninput=render; fad.oninput=render;
+  document.getElementById("gsQuiet").onclick=function(){src="quiet";render()};
+  document.getElementById("gsNorm").onclick =function(){src="norm"; render()};
+  document.getElementById("gsLoud").onclick =function(){src="loud"; render()};
+  document.getElementById("gsAuto").onclick=function(){
+    // solve for chan ≈ 0 with fader at unity
+    gain.value = 40 - SRC[src]; fad.value = 0; render();
+  };
+  document.getElementById("gsReset").onclick=function(){
+    gain.value=40; fad.value=0; src="norm"; render();
+  };
+  render();
+})();
+
+/* ═══════════ DMX rig builder ═══════════ */
+(function(){
+  var host=document.getElementById("dmxSim"); if(!host) return;
+  var svg=document.getElementById("dxSvg"), NS="http://www.w3.org/2000/svg";
+  var JOBS=[
+    {n:"Small corporate rig",  rows:[6],      ch:16, note:"Six LED washes on one truss."},
+    {n:"Two-truss ballroom",   rows:[8,8],    ch:16, note:"Two trusses, eight fixtures each."},
+    {n:"Festival wash rig",    rows:[12,12],  ch:24, note:"Twenty-four fixtures. Watch your device count."},
+    {n:"Big moving-light rig", rows:[10,10,10],ch:32,note:"Thirty fixtures in extended mode."}
+  ];
+  var job=0, fixtures=[], chain=[], terminated=false, splitter=false;
+
+  function mk(tag,attrs,txt){
+    var e=document.createElementNS(NS,tag);
+    for(var k in attrs) e.setAttribute(k,attrs[k]);
+    if(txt!=null) e.appendChild(document.createTextNode(txt));
+    return e;
+  }
+
+
+  function build(){
+    var J=JOBS[job];
+    fixtures=[]; chain=[]; terminated=false; splitter=false;
+    var id=0;
+    J.rows.forEach(function(count,r){
+      for(var i=0;i<count;i++){
+        fixtures.push({id:id++, row:r, i:i, n:count});
+      }
+    });
+    document.getElementById("dxJob").textContent = J.n+" — "+fixtures.length+" fixtures × "+J.ch+" ch";
+    draw(); verdict("", "");
+  }
+
+  function pos(f){
+    var J=JOBS[job], rows=J.rows.length;
+    var top = 54 + f.row * (200/Math.max(rows,1));
+    var span = 600 / (f.n+1);
+    return {x: 40 + span*(f.i+1), y: top};
+  }
+
+  function draw(){
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var J=JOBS[job];
+    // truss lines
+    J.rows.forEach(function(c,r){
+      var y = 54 + r*(200/Math.max(J.rows.length,1)) - 16;
+      var l=document.createElementNS(NS,"path");
+      l.setAttribute("d","M30 "+y+" H630"); l.setAttribute("stroke","#2b3440");
+      l.setAttribute("stroke-width","6"); l.setAttribute("stroke-linecap","round");
+      svg.appendChild(l);
+    });
+    // console
+    var g=document.createElementNS(NS,"g"); g.setAttribute("class","fx"); g.dataset.k="console";
+    g.appendChild(mk("rect",{class:"fxbody",x:12,y:248,width:86,height:40,rx:6}));
+    g.appendChild(mk("text",{class:"fxnum",x:55,y:266,"text-anchor":"middle"},"CONSOLE"));
+    g.appendChild(mk("text",{class:"fxlbl",x:55,y:280,"text-anchor":"middle"},"DMX OUT"));
+    g.onclick=function(){ chain=[]; terminated=false; draw(); verdict("","") };
+    svg.appendChild(g);
+    if(splitter){
+      var s=document.createElementNS(NS,"g");
+      s.appendChild(mk("rect",{class:"fxbody",x:118,y:248,width:82,height:40,rx:6,style:"stroke:#39d0d8"}));
+      s.appendChild(mk("text",{class:"fxnum",x:159,y:266,"text-anchor":"middle"},"SPLITTER"));
+      s.appendChild(mk("text",{class:"fxlbl",x:159,y:280,"text-anchor":"middle"},"opto · 4 out"));
+      svg.appendChild(s);
+    }
+    // cable
+    var pts=[{x:splitter?200:98,y:268}];
+    chain.forEach(function(id){ var p=pos(fixtures[id]); pts.push({x:p.x,y:p.y+14}); });
+    if(pts.length>1){
+      var d="M"+pts.map(function(p){return p.x+" "+p.y}).join(" L ");
+      var path=document.createElementNS(NS,"path");
+      path.setAttribute("class","dxline"+(chain.length>32?" bad":""));
+      path.setAttribute("d",d); svg.appendChild(path);
+    }
+    // fixtures
+    fixtures.forEach(function(f){
+      var p=pos(f), idx=chain.indexOf(f.id);
+      var g=document.createElementNS(NS,"g");
+      g.setAttribute("class","fx"+(idx>=0?" sel":""));
+      g.appendChild(mk("rect",{class:"fxbody",x:p.x-17,y:p.y-14,width:34,height:28,rx:4}));
+      g.appendChild(mk("text",{class:"fxnum",x:p.x,y:p.y+4,"text-anchor":"middle"}, idx>=0?String(idx+1):""));
+      g.onclick=function(){
+        if(idx>=0) chain=chain.slice(0,idx);
+        else chain.push(f.id);
+        terminated=false; draw(); verdict("","");
+      };
+      svg.appendChild(g);
+    });
+    // terminator
+    if(terminated && chain.length){
+      var last=pos(fixtures[chain[chain.length-1]]);
+      var t=document.createElementNS(NS,"g");
+      t.appendChild(mk("circle",{cx:last.x,cy:last.y-26,r:9,fill:"#3fb950",opacity:".25"}));
+      t.appendChild(mk("text",{x:last.x,y:last.y-22,"text-anchor":"middle",style:"font-size:10px;font-weight:800;fill:#3fb950"},"T"));
+      svg.appendChild(t);
+    }
+  }
+
+  function verdict(cls,html){
+    var v=document.getElementById("dxVerdict");
+    if(!html){ v.className="verdict"; v.innerHTML='<b>Not run yet</b>Tap fixtures in the order the cable should run, add a terminator, then run the show.'; return; }
+    v.className="verdict "+cls; v.innerHTML=html;
+  }
+
+  document.getElementById("dxNext").onclick=function(){ job=(job+1)%JOBS.length; build() };
+  document.getElementById("dxClear").onclick=function(){ chain=[]; terminated=false; splitter=false; draw(); verdict("","") };
+  document.getElementById("dxTerm").onclick=function(){
+    if(!chain.length){ verdict("warn","<b>Nothing to terminate</b>Build a chain first — the terminator goes in the DMX OUT of the <b>last</b> fixture."); return; }
+    terminated=!terminated; draw();
+    verdict(terminated?"ok":"warn", terminated
+      ? "<b>Terminator fitted</b>120 Ω in the OUT of fixture "+chain.length+". Signal gets absorbed at the end of the line instead of reflecting back up it."
+      : "<b>Terminator removed</b>The chain is now unterminated. It may look fine on a short run — that's exactly what makes this fault so hard to catch.");
+  };
+  document.getElementById("dxSplit").onclick=function(){
+    splitter=!splitter; draw();
+    verdict(splitter?"ok":"warn", splitter
+      ? "<b>Opto-splitter in line</b>Four isolated outputs. Now a shorted data line on one branch kills that branch only — not the whole rig. Rebuild your chain from the splitter."
+      : "<b>Splitter removed</b>Straight out of the console again.");
+  };
+
+  document.getElementById("dxRun").onclick=function(){
+    var J=JOBS[job], total=fixtures.length;
+    if(!chain.length){ verdict("bad","<b>No cable run</b>Nothing is connected. Tap fixtures in order to run DMX to them."); return; }
+    var missed=total-chain.length;
+    var perUni=Math.floor(512/J.ch);
+    var msgs=[], cls="ok", head="Show is up";
+
+    if(missed>0){
+      cls="bad"; head=missed+" fixture"+(missed>1?"s":"")+" dark";
+      msgs.push("You cabled "+chain.length+" of "+total+". The rest never got data — they'll sit at whatever they were last told, or in their standalone default. <b>Every fixture needs to be in a chain.</b>");
+    }
+    if(chain.length>32){
+      cls="bad"; head="Too many devices on one chain";
+      msgs.push("<b>"+chain.length+" devices on a single run.</b> The DMX spec tops out at 32. Past that the signal degrades and the far end of the chain gets unreliable. Insert an <b>opto-splitter</b> and branch it.");
+    }
+    if(!terminated){
+      if(cls==="ok"){ cls="warn"; head="It works — until it doesn't"; }
+      msgs.push("<b>No terminator.</b> With "+chain.length+" fixtures you may well get away with it in a quiet room. Then the run gets longer, or the venue gets noisier, and you get intermittent flicker on the last few fixtures that you'll spend an hour chasing. <b>Terminate every chain.</b>");
+    }
+    if(chain.length*J.ch>512){
+      cls="bad"; head="Universe overflow";
+      msgs.push("<b>"+chain.length+" fixtures × "+J.ch+" channels = "+(chain.length*J.ch)+" channels.</b> A universe holds 512. Only the first <b>"+perUni+"</b> fixtures fit — the rest need a second universe, which means a second physical run or a node with another port.");
+    }
+    // topology comment
+    if(cls!=="bad" && !splitter && chain.length>12){
+      msgs.push("<b>Topology note:</b> one long snake of "+chain.length+" fixtures works, but any fault anywhere kills everything downstream of it. A splitter feeding shorter branches turns a whole-rig outage into a one-branch outage. On a show that matters, that's worth the extra box.");
+    }
+    if(!msgs.length) msgs.push("Every fixture in the chain, inside the device limit, inside the universe, terminated at the end. This is what a clean run looks like.");
+    verdict(cls,"<b>"+head+"</b>"+msgs.join("<br><br>"));
+    // visual feedback
+    fixtures.forEach(function(f){
+      var g=svg.querySelectorAll(".fx")[0];
+    });
+    var nodes=svg.querySelectorAll(".fx");
+    var k=0;
+    fixtures.forEach(function(f){
+      var idx=chain.indexOf(f.id);
+      var el=[].slice.call(svg.querySelectorAll(".fx")).filter(function(n){return !n.dataset.k})[f.id];
+      if(!el) return;
+      el.classList.remove("dead","flick");
+      if(idx<0) el.classList.add("dead");
+      else if(idx>=32 || (idx+1)*J.ch>512) el.classList.add("dead");
+      else if(!terminated && idx>=chain.length-3) el.classList.add("flick");
+    });
+  };
+
+  build();
+})();
+
+/* ═══════════ address calculator ═══════════ */
+(function(){
+  var host=document.getElementById("addrSim"); if(!host) return;
+  var ch=document.getElementById("acCh"), n=document.getElementById("acN"), s=document.getElementById("acS");
+  var COLS=["#3fb950","#58a6ff","#bc8cff","#f0883e","#39d0d8","#e3b341"];
+  function render(){
+    var C=+ch.value, N=+n.value, S=+s.value;
+    document.getElementById("acChV").textContent=C;
+    document.getElementById("acNV").textContent=N;
+    document.getElementById("acSV").textContent=S;
+    var bar=document.getElementById("acBar"); bar.innerHTML="";
+    var list=document.getElementById("acList"); list.innerHTML="";
+    var fit=0, rows=[];
+    for(var i=0;i<N;i++){
+      var a=S+i*C, end=a+C-1;
+      var over = end>512;
+      if(!over) fit++;
+      if(i<14) rows.push('<div class="'+(over?"over":"")+'">Fixture '+(i+1)+' → <b>'+a+'</b>'+(over?"  ✕ past 512":"  ("+a+"–"+end+")")+'</div>');
+      if(!over){
+        var el=document.createElement("i");
+        el.style.left=((a-1)/512*100)+"%";
+        el.style.width=(C/512*100)+"%";
+        el.style.background=COLS[i%COLS.length];
+        el.style.opacity=".55";
+        bar.appendChild(el);
+      }
+    }
+    if(N>14) rows.push('<div style="color:var(--dimmer)">… '+(N-14)+' more</div>');
+    list.innerHTML=rows.join("");
+    var v=document.getElementById("acVerdict"), cls, head, body;
+    var max=Math.floor(512/C);
+    if(fit<N){
+      cls="bad"; head="Doesn't fit in one universe";
+      body="Only <b>"+fit+" of "+N+"</b> fixtures fit starting at "+S+". At "+C+" channels each, a universe holds <b>"+max+"</b> fixtures maximum — and starting higher than 1 costs you more. The remaining <b>"+(N-fit)+"</b> need a <b>second universe</b>: another physical DMX run, or another port on a node.";
+    } else if(fit===max && S===1){
+      cls="warn"; head="Exactly full";
+      body="All "+N+" fit and the universe is packed to the ceiling. No room to add a fixture later — and somebody always adds a fixture later. If you can, leave a gap.";
+    } else {
+      cls="ok"; head="Fits";
+      var used=N*C, free=512-(S-1)-used;
+      body="All <b>"+N+"</b> fixtures fit. Using <b>"+used+"</b> channels, <b>"+free+"</b> free above them. Last fixture lands at address <b>"+(S+(N-1)*C)+"</b>.";
+      if(C<=4) body+="<br><br>At only "+C+" channels each you could fit <b>"+max+"</b> in this universe — small-channel fixtures like simple LED pars are why one universe can run a whole ballroom of uplights.";
+    }
+    v.className="verdict "+cls; v.innerHTML="<b>"+head+"</b>"+body;
+  }
+  ch.oninput=render; n.oninput=render; s.oninput=render; render();
+})();
+
+/* ═══════════ LED wall cabling sim ═══════════ */
+(function(){
+  var host=document.getElementById("lwSim"); if(!host) return;
+  var svg=document.getElementById("lwSvg"), NS="http://www.w3.org/2000/svg";
+  var JOBS=[
+    {n:"Small backdrop", w:6, h:3, px:16384, cap:650000, note:"P3.91 500mm cabinets."},
+    {n:"Corporate IMAG", w:10, h:5, px:16384, cap:650000},
+    {n:"Wide festival wall", w:16, h:6, px:16384, cap:650000},
+    {n:"Fine-pitch broadcast", w:12, h:6, px:36864, cap:650000, note:"P2.6 — far more pixels per panel."}
+  ];
+  var job=0, ports=[[]], backup=false;
+
+  function mk2(tag,attrs,txt){
+    var e=document.createElementNS(NS,tag);
+    for(var k in attrs) e.setAttribute(k,attrs[k]);
+    if(txt!=null) e.appendChild(document.createTextNode(txt));
+    return e;
+  }
+
+
+  function J(){ return JOBS[job] }
+  function total(){ return J().w*J().h }
+  function used(){ return ports.reduce(function(a,p){return a+p.length},0) }
+  function cur(){ return ports[ports.length-1] }
+  function inAny(i){ for(var p=0;p<ports.length;p++) if(ports[p].indexOf(i)>=0) return p; return -1 }
+
+  function geom(){
+    var j=J(), pad=24, availW=660-pad*2, availH=300-pad*2;
+    var s=Math.min(availW/j.w, availH/j.h, 62);
+    return {s:s, ox:(660-s*j.w)/2, oy:(340-s*j.h)/2};
+  }
+  function cxy(i){
+    var j=J(), g=geom(), r=Math.floor(i/j.w), c=i%j.w;
+    return {x:g.ox+c*g.s+g.s/2, y:g.oy+r*g.s+g.s/2, s:g.s};
+  }
+
+  function draw(){
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var j=J(), g=geom();
+    // cables first
+    ports.forEach(function(p,pi){
+      if(p.length<2) return;
+      var d="M"+p.map(function(i){var c=cxy(i);return c.x+" "+c.y}).join(" L ");
+      var path=document.createElementNS(NS,"path");
+      path.setAttribute("class","lwline c"+((pi%4)+1)); path.setAttribute("d",d);
+      svg.appendChild(path);
+    });
+    if(backup){
+      ports.forEach(function(p,pi){
+        if(p.length<2) return;
+        var a=cxy(p[p.length-1]), b=cxy(p[0]);
+        var path=document.createElementNS(NS,"path");
+        path.setAttribute("class","lwline bk");
+        path.setAttribute("d","M"+a.x+" "+a.y+" Q "+((a.x+b.x)/2)+" "+(geom().oy-18)+" "+b.x+" "+b.y);
+        svg.appendChild(path);
+      });
+    }
+    for(var i=0;i<total();i++){
+      (function(i){
+        var c=cxy(i), pi=inAny(i);
+        var gEl=document.createElementNS(NS,"g");
+        gEl.setAttribute("class","pn"+(pi>=0?" on p"+((pi%4)+1):""));
+        var order = pi>=0 ? (ports[pi].indexOf(i)+1) : "";
+        gEl.appendChild(mk2("rect",{class:"pnb",x:c.x-c.s/2+2,y:c.y-c.s/2+2,width:c.s-4,height:c.s-4,rx:3}));
+        gEl.appendChild(mk2("text",{class:"pnn",x:c.x,y:c.y+4,"text-anchor":"middle"},String(order)));
+        gEl.onclick=function(){
+          var p=inAny(i);
+          if(p>=0){ ports[p]=ports[p].slice(0,ports[p].indexOf(i)); }
+          else cur().push(i);
+          draw(); reset();
+        };
+        svg.appendChild(gEl);
+      })(i);
+    }
+    document.getElementById("lwJob").textContent =
+      J().n+" — "+j.w+"×"+j.h+" panels · "+used()+"/"+total()+" cabled · port "+ports.length;
+  }
+  function reset(){ var v=document.getElementById("lwVerdict"); v.className="verdict";
+    v.innerHTML='<b>Not sent yet</b>Tap panels in the order the data cable runs. Use "Start next port" when a port is full.'; }
+
+  function newJob(){ ports=[[]]; backup=false; draw(); reset(); }
+
+  document.getElementById("lwNext").onclick=function(){ job=(job+1)%JOBS.length; newJob() };
+  document.getElementById("lwClear").onclick=newJob;
+  document.getElementById("lwPort").onclick=function(){
+    if(!cur().length){ return }
+    ports.push([]); draw(); reset();
+  };
+  document.getElementById("lwBack").onclick=function(){
+    backup=!backup; draw();
+    var v=document.getElementById("lwVerdict"); v.className="verdict "+(backup?"ok":"warn");
+    v.innerHTML=backup
+      ? "<b>Backup loop run</b>Last panel of each chain now returns to the processor's backup port. If the chain breaks mid-run, the panels past the break get fed from the other end — you lose <b>one</b> panel instead of half the wall."
+      : "<b>Backup removed</b>A single break now takes out everything downstream of it.";
+  };
+  document.getElementById("lwSnake").onclick=function(){
+    var j=J(), c=cur();
+    // fill remaining rows serpentine from wherever we are
+    var startRow=0;
+    var taken={}; ports.forEach(function(p){p.forEach(function(i){taken[i]=1})});
+    for(var r=0;r<j.h;r++){
+      var rowIdx=[]; for(var k=0;k<j.w;k++) rowIdx.push(r*j.w+k);
+      if(r%2===1) rowIdx.reverse();
+      var free=rowIdx.filter(function(i){return !taken[i]});
+      if(free.length===rowIdx.length){ rowIdx.forEach(function(i){ c.push(i); taken[i]=1; }); }
+    }
+    draw(); reset();
+  };
+
+  document.getElementById("lwRun").onclick=function(){
+    var j=J(), v=document.getElementById("lwVerdict"), msgs=[], cls="ok", head="Wall is up";
+    var un=total()-used();
+    var overPorts=[];
+    ports.forEach(function(p,pi){
+      if(p.length*j.px > j.cap) overPorts.push(pi+1);
+    });
+    // contiguity check — is each port's run physically adjacent?
+    var jumps=0;
+    ports.forEach(function(p){
+      for(var k=1;k<p.length;k++){
+        var a=p[k-1], b=p[k];
+        var ar=Math.floor(a/j.w), ac=a%j.w, br=Math.floor(b/j.w), bc=b%j.w;
+        if(Math.abs(ar-br)+Math.abs(ac-bc)!==1) jumps++;
+      }
+    });
+
+    if(un>0){ cls="bad"; head=un+" panel"+(un>1?"s":"")+" black";
+      msgs.push("<b>"+un+" of "+total()+" panels have no data.</b> They'll sit black — or worse, show the last frame they received. Every panel needs to be in a chain."); }
+
+    if(overPorts.length){
+      cls="bad"; head="Port capacity exceeded";
+      var maxP=Math.floor(j.cap/j.px);
+      msgs.push("<b>Port "+overPorts.join(" and ")+" is over capacity.</b> Each panel is "+j.px.toLocaleString()+" pixels and the port carries about "+j.cap.toLocaleString()+" — that's <b>"+maxP+" panels per port</b>. Panels past the limit go black, and it looks exactly like a bad cable. Split onto another port.");
+    }
+
+    if(jumps>0){
+      if(cls==="ok"){ cls="warn"; head="It works, but the cabling is wrong"; }
+      msgs.push("<b>"+jumps+" non-adjacent jump"+(jumps>1?"s":"")+" in your run.</b> You've cabled from a panel to one that isn't next to it — meaning a cable flying across the back of the wall. It'll function, but it's long, it's in the way, it's hard to trace, and it's the first thing to get snagged during strike. <b>Serpentine:</b> across a row, drop down, back the other way.");
+    }
+
+    if(!backup && cls!=="bad" && used()>6){
+      msgs.push("<b>No backup loop.</b> Right now a single failed panel or unplugged cable takes out everything downstream of it. One extra cable per port turns that into a one-panel problem.");
+    }
+
+    if(!msgs.length) msgs.push("Every panel fed, every port inside its pixel budget, runs are physically adjacent"+(backup?", backup loop in place":"")+". This is what a clean wall build looks like.");
+    v.className="verdict "+cls; v.innerHTML="<b>"+head+"</b>"+msgs.join("<br><br>");
+
+    // mark dead
+    var maxPan=Math.floor(j.cap/j.px);
+    [].slice.call(svg.querySelectorAll(".pn")).forEach(function(el,i){
+      el.classList.remove("dead");
+      var pi=inAny(i);
+      if(pi<0) el.classList.add("dead");
+      else if(ports[pi].indexOf(i) >= maxPan) el.classList.add("dead");
+    });
+  };
+
+  newJob();
+})();
+
+/* ═══════════ wall planner ═══════════ */
+(function(){
+  var host=document.getElementById("lwCalc"); if(!host) return;
+  var PITCH=[1.5,1.9,2.6,3.91,4.8,6.67,10];
+  var pw=document.getElementById("pw"), ph=document.getElementById("ph"),
+      pp=document.getElementById("pp"), pv=document.getElementById("pv");
+  function render(){
+    var W=+pw.value, H=+ph.value, P=PITCH[+pp.value], V=+pv.value;
+    document.getElementById("pwV").textContent=W;
+    document.getElementById("phV").textContent=H;
+    document.getElementById("ppV").textContent="P"+P;
+    document.getElementById("pvV").textContent=V+" m";
+
+    var pxPer=Math.round(500/P);                 // pixels along a 500mm cabinet
+    var resW=pxPer*W, resH=pxPer*H;
+    var totalPx=resW*resH;
+    var panelPx=pxPer*pxPer;
+    var perPort=Math.floor(650000/panelPx);
+    var ports=Math.ceil((W*H)/perPort);
+    var mW=(W*0.5).toFixed(1), mH=(H*0.5).toFixed(1);
+
+    var prev=document.getElementById("wallPrev");
+    prev.style.gridTemplateColumns="repeat("+W+",1fr)";
+    prev.innerHTML=new Array(W*H+1).join("<span></span>");
+
+    document.getElementById("wallStats").innerHTML=
+      '<div><b>Wall size</b><span>'+mW+' × '+mH+' m</span></div>'+
+      '<div><b>Resolution</b><span>'+resW+' × '+resH+'</span></div>'+
+      '<div><b>Total pixels</b><span>'+(totalPx/1e6).toFixed(2)+' MP</span></div>'+
+      '<div><b>Panels</b><span>'+(W*H)+'</span></div>'+
+      '<div><b>Per port</b><span>'+perPort+' max</span></div>'+
+      '<div><b>Ports needed</b><span>'+ports+'</span></div>';
+
+    var v=document.getElementById("lwCalcV"), cls, head, body;
+    if(V < P){
+      cls="bad"; head="Pitch too coarse for that viewing distance";
+      body="At <b>P"+P+"</b> the nearest comfortable viewing distance is about <b>"+P+" m</b>, and you've got someone at <b>"+V+" m</b>. They will see individual pixels. Go finer — or move the audience back.";
+    } else if(V > P*4){
+      cls="warn"; head="Finer than you need";
+      body="Nearest viewer is "+V+" m and <b>P"+P+"</b> is clean from "+P+" m. You're paying for resolution nobody can resolve. A coarser pitch would look identical from the floor and cost meaningfully less — worth raising if you're speccing.";
+    } else {
+      cls="ok"; head="Pitch matches the room";
+      body="<b>P"+P+"</b> is clean from about "+P+" m and your nearest viewer is at "+V+" m. Good match.";
+    }
+    body+="<br><br><b>"+(W*H)+" panels</b> at "+panelPx.toLocaleString()+" px each = <b>"+(totalPx/1e6).toFixed(2)+" megapixels</b>. At roughly 650k pixels per port that's <b>"+ports+" processor port"+(ports>1?"s":"")+"</b> minimum — plan your cabling around that number before you start hanging.";
+    if(resW>1920||resH>1080) body+="<br><br><b>Note:</b> the wall is "+resW+"×"+resH+", which is bigger than a 1080p source. Feeding it 1080p means the processor is scaling <i>up</i> and you'll see softness. Send it a source that matches, or accept the scale.";
+    v.className="verdict "+cls; v.innerHTML="<b>"+head+"</b>"+body;
+  }
+  [pw,ph,pp,pv].forEach(function(el){ el.oninput=render });
+  render();
+})();
+
+</script>
+</body>
+</html>
