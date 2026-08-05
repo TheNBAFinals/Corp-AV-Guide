@@ -373,6 +373,21 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
 .fkey:active{background:var(--warn);color:#1a1206;border-color:var(--warn)}
 .keyhint{font-size:10.5px;color:var(--dimmer);text-align:center;margin-top:11px;line-height:1.5}
 
+/* ---------- eos trainer ---------- */
+.cmdline{background:#05080b;border:1px solid var(--line);border-radius:8px;padding:13px 15px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px;color:#e6edf3;
+  margin-bottom:14px;min-height:48px;letter-spacing:.5px}
+.cmdprompt{color:var(--dimmer)}
+.caret{color:var(--video);animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.eokeys{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:6px}
+.eokey{background:var(--bg3);border:1px solid var(--line);color:var(--txt);border-radius:7px;
+  padding:11px 4px;font:700 11.5px/1 inherit;cursor:pointer;transition:.1s}
+.eokey:hover{border-color:var(--dimmer)}
+.eokey:active{background:var(--video);color:#06121f;border-color:var(--video)}
+.eokey.num{color:var(--warn)}
+.eokey.mod{color:var(--video)}
+
 .homelink{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--dim);
   text-decoration:none;margin-bottom:12px;padding:5px 11px;border:1px solid var(--line);
   border-radius:99px;transition:.15s}
@@ -698,6 +713,34 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
     <b>Why this one matters.</b> Every other skill on a lighting call is useless if you can't set an address. The menu labels differ slightly between brands — <i>Address</i> vs <i>DMX Addr</i>, <i>Mode</i> vs <i>Personality</i> vs <i>Channel Mode</i> — but the <b>shape</b> is identical on every fixture you will ever pick up. Get fluent here and you can drive a fixture you have never seen in about ten seconds.
   </div>
 
+  <h2>Eos Command Line Trainer</h2>
+  <p class="lede">Eos is driven by building a sentence and pressing Enter. <b>The syntax is the skill</b> — and it is identical on a free copy of ETCnomad and on an Apex. Build the command for each task. Wrong keys get explained.</p>
+
+  <div class="sim" id="eosSim">
+    <div class="row" style="margin:0 0 12px">
+      <span class="counter" id="eoScore"></span>
+      <button class="btn" id="eoSkip" style="margin-left:auto">Skip</button>
+    </div>
+
+    <div class="fixcard" id="eoTask" style="border-left-color:var(--video)"></div>
+
+    <div class="cmdline" id="eoLine"><span class="cmdprompt">&gt;</span> <span id="eoCmd"></span><span class="caret">▌</span></div>
+
+    <div class="eokeys" id="eoKeys"></div>
+
+    <div class="row" style="margin:12px 0 0">
+      <button class="btn" id="eoClear">Shift+Clear</button>
+      <button class="btn" id="eoBack">Backspace</button>
+      <button class="btn pri" id="eoEnter" style="margin-left:auto">ENTER</button>
+    </div>
+
+    <div id="eoFeed"></div>
+  </div>
+
+  <div class="key">
+    <b>Why this is worth drilling.</b> On a command-line desk, hesitation reads as inexperience faster than anything else. The LD says "channels 1 through 10 at 50" and you either type it without thinking or you don't. <b>ETCnomad is free — install it and practise this for real.</b>
+  </div>
+
   <h2>Run the Call</h2>
   <p class="lede">One rig, start to doors. Ten decisions — judgement, order, addressing, power and cable. <b>Every choice carries forward.</b> At the end you get a show report describing what actually happens in the room because of what you did.</p>
 
@@ -880,72 +923,6 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
   </ul>
 </section>
 
-<section class="panel" id="p-console">
-  <h2>Consoles</h2>
-  <p class="lede">Every lighting console does the same five things in the same order. Learn that order once and any desk becomes navigable — you're just hunting for where <i>this</i> manufacturer put each step.</p>
-
-  <div class="fig">
-    <svg viewBox="0 0 420 130" role="img" aria-label="The five stages every lighting console follows">
-      <g>
-        <rect class="sf" x="8" y="34" width="72" height="40" rx="6" style="stroke:#58a6ff"/>
-        <text class="lbl f-video" x="44" y="52" text-anchor="middle">PATCH</text>
-        <text class="lbl" x="44" y="65" text-anchor="middle" style="font-size:8.5px">fixture → address</text>
-        <path class="s c-audio" d="M80 54 h18"/><path class="f-audio" d="M100 54 l-7 -4 v8 z"/>
-
-        <rect class="sf" x="102" y="34" width="66" height="40" rx="6" style="stroke:#3fb950"/>
-        <text class="lbl f-audio" x="135" y="52" text-anchor="middle">GROUPS</text>
-        <text class="lbl" x="135" y="65" text-anchor="middle" style="font-size:8.5px">select fast</text>
-        <path class="s c-audio" d="M168 54 h18"/><path class="f-audio" d="M188 54 l-7 -4 v8 z"/>
-
-        <rect class="sf" x="190" y="34" width="70" height="40" rx="6" style="stroke:#bc8cff"/>
-        <text class="lbl f-sdi" x="225" y="52" text-anchor="middle">PALETTES</text>
-        <text class="lbl" x="225" y="65" text-anchor="middle" style="font-size:8.5px">colour · position</text>
-        <path class="s c-audio" d="M260 54 h18"/><path class="f-audio" d="M280 54 l-7 -4 v8 z"/>
-
-        <rect class="sf" x="282" y="34" width="58" height="40" rx="6" style="stroke:#e3b341"/>
-        <text class="lbl f-warn" x="311" y="52" text-anchor="middle">CUES</text>
-        <text class="lbl" x="311" y="65" text-anchor="middle" style="font-size:8.5px">record looks</text>
-        <path class="s c-audio" d="M340 54 h18"/><path class="f-audio" d="M360 54 l-7 -4 v8 z"/>
-
-        <rect class="sf" x="362" y="34" width="50" height="40" rx="6" style="stroke:#f0883e"/>
-        <text class="lbl f-rf" x="387" y="52" text-anchor="middle">PLAY</text>
-        <text class="lbl" x="387" y="65" text-anchor="middle" style="font-size:8.5px">GO</text>
-      </g>
-      <text class="lbl f-warn" x="210" y="104" text-anchor="middle">Every console. Every brand. Only the button names change.</text>
-      <text class="lbl" x="210" y="120" text-anchor="middle" style="font-size:10px">Patch wrong and nothing downstream can be right.</text>
-    </svg>
-    <div class="figcap"><b>Patch is the foundation.</b> If the console thinks fixture 12 is a 16-channel wash and it's actually a 24-channel one in extended mode, every parameter after channel 16 lands on the wrong thing — and the symptom looks like a broken fixture, not a patch error.</div>
-  </div>
-
-  <h3>The families you'll meet</h3>
-  <table class="tbl">
-    <tr><th>Family</th><th>Desks</th><th>Where you'll see it</th></tr>
-    <tr><td><b style="color:var(--sdi)">MA Lighting</b></td><td>grandMA3 Full/Light, grandMA2 Full/Light/Ultra, dot2, onPC + Command Wing, NPU</td><td>Concert, festival, arena, big corporate. The touring standard.</td></tr>
-    <tr><td><b style="color:var(--video)">ETC Eos</b></td><td>Eos Ti, Gio @5, Ion Xe, Element, ColorSource, ETCnomad Puck</td><td>Theatre, broadcast, houses of worship, most permanent installs.</td></tr>
-    <tr><td><b style="color:var(--warn)">High End / Hog</b></td><td>Full Boar 4, Road Hog 4, HedgeHog 4X</td><td>Concert and club touring. Fast, busking-friendly.</td></tr>
-    <tr><td><b style="color:var(--audio)">Avolites</b></td><td>Arena, Tiger Touch</td><td>Heavy in the UK and EU; club and festival work.</td></tr>
-    <tr><td><b style="color:var(--rf)">Small-format</b></td><td>Vari-Lite FLX S24, Leprecon LP-624, ColorSource 20</td><td>Corporate breakouts, small houses, one-person calls.</td></tr>
-  </table>
-
-  <div class="card L data">
-    <h4>Tracking vs. non-tracking — the concept that trips people</h4>
-    <p><b>Tracking</b> (Eos, grandMA) means a value stays as it is until something explicitly changes it. Record cue 1 with channel 5 at full and it's still at full in cue 8 unless you changed it. This makes cue lists compact and edits propagate forward — powerful, and occasionally surprising.</p>
-    <p><b>Non-tracking</b> records every value in every cue. Simpler to reason about, much heavier to edit.</p>
-    <p><b>Why you care as an assistant:</b> when the LD says "that change tracked forward," they mean an edit rippled into later cues. It's not a fault.</p>
-  </div>
-
-  <div class="card L audio">
-    <h4>Palettes — where the time savings live</h4>
-    <p>A <b>palette</b> stores a parameter value <i>by reference</i> instead of by number. A position palette called "PODIUM" holds a pan/tilt for every fixture. Cues then reference the palette rather than raw numbers.</p>
-    <p><b>The payoff:</b> the podium moves six feet at rehearsal. You update <b>one palette</b> and every cue that references it follows. Without palettes you'd re-record every cue by hand.</p>
-    <p><b>The assistant's job is often exactly this</b> — updating position palettes after a set change while the LD keeps working.</p>
-  </div>
-
-  <div class="key">
-    <b>If you're handed a desk you've never seen:</b> find the <b>patch</b>, find <b>groups</b>, find how to <b>select a fixture and get a parameter on an encoder</b>. Those three get you useful. Everything else can be learned while the LD talks.
-  </div>
-</section>
-
 <section class="panel" id="p-atmos">
   <h2>Haze and Fog</h2>
   <p class="lede">Beams don't exist until there's something in the air to catch them. Atmospherics aren't decoration — for a beam-heavy rig they're the difference between a light show and a bunch of expensive fixtures pointing at nothing.</p>
@@ -1022,6 +999,150 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
   <div class="card L warn">
     <h4>Followspot Operator</h4>
     <p>On a spot, on headset, taking calls. Discussed in the Fixtures tab.</p>
+  </div>
+</section>
+<section class="panel" id="p-console">
+  <h2>Consoles</h2>
+  <p class="lede">Every lighting console does the same five things in the same order. Learn that once and any desk becomes navigable — you're just hunting for where <i>this</i> manufacturer put each step.</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 420 130" role="img" aria-label="The five stages every lighting console follows">
+      <rect class="sf" x="8" y="34" width="72" height="40" rx="6" style="stroke:#58a6ff"/>
+      <text class="lbl f-video" x="44" y="52" text-anchor="middle">PATCH</text>
+      <text class="lbl" x="44" y="65" text-anchor="middle" style="font-size:8.5px">fixture → address</text>
+      <path class="s c-audio" d="M80 54 h18"/><path class="f-audio" d="M100 54 l-7 -4 v8 z"/>
+      <rect class="sf" x="102" y="34" width="66" height="40" rx="6" style="stroke:#3fb950"/>
+      <text class="lbl f-audio" x="135" y="52" text-anchor="middle">GROUPS</text>
+      <text class="lbl" x="135" y="65" text-anchor="middle" style="font-size:8.5px">select fast</text>
+      <path class="s c-audio" d="M168 54 h18"/><path class="f-audio" d="M188 54 l-7 -4 v8 z"/>
+      <rect class="sf" x="190" y="34" width="70" height="40" rx="6" style="stroke:#bc8cff"/>
+      <text class="lbl f-sdi" x="225" y="52" text-anchor="middle">PALETTES</text>
+      <text class="lbl" x="225" y="65" text-anchor="middle" style="font-size:8.5px">colour · position</text>
+      <path class="s c-audio" d="M260 54 h18"/><path class="f-audio" d="M280 54 l-7 -4 v8 z"/>
+      <rect class="sf" x="282" y="34" width="58" height="40" rx="6" style="stroke:#e3b341"/>
+      <text class="lbl f-warn" x="311" y="52" text-anchor="middle">CUES</text>
+      <text class="lbl" x="311" y="65" text-anchor="middle" style="font-size:8.5px">record looks</text>
+      <path class="s c-audio" d="M340 54 h18"/><path class="f-audio" d="M360 54 l-7 -4 v8 z"/>
+      <rect class="sf" x="362" y="34" width="50" height="40" rx="6" style="stroke:#f0883e"/>
+      <text class="lbl f-rf" x="387" y="52" text-anchor="middle">PLAY</text>
+      <text class="lbl" x="387" y="65" text-anchor="middle" style="font-size:8.5px">GO</text>
+      <text class="lbl f-warn" x="210" y="104" text-anchor="middle">Every console. Every brand. Only the button names change.</text>
+      <text class="lbl" x="210" y="120" text-anchor="middle" style="font-size:10px">Patch wrong and nothing downstream can be right.</text>
+    </svg>
+    <div class="figcap"><b>Patch is the foundation.</b> If the console thinks fixture 12 is a 16-channel wash and it's actually 24-channel, every parameter after channel 16 lands on the wrong thing — and the symptom looks like a broken fixture, not a patch error.</div>
+  </div>
+
+  <h3>The families you'll meet</h3>
+  <table class="tbl">
+    <tr><th>Family</th><th>Desks</th><th>Where you'll see it</th></tr>
+    <tr><td><b style="color:var(--video)">ETC Eos</b></td><td>Eos Apex, Eos Ti, Gio @5, Ion Xe, Element 2, ColorSource, ETCnomad</td><td>Theatre, broadcast, worship, corporate, most permanent installs</td></tr>
+    <tr><td><b style="color:var(--sdi)">MA Lighting</b></td><td>grandMA3 Full/Light, grandMA2, dot2, onPC + wing</td><td>Concert, festival, arena. The touring standard.</td></tr>
+    <tr><td><b style="color:var(--warn)">High End / Hog</b></td><td>Full Boar 4, Road Hog 4, HedgeHog 4X</td><td>Concert and club touring. Fast, busking-friendly.</td></tr>
+    <tr><td><b style="color:var(--audio)">Avolites</b></td><td>Arena, Tiger Touch</td><td>Heavy in UK/EU; club and festival work.</td></tr>
+    <tr><td><b style="color:var(--rf)">Small-format</b></td><td>Vari-Lite FLX S24, Leprecon LP-624</td><td>Corporate breakouts, small houses, one-person calls.</td></tr>
+  </table>
+
+  <h2>ETC Eos Family</h2>
+  <div class="key">
+    <b>Eos is a command-line console.</b> That single fact explains everything about it. You are not pushing buttons that do things — you are <b>building a sentence</b> and then pressing Enter. Once that clicks, the whole desk opens up, and the same syntax works on a $200 ETCnomad dongle and a $60,000 Apex.
+  </div>
+
+  <h3>The sentence</h3>
+  <p class="lede">Every Eos command follows the same shape: <b>WHAT → HOW MUCH → ENTER.</b> Read the command line at the top of the screen constantly — it shows you the sentence you are building before you commit it.</p>
+
+  <table class="tbl">
+    <tr><th>You press</th><th>What it means</th></tr>
+    <tr><td><code>1 [Enter]</code></td><td>Select channel 1</td></tr>
+    <tr><td><code>1 [Thru] 10 [Enter]</code></td><td>Select channels 1 through 10</td></tr>
+    <tr><td><code>1 [+] 5 [Enter]</code></td><td>Select 1 and 5</td></tr>
+    <tr><td><code>1 [Thru] 10 [-] 5 [Enter]</code></td><td>Select 1–10 but not 5</td></tr>
+    <tr><td><code>[At] 50 [Enter]</code></td><td>Set the selection to 50%</td></tr>
+    <tr><td><code>[Full]</code></td><td>Straight to 100% — no Enter needed</td></tr>
+    <tr><td><code>[Out]</code></td><td>Straight to zero</td></tr>
+    <tr><td><code>[Group] 1 [Enter]</code></td><td>Select group 1</td></tr>
+    <tr><td><code>[Record] [Cue] 1 [Enter]</code></td><td>Record everything live into cue 1</td></tr>
+    <tr><td><code>[Record Only] [Cue] 2 [Enter]</code></td><td>Record <b>only what you touched manually</b></td></tr>
+    <tr><td><code>[Update] [Enter]</code></td><td>Push changes back into the active cue</td></tr>
+    <tr><td><code>[Cue] 3 [Time] 5 [Enter]</code></td><td>Give cue 3 a 5-second fade</td></tr>
+    <tr><td><code>[Sneak] [Enter]</code></td><td>Release manual control back to the cue</td></tr>
+    <tr><td><code>[Shift] + [Clear]</code></td><td>Wipe the command line and start over</td></tr>
+  </table>
+
+  <div class="card L video">
+    <h4>Live vs. Blind — the concept that confuses everyone once</h4>
+    <p><b>Live</b> is the real output. What you change, the room sees.</p>
+    <p><b>Blind</b> is editing a cue without affecting output. You can rebuild cue 40 while cue 12 is on stage and nobody in the room knows.</p>
+    <p><b>The trap:</b> making changes in Blind and wondering why the stage did not react — or worse, making changes in Live during a show thinking you were in Blind. <b>Check which mode you are in before you touch anything.</b></p>
+  </div>
+
+  <div class="card L video">
+    <h4>Tracking</h4>
+    <p>Eos is a <b>tracking</b> console. A value stays as it is until something explicitly changes it. Record cue 1 with channel 5 at full and it is still at full in cue 8 unless you changed it.</p>
+    <p><b>Why it matters:</b> cue lists stay compact, and an edit ripples forward into every later cue that inherited the value. Powerful, and occasionally surprising.</p>
+    <p><b>When the LD says "that tracked forward"</b> they mean an edit propagated into later cues. That is the desk working correctly, not a fault.</p>
+    <p><b>Record Only</b> and <b>Cue Only / Track</b> are the tools that let you make a change in one cue without it tracking onward.</p>
+  </div>
+
+  <div class="card L audio">
+    <h4>Palettes — where the time savings live</h4>
+    <p>Four kinds, matching the four parameter families: <b>Intensity, Focus, Colour, Beam</b> (IFCB). A palette stores values <b>by reference</b>.</p>
+    <p>A focus palette called PODIUM holds a pan/tilt for every fixture. Cues reference the palette rather than raw numbers. <b>The podium moves six feet at rehearsal — you update one palette and every cue that references it follows.</b></p>
+    <p><b>This is very often the assistant's job:</b> updating focus palettes after a set change while the LD keeps working.</p>
+  </div>
+
+  <div class="card L warn">
+    <h4>Eos hardware you'll meet</h4>
+    <p><b>Eos Apex</b> — current flagship. <b>Eos Ti</b>, <b>Gio @5</b>, <b>Ion Xe</b> — the working desks you'll see on corporate and theatre calls. <b>Element 2</b> — simplified, education and small houses. <b>ETCnomad</b> — the software on a laptop with a USB dongle; same syntax, no hardware faders unless you add a wing.</p>
+    <p><b>The important part:</b> the syntax is identical across all of them. Learn it once on a free copy of ETCnomad at home and you can walk up to an Apex.</p>
+  </div>
+
+  <div class="key" style="border-color:rgba(63,185,80,.35);background:rgba(63,185,80,.07)">
+    <b style="color:var(--audio)">Practice at home for free.</b> ETC publishes <b>ETCnomad</b> — the actual Eos software — and it runs in a demo/offline mode without a dongle. You can patch a rig, build cues and practise the entire syntax on your own laptop. That is the single highest-value thing you can do between calls. ETC also publishes free <b>video tutorials</b> and <b>practice projects</b> built on real production scenarios.<br><br>
+    <b>Their paid Level 1–4 courses</b> are instructor-led with their own workbooks. Worth doing if an employer will fund it — but the syntax above and hands-on Nomad time will get you working long before that.
+  </div>
+
+  <h2>ETC ColorSource</h2>
+  <div class="key">
+    <b>ColorSource is the opposite design philosophy from Eos.</b> Eos gives you a command line and expects you to build sentences. ColorSource gives you <b>faders and a colour picker</b> and expects you to touch things directly. It is Eos's little sibling in family, not in operation — do not walk up expecting Eos syntax.
+  </div>
+
+  <div class="card L rf">
+    <h4>How it actually works</h4>
+    <p><b>Faders are the interface.</b> Each fader is a channel or a recorded look. You push it up, the light comes up. There is no command line to learn.</p>
+    <p><b>The colour picker</b> is the standout feature — a touchscreen colour space where you pick a colour and the desk works out the emitter mix for whatever LED fixture is patched. This is why it lands in so many corporate and worship rooms: someone non-technical can drive it.</p>
+    <p><b>Cues</b> record and play back in a list with a Go button, same as any desk.</p>
+    <p><b>Patch</b> is a simple fixture-picker: choose the fixture from the library, give it an address, done.</p>
+  </div>
+
+  <div class="card L rf">
+    <h4>What to expect on a call</h4>
+    <p>ColorSource turns up when the room needs <b>competent, simple control</b> rather than deep programming — corporate breakouts, houses of worship, small venues, and anywhere the client will be driving it after you leave.</p>
+    <p><b>The handover matters more than the programming.</b> If a client is running it themselves, record clean looks onto faders, label them, and leave a card explaining what each fader does. That is the job.</p>
+  </div>
+
+  <div class="key" style="border-color:rgba(227,179,65,.35)">
+    <b>Verify specifics against the manual on the desk in front of you.</b> ETC updates the ColorSource line and the exact fader counts, universe outputs and feature set differ by model and software version. The <b>operating model</b> above is stable; the numbers are not. ETC publishes every manual free at their documentation search — check the version on the console's own about screen and match it.
+  </div>
+
+  <h2>Console Log</h2>
+  <p class="lede">Every new desk you touch, add it here. The pattern is always the same five questions — answer them and you can work.</p>
+  <table class="tbl">
+    <tr><th>Console</th><th>Type</th><th>Status</th></tr>
+    <tr><td><b>ETC Eos family</b></td><td>Command line, tracking</td><td><b style="color:var(--audio)">Used · documented above</b></td></tr>
+    <tr><td><b>ETC ColorSource</b></td><td>Fader + colour picker</td><td><b style="color:var(--audio)">Used · documented above</b></td></tr>
+    <tr><td>grandMA2 / MA3</td><td>Command line + executors</td><td><span style="color:var(--dimmer)">not yet</span></td></tr>
+    <tr><td>Hog 4</td><td>Command line, busking-focused</td><td><span style="color:var(--dimmer)">not yet</span></td></tr>
+    <tr><td>Avolites</td><td>Fader + palette driven</td><td><span style="color:var(--dimmer)">not yet</span></td></tr>
+  </table>
+
+  <div class="card L data">
+    <h4>The five questions for any console you have never touched</h4>
+    <p><b>1.</b> Where is <b>patch</b>, and what does it think is out there?<br>
+    <b>2.</b> How do I <b>select</b> a fixture or a group?<br>
+    <b>3.</b> How do I get a <b>parameter onto an encoder</b> or a fader?<br>
+    <b>4.</b> How do I <b>record</b> what I am looking at?<br>
+    <b>5.</b> How do I <b>play it back</b>, and how do I get out of trouble — undo, clear, release?</p>
+    <p>Answer those five and you are useful on any desk in the world inside ten minutes. Everything else is depth you can add while the LD talks.</p>
   </div>
 </section>
 
@@ -2423,6 +2544,136 @@ SCN.forEach(function(s,i){
   };
 
   newTask();
+})();
+
+/* ═══════════ eos command line trainer ═══════════ */
+(function(){
+  var host=document.getElementById("eosSim"); if(!host) return;
+
+  var KEYS=["1","2","3","4","5","6","7","8","9","0",
+            "Thru","+","-","At","Full","Out",
+            "Group","Record","Record Only","Update","Cue","Time","Sneak"];
+
+  var T=[
+   {t:"Select channel 1 and bring it to full.",
+    a:[["1","Full"]],
+    hint:"Channel number, then Full. Full is a one-press level — it does not need Enter after it.",
+    why:{}},
+   {t:"Select channels 1 through 10 and set them to 50%.",
+    a:[["1","Thru","10","At","50"]],
+    hint:"Range with Thru, then At and the level.",
+    why:{}},
+   {t:"Select channels 1 through 10, but not channel 5, and take them out.",
+    a:[["1","Thru","10","-","5","Out"]],
+    hint:"Build the range first, subtract with minus, then Out.",
+    why:{"+":"Plus <b>adds</b> to a selection. You want to remove channel 5 from the range, which is minus."}},
+   {t:"Select channels 1 and 5 together and set them to 75%.",
+    a:[["1","+","5","At","75"]],
+    hint:"Plus joins two separate channels into one selection.",
+    why:{"Thru":"Thru gives you a <b>continuous range</b> — 1 through 5 would grab 2, 3 and 4 as well. You want only 1 and 5, so use plus."}},
+   {t:"Select group 3 and bring it to full.",
+    a:[["Group","3","Full"]],
+    hint:"The Group key comes first, then the number.",
+    why:{}},
+   {t:"Record what is on stage right now as cue 1.",
+    a:[["Record","Cue","1"]],
+    hint:"Record, then what you are recording into.",
+    why:{"Record Only":"<b>Record Only</b> captures just the parameters you touched manually, leaving everything else to track from the previous cue. Useful — but the task said record what is on stage, which is a full Record."}},
+   {t:"Record only the changes you made manually into cue 5.",
+    a:[["Record Only","Cue","5"]],
+    hint:"There is a dedicated key for this.",
+    why:{"Record":"Plain <b>Record</b> captures everything currently live, including values that tracked in from earlier cues. That bakes in values you did not intend to set here, and it makes later edits behave unexpectedly."}},
+   {t:"Give cue 4 a five second fade time.",
+    a:[["Cue","4","Time","5"]],
+    hint:"Address the cue, then the attribute you are changing.",
+    why:{}},
+   {t:"Release your manual changes and let the cue take back over.",
+    a:[["Sneak"]],
+    hint:"One key. It hands control back to the background state.",
+    why:{"Out":"<b>Out</b> takes your selection to zero — the lights go dark. Sneak hands control back to whatever the cue says it should be, which is usually what you actually want."}},
+   {t:"Push the change you just made into the cue that is currently running.",
+    a:[["Update"]],
+    hint:"One key, then Enter.",
+    why:{"Record":"<b>Record</b> would overwrite the whole cue with everything live. <b>Update</b> pushes just your modification into the existing cue and leaves the rest alone."}}
+  ];
+
+  var order=[], idx=0, cmd=[], score=0, asked=0;
+
+  function shuffle(){ order=T.map(function(_,i){return i}).sort(function(){return Math.random()-.5}) }
+
+  function render(){
+    var s=cmd.map(function(k){ return /^\d+$/.test(k)?k:"["+k+"]" }).join(" ");
+    document.getElementById("eoCmd").textContent=s;
+  }
+  function tally(){ document.getElementById("eoScore").textContent="Score "+score+" / "+asked }
+
+  function load(){
+    if(idx>=order.length){ shuffle(); idx=0 }
+    cmd=[];
+    var q=T[order[idx]];
+    document.getElementById("eoTask").innerHTML=
+      "<h4>Task</h4><p>"+q.t+"</p><div class='brief'>Hint: "+q.hint+"</div>";
+    document.getElementById("eoFeed").innerHTML="";
+    render(); tally();
+  }
+
+  var kb=document.getElementById("eoKeys");
+  KEYS.forEach(function(k){
+    var b=document.createElement("button");
+    b.className="eokey "+(/^\d$/.test(k)?"num":"mod");
+    b.textContent=k;
+    b.onclick=function(){
+      // merge consecutive digits into one number
+      if(/^\d$/.test(k) && cmd.length && /^\d+$/.test(cmd[cmd.length-1])) cmd[cmd.length-1]+=k;
+      else cmd.push(k);
+      render();
+    };
+    kb.appendChild(b);
+  });
+  document.getElementById("eoClear").onclick=function(){ cmd=[]; render();
+    document.getElementById("eoFeed").innerHTML=""; };
+  document.getElementById("eoBack").onclick=function(){
+    if(!cmd.length) return;
+    var last=cmd[cmd.length-1];
+    if(/^\d\d+$/.test(last)) cmd[cmd.length-1]=last.slice(0,-1);
+    else cmd.pop();
+    render();
+  };
+  document.getElementById("eoSkip").onclick=function(){ idx++; load() };
+
+  document.getElementById("eoEnter").onclick=function(){
+    var q=T[order[idx]];
+    if(!cmd.length){
+      document.getElementById("eoFeed").innerHTML=
+        '<div class="fb no"><b class="h">Empty command line</b>Nothing to send. Build the command first.</div>';
+      return;
+    }
+    var got=cmd.join(" ");
+    var right=q.a.some(function(a){ return a.join(" ")===got });
+    asked++;
+    if(right){
+      score++;
+      document.getElementById("eoFeed").innerHTML=
+        '<div class="fb ok"><b class="h">Correct</b><code>'+
+        cmd.map(function(k){return /^\d+$/.test(k)?k:"["+k+"]"}).join(" ")+
+        '</code><br><br>'+q.hint+'</div>';
+      tally();
+      setTimeout(function(){ idx++; load() },1900);
+    } else {
+      // find the most instructive wrong key present
+      var note="";
+      for(var k in q.why){ if(cmd.indexOf(k)>=0){ note=q.why[k]; break } }
+      var want=q.a[0].map(function(k){return /^\d+$/.test(k)?k:"["+k+"]"}).join(" ");
+      document.getElementById("eoFeed").innerHTML=
+        '<div class="fb no"><b class="h">Not the command</b>'+
+        (note?note+"<br><br>":"")+
+        'You sent <code>'+cmd.map(function(k){return /^\d+$/.test(k)?k:"["+k+"]"}).join(" ")+'</code><br>'+
+        'The command is <code>'+want+'</code><br><br>'+q.hint+'</div>';
+      tally();
+    }
+  };
+
+  shuffle(); load();
 })();
 
 </script>
