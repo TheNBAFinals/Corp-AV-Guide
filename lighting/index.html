@@ -388,6 +388,44 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
 .eokey.num{color:var(--warn)}
 .eokey.mod{color:var(--video)}
 
+/* ---------- truss trainer ---------- */
+.ldbrief{background:#05080b;border:1px solid var(--line);border-left:3px solid var(--rf);
+  border-radius:11px;padding:14px 16px;margin-bottom:14px}
+.ldbrief .who{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--rf);
+  font-weight:700;margin-bottom:7px}
+.ldbrief p{margin:0 0 8px;font-size:14px;line-height:1.65;color:var(--txt)}
+.ldbrief ul{margin:8px 0 0;padding-left:18px;color:var(--dim);font-size:13px;line-height:1.8}
+.ldbrief li::marker{color:var(--rf)}
+.fxt{cursor:pointer}
+.fxt .b{fill:#141a21;stroke:#3a4652;stroke-width:1.5}
+.fxt.pick .b{stroke:#e3b341;stroke-width:2.5}
+.fxt.done .b{fill:#121f16;stroke:#3fb950}
+.fxt.err .b{fill:#2a1416;stroke:#f85149}
+.fxt t{pointer-events:none}
+.ckt{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:8px;margin-top:12px}
+.ck{background:var(--bg3);border:1px solid var(--line);border-radius:9px;padding:9px 11px;cursor:pointer;transition:.15s}
+.ck:hover{border-color:var(--dimmer)}
+.ck.sel{border-color:var(--warn);background:rgba(227,179,65,.08)}
+.ck.over{border-color:var(--power);background:rgba(248,81,73,.08)}
+.ck b{display:block;font-size:11px;letter-spacing:.6px;color:var(--dimmer)}
+.ck .amp{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:3px}
+.ck .who2{font-size:10.5px;color:var(--dim);margin-top:3px;min-height:13px}
+.legendrow{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;font-size:11px;color:var(--dim)}
+.legendrow span{background:var(--bg3);border:1px solid var(--line);border-radius:6px;padding:4px 9px}
+
+/* eos trainer v2 */
+.lvltabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.lvltab{background:#0d1117;border:1px solid var(--line);color:#8b98a5;border-radius:6px;
+  padding:6px 13px;font:700 11.5px/1 var(--f);cursor:pointer;letter-spacing:.04em}
+.lvltab.on{background:rgba(88,166,255,.12);border-color:var(--video);color:#cfe3ff}
+.keybank{margin:10px 0 0}
+.keybank>span{display:block;font:800 9.5px/1 var(--f);letter-spacing:.13em;
+  color:#5c6773;margin:0 0 5px;text-transform:uppercase}
+.keybank .eokeys{margin:0}
+.topictag{display:inline-block;font:800 9px/1 var(--f);letter-spacing:.1em;
+  padding:3px 7px;border-radius:4px;background:#131a22;color:#8b98a5;
+  border:1px solid var(--line);margin:0 0 7px}
+
 .homelink{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--dim);
   text-decoration:none;margin-bottom:12px;padding:5px 11px;border:1px solid var(--line);
   border-radius:99px;transition:.15s}
@@ -682,6 +720,37 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
   </div>
 </section>
 <section class="panel" id="p-sim">
+  <h2>Cable the Truss</h2>
+  <p class="lede">The LD tells you how they want it. You do the <b>power pass</b>, then the <b>data pass</b>. Mixed fixture types, real load maths, and constraints that change every job. Get it wrong and the LD tells you why.</p>
+
+  <div class="sim" id="trussSim">
+    <div class="ldbrief" id="tsBrief"></div>
+
+    <div class="row" style="margin:0 0 12px">
+      <button class="btn" id="tsPower">1 · Power pass</button>
+      <button class="btn" id="tsData">2 · Data pass</button>
+      <span class="counter" id="tsMode" style="margin-left:auto"></span>
+    </div>
+
+    <div class="rigwrap">
+      <svg id="tsSvg" viewBox="0 0 680 250" role="img" aria-label="Interactive truss — assign circuits and build data chains"></svg>
+    </div>
+
+    <div id="tsPanel"></div>
+
+    <div class="row" style="margin:12px 0 0">
+      <button class="btn" id="tsClear">Clear pass</button>
+      <button class="btn" id="tsJob">Next job</button>
+      <button class="btn pri" id="tsCheck" style="margin-left:auto">Show the LD</button>
+    </div>
+
+    <div id="tsFeed"></div>
+  </div>
+
+  <div class="key">
+    <b>What changed from a simple chain builder.</b> Now you have <b>five fixture types</b> with different wattages, connectors and channel counts; <b>dimmed and non-dim circuits</b> that are not interchangeable; <b>load maths</b> that decides how many circuits you need; and an <b>LD with opinions</b> that change job to job. Same rig, different brief, different right answer.
+  </div>
+
   <h2>Fixture Menu Trainer</h2>
   <p class="lede">The back of a moving light. Four buttons and a tiny screen — and on a real call somebody hands you forty of these and expects you to set them all. <b>The menu tree below is how almost every mover on the market is laid out.</b> Learn it here and the first real one you touch is familiar.</p>
 
@@ -717,6 +786,7 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
   <p class="lede">Eos is driven by building a sentence and pressing Enter. <b>The syntax is the skill</b> — and it is identical on a free copy of ETCnomad and on an Apex. Build the command for each task. Wrong keys get explained.</p>
 
   <div class="sim" id="eosSim">
+    <div class="lvltabs" id="eoLvls"></div>
     <div class="row" style="margin:0 0 12px">
       <span class="counter" id="eoScore"></span>
       <button class="btn" id="eoSkip" style="margin-left:auto">Skip</button>
@@ -738,7 +808,7 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
   </div>
 
   <div class="key">
-    <b>Why this is worth drilling.</b> On a command-line desk, hesitation reads as inexperience faster than anything else. The LD says "channels 1 through 10 at 50" and you either type it without thinking or you don't. <b>ETCnomad is free — install it and practise this for real.</b>
+    <b>What's in here.</b> Every drill maps to a skill from the four Eos training levels — selection and groups in L1, palettes and snapshots in L2, query, macros and update modifiers in L3, multiple cue lists, by-type palettes and capture in L4. Filter by level or run them all mixed.<br><br><b>Why this is worth drilling.</b> On a command-line desk, hesitation reads as inexperience faster than anything else. The LD says "channels 1 through 10 at 50" and you either type it without thinking or you don't. <b>ETCnomad is free — install it and practise this for real.</b>
   </div>
 
   <h2>Run the Call</h2>
@@ -789,34 +859,7 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
     <b>What it's drilling.</b> Dimmed vs. constant power and why that choice can destroy a fixture. True1 vs. powerCON vs. Edison vs. stage pin — which body goes with which fixture. When a fixture needs no data line, when it needs no cable at all, and where a node actually sits in the chain.
   </div>
 
-<h2>DMX Rig Builder</h2>
-  <p class="lede">Cable the rig yourself. Tap the console output, then tap fixtures in the order you want the chain to run. The rig reacts the way a real one would — including failing quietly in the ways real ones do.</p>
-
-  <div class="sim" id="dmxSim">
-    <div class="row" style="margin:0 0 12px">
-      <span class="counter" id="dxJob"></span>
-      <button class="btn" id="dxNext" style="margin-left:auto">New rig</button>
-      <button class="btn" id="dxClear">Clear cable</button>
-    </div>
-
-    <div class="rigwrap">
-      <svg id="dxSvg" viewBox="0 0 660 300" role="img" aria-label="Interactive DMX rig — tap the console then fixtures to build a chain"></svg>
-    </div>
-
-    <div class="row" style="margin:12px 0 0">
-      <button class="btn" id="dxTerm">Add terminator</button>
-      <button class="btn" id="dxSplit">Insert opto-splitter</button>
-      <button class="btn pri" id="dxRun" style="margin-left:auto">Run the show</button>
-    </div>
-
-    <div class="verdict" id="dxVerdict"></div>
-  </div>
-
-  <div class="key">
-    <b>What it's drilling.</b> Out-to-In direction, the 32-device ceiling, terminating the end of every chain, when a splitter earns its place, and why a long single snake is a bad topology even when it technically works.
-  </div>
-
-  <h2>Address Calculator</h2>
+<h2>Address Calculator</h2>
   <p class="lede">The maths you do standing on a ladder with a phone in your teeth. Set the channel count and how many fixtures, and see where the universe runs out.</p>
 
   <div class="sim" id="addrSim">
@@ -2621,64 +2664,454 @@ SCN.forEach(function(s,i){
   newTask();
 })();
 
-/* ═══════════ eos command line trainer ═══════════ */
+
+/* ═══════════ cable the truss ═══════════ */
+(function(){
+  var host=document.getElementById("trussSim"); if(!host) return;
+  var svg=document.getElementById("tsSvg"), NS="http://www.w3.org/2000/svg";
+  function mk3(t,a,x){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);
+    if(x!=null)e.appendChild(document.createTextNode(x));return e;}
+
+  var TYPE={
+    MH:  {n:"Mover",   w:450, ch:32, conn:"True1",     dim:false, c:"#bc8cff"},
+    WA:  {n:"Wash",    w:300, ch:16, conn:"powerCON",  dim:false, c:"#3fb950"},
+    S4:  {n:"S4 575",  w:575, ch:0,  conn:"Stage pin", dim:true,  c:"#e3b341"},
+    BL:  {n:"Blinder", w:800, ch:8,  conn:"True1",     dim:false, c:"#f0883e"},
+    HZ:  {n:"Hazer",   w:1200,ch:2,  conn:"Edison",    dim:false, c:"#39d0d8"}
+  };
+
+  var JOBS=[
+   {ld:"Standard corporate general session. Nothing exotic — I just want it clean.",
+    reqs:["Conventionals on the <b>house dimmers</b>. Everything else on <b>constant</b>.",
+          "Nothing over <b>16 A</b> on a circuit. I don't want to be chasing breakers.",
+          "<b>Hazer on its own circuit.</b> I want to be able to kill it without touching anything else.",
+          "One universe is fine. Terminate the end."],
+    fx:["MH","MH","MH","MH","WA","WA","WA","WA","S4","S4","HZ"],
+    rules:{maxA:16, hazeAlone:true, splitter:false, universes:1}},
+
+   {ld:"Festival side stage. I've been burned by this venue's power and I'm not losing a truss to one bad data cable.",
+    reqs:["<b>Splitter in line.</b> Two branches minimum — I'm not running one long snake.",
+          "Keep every circuit under <b>12 A</b>. I don't trust the distro here.",
+          "Conventionals on dimmers, intelligents on constant.",
+          "Terminate every branch."],
+    fx:["MH","MH","MH","MH","MH","MH","BL","BL","WA","WA","S4","S4"],
+    rules:{maxA:12, hazeAlone:false, splitter:true, universes:1}},
+
+   {ld:"Big corporate. Movers are in 32-channel extended mode and I'll be re-patching them all day.",
+    reqs:["<b>Movers get their own universe.</b> Don't mix them with anything else.",
+          "Washes and blinders on universe 2.",
+          "16 A ceiling per circuit.",
+          "Hazer on its own circuit. Terminate both universes."],
+    fx:["MH","MH","MH","MH","MH","MH","MH","MH","WA","WA","WA","BL","BL","HZ"],
+    rules:{maxA:16, hazeAlone:true, splitter:false, universes:2, moversAlone:true}}
+  ];
+
+  var CKT=["C1","C2","C3","C4","C5","C6","D1","D2"];
+  var job=0, mode="power", fx=[], pwr={}, chains=[[]], sel=null, term=false, splitter=false, uni={};
+
+  function J(){ return JOBS[job] }
+
+  function build(){
+    fx=J().fx.map(function(t,i){ return {i:i,t:t} });
+    pwr={}; chains=[[]]; sel=null; term=false; splitter=false; uni={};
+    mode="power"; draw(); panel(); feed("");
+  }
+
+  function pos(i){
+    var n=fx.length, span=620/(n+1);
+    return {x:30+span*(i+1), y:104};
+  }
+
+  function draw(){
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    svg.appendChild(mk3("path",{d:"M20 76 H660",stroke:"#2b3440","stroke-width":7,"stroke-linecap":"round"}));
+    // data cable
+    if(mode==="data"){
+      chains.forEach(function(ch,ci){
+        if(ch.length<1) return;
+        var start = splitter ? {x:160,y:210} : {x:60,y:210};
+        var pts=[start].concat(ch.map(function(i){var p=pos(i);return {x:p.x,y:p.y+16}}));
+        if(pts.length>1) svg.appendChild(mk3("path",{
+          class:"lwline c"+((ci%4)+1),
+          d:"M"+pts.map(function(p){return p.x+" "+p.y}).join(" L ")}));
+      });
+      var cons=mk3("g",{});
+      cons.appendChild(mk3("rect",{class:"fxbody",x:16,y:194,width:82,height:34,rx:5}));
+      cons.appendChild(mk3("text",{class:"fxnum",x:57,y:215,"text-anchor":"middle"},"CONSOLE"));
+      svg.appendChild(cons);
+      if(splitter){
+        var sp=mk3("g",{});
+        sp.appendChild(mk3("rect",{class:"fxbody",x:118,y:194,width:84,height:34,rx:5,style:"stroke:#39d0d8"}));
+        sp.appendChild(mk3("text",{class:"fxnum",x:160,y:215,"text-anchor":"middle"},"SPLITTER"));
+        svg.appendChild(sp);
+      }
+    }
+    fx.forEach(function(f){
+      var p=pos(f.i), T=TYPE[f.t];
+      var g=mk3("g",{class:"fxt"+(sel===f.i?" pick":"")});
+      var label="", state="";
+      if(mode==="power"){ label = pwr[f.i]||"—"; if(pwr[f.i]) state=" done"; }
+      else { var ci=chainOf(f.i); label = ci>=0 ? String(chains[ci].indexOf(f.i)+1) : (T.ch?"—":"n/a"); if(ci>=0) state=" done"; }
+      g.setAttribute("class","fxt"+(sel===f.i?" pick":"")+state);
+      g.appendChild(mk3("rect",{class:"b",x:p.x-21,y:p.y-30,width:42,height:34,rx:4}));
+      g.appendChild(mk3("text",{x:p.x,y:p.y-16,"text-anchor":"middle",
+        style:"font-size:9.5px;font-weight:800;fill:"+T.c},f.t));
+      g.appendChild(mk3("text",{x:p.x,y:p.y-5,"text-anchor":"middle",
+        style:"font-size:9px;fill:#8b98a5"},label));
+      g.appendChild(mk3("text",{x:p.x,y:p.y+22,"text-anchor":"middle",
+        style:"font-size:8.5px;fill:#5c6773"},T.w+"W"));
+      g.onclick=function(){
+        if(mode==="power"){ sel=(sel===f.i?null:f.i); }
+        else {
+          if(!TYPE[f.t].ch){ feed("no","No data on that fixture",
+            "<b>"+TYPE[f.t].n+"</b> is a conventional — it has no DMX input. The console controls it through the <b>dimmer</b>, one channel per dimmer circuit. Nothing to cable here."); return; }
+          var ci=chainOf(f.i);
+          if(ci>=0) chains[ci]=chains[ci].slice(0,chains[ci].indexOf(f.i));
+          else chains[chains.length-1].push(f.i);
+        }
+        draw(); panel();
+      };
+      svg.appendChild(g);
+    });
+  }
+  function chainOf(i){ for(var c=0;c<chains.length;c++) if(chains[c].indexOf(i)>=0) return c; return -1 }
+  function ampsOn(c){ var w=0; fx.forEach(function(f){ if(pwr[f.i]===c) w+=TYPE[f.t].w }); return w/120 }
+
+  function panel(){
+    var el=document.getElementById("tsPanel");
+    document.getElementById("tsMode").textContent =
+      mode==="power" ? "Power pass — assign every fixture to a circuit"
+                     : "Data pass — chain the intelligents";
+    if(mode==="power"){
+      var h='<p class="banklab">'+(sel!==null
+        ? "Put <b>"+TYPE[fx[sel].t].n+"</b> ("+TYPE[fx[sel].t].w+" W · "+TYPE[fx[sel].t].conn+" · "+
+          (TYPE[fx[sel].t].dim?"<b>needs a dimmer</b>":"needs constant")+") on…"
+        : "Tap a fixture on the truss, then pick its circuit")+'</p><div class="ckt">';
+      CKT.forEach(function(c){
+        var a=ampsOn(c), who=fx.filter(function(f){return pwr[f.i]===c}).map(function(f){return f.t}).join(" ");
+        h+='<div class="ck'+(a>J().rules.maxA?" over":"")+'" data-c="'+c+'">'+
+           '<b>'+c+(c[0]==="D"?" · DIMMED":" · CONSTANT")+'</b>'+
+           '<div class="amp" style="color:'+(a>J().rules.maxA?"var(--power)":a?"var(--audio)":"var(--dimmer)")+'">'+
+           a.toFixed(1)+' A</div><div class="who2">'+(who||"empty")+'</div></div>';
+      });
+      h+='</div><div class="legendrow"><span>Ceiling this job: <b style="color:var(--warn)">'+J().rules.maxA+' A</b></span>'+
+         '<span>C = constant / non-dim</span><span>D = house dimmer</span></div>';
+      el.innerHTML=h;
+      el.querySelectorAll(".ck").forEach(function(b){
+        b.onclick=function(){
+          if(sel===null){ feed("no","Pick a fixture first","Tap a fixture on the truss, then choose the circuit it goes on."); return; }
+          pwr[sel]=b.dataset.c; sel=null; draw(); panel();
+        };
+      });
+    } else {
+      var need=fx.filter(function(f){return TYPE[f.t].ch}).length;
+      var got=chains.reduce(function(a,c){return a+c.length},0);
+      el.innerHTML='<p class="banklab">Chains: '+chains.length+' · '+got+' of '+need+' intelligents cabled</p>'+
+        '<div class="row" style="margin:0"><button class="btn" id="tsNewChain">Start another chain</button>'+
+        '<button class="btn" id="tsSplit">'+(splitter?"Remove":"Insert")+' splitter</button>'+
+        '<button class="btn" id="tsTerm">'+(term?"Remove":"Add")+' terminators</button></div>';
+      document.getElementById("tsNewChain").onclick=function(){ if(chains[chains.length-1].length) chains.push([]); draw(); panel(); };
+      document.getElementById("tsSplit").onclick=function(){ splitter=!splitter; draw(); panel(); };
+      document.getElementById("tsTerm").onclick=function(){ term=!term; panel(); };
+    }
+  }
+
+  function feed(cls,head,body){
+    var f=document.getElementById("tsFeed");
+    if(!cls){ f.innerHTML=""; return }
+    f.innerHTML='<div class="fb '+cls+'"><b class="h">'+head+'</b>'+body+'</div>';
+  }
+
+  function brief(){
+    var j=J();
+    document.getElementById("tsBrief").innerHTML=
+      '<div class="who">The LD, walking away from you</div><p>“'+j.ld+'”</p><ul>'+
+      j.reqs.map(function(r){return "<li>"+r+"</li>"}).join("")+'</ul>';
+  }
+
+  document.getElementById("tsPower").onclick=function(){ mode="power"; sel=null; draw(); panel(); feed("") };
+  document.getElementById("tsData").onclick =function(){ mode="data";  sel=null; draw(); panel(); feed("") };
+  document.getElementById("tsClear").onclick=function(){
+    if(mode==="power") pwr={}; else { chains=[[]]; splitter=false; term=false; }
+    sel=null; draw(); panel(); feed("");
+  };
+  document.getElementById("tsJob").onclick=function(){ job=(job+1)%JOBS.length; brief(); build(); };
+
+  document.getElementById("tsCheck").onclick=function(){
+    var j=J(), r=j.rules, out=[], ok=true;
+
+    // ---- power ----
+    var unassigned=fx.filter(function(f){ return !pwr[f.i] });
+    if(unassigned.length){ ok=false;
+      out.push(["no","“"+unassigned.length+" fixtures aren't on anything”",
+        "You've left "+unassigned.length+" fixture"+(unassigned.length>1?"s":"")+" without a circuit. Every fixture needs power — that is not optional and it is not something I should be finding."]);
+    }
+    var wrongDim=fx.filter(function(f){
+      var c=pwr[f.i]; if(!c) return false;
+      return TYPE[f.t].dim ? c[0]!=="D" : c[0]==="D";
+    });
+    if(wrongDim.length){ ok=false;
+      var conv=wrongDim.filter(function(f){return TYPE[f.t].dim});
+      var intel=wrongDim.filter(function(f){return !TYPE[f.t].dim});
+      var m="";
+      if(intel.length) m+="<b>You put "+intel.length+" intelligent fixture"+(intel.length>1?"s":"")+" on a dimmer.</b> LED movers, washes, blinders and the hazer all have power supplies — they need constant voltage and control their own intensity over DMX. A dimmed circuit damages them. Move them to a C circuit.";
+      if(conv.length) m+=(m?"<br><br>":"")+"<b>You put "+conv.length+" conventional"+(conv.length>1?"s":"")+" on a constant circuit.</b> A Source Four on constant power is just <i>on</i>, at full, forever. Its intensity comes from the dimmer. Move them to a D circuit.";
+      out.push(["no","“That's going to cost me a fixture”",m]);
+    }
+    var over=CKT.filter(function(c){ return ampsOn(c)>r.maxA });
+    if(over.length){ ok=false;
+      out.push(["no","“You've overloaded "+over.join(" and ")+"”",
+        over.map(function(c){
+          var who=fx.filter(function(f){return pwr[f.i]===c});
+          return "<b>"+c+"</b> is carrying "+ampsOn(c).toFixed(1)+" A — "+who.length+" fixtures totalling "+
+            who.reduce(function(a,f){return a+TYPE[f.t].w},0)+" W. I said <b>"+r.maxA+" A</b>.";
+        }).join("<br>")+
+        "<br><br><b>The maths:</b> watts ÷ 120 = amps. Then derate — a 20 A circuit carries 16 A continuous, and lighting runs for hours. Split the load across more circuits."]);
+    }
+    if(r.hazeAlone){
+      var hz=fx.filter(function(f){return f.t==="HZ"});
+      hz.forEach(function(h){
+        var c=pwr[h.i]; if(!c) return;
+        var mates=fx.filter(function(f){return pwr[f.i]===c && f.i!==h.i});
+        if(mates.length){ ok=false;
+          out.push(["no","“The hazer isn't alone”",
+            "I asked for the hazer on its own circuit. You've got "+mates.length+" other fixture"+(mates.length>1?"s":"")+" sharing "+c+".<br><br><b>Why I want it:</b> if the fire panel gets twitchy or the room complains, I want to kill the hazer at the circuit and lose <i>nothing else</i>. Sharing a circuit means killing it takes lights with it."]);
+        }
+      });
+    }
+
+    // ---- data ----
+    var needData=fx.filter(function(f){ return TYPE[f.t].ch });
+    var cabled=chains.reduce(function(a,c){return a+c.length},0);
+    if(cabled<needData.length){ ok=false;
+      out.push(["no","“"+(needData.length-cabled)+" fixtures have no data”",
+        "They'll have power and sit there doing nothing — or worse, holding whatever they were last told. Every fixture with a DMX input needs to be in a chain."]);
+    }
+    if(r.splitter && !splitter){ ok=false;
+      out.push(["no","“Where's my splitter?”",
+        "I asked for a splitter and two branches. One long snake means <b>any</b> fault anywhere kills everything downstream of it. An opto-splitter isolates each branch — one bad fixture takes out its branch and nothing else. On this venue's power I'm not gambling the truss."]);
+    }
+    if(r.splitter && chains.filter(function(c){return c.length}).length<2){ ok=false;
+      out.push(["no","“That's still one branch”",
+        "You put a splitter in and then ran everything down one leg. That gets you the box without the benefit. Use <b>Start another chain</b> and split the truss between branches."]);
+    }
+    if(r.moversAlone){
+      var mixed=chains.some(function(c){
+        var has=c.some(function(i){return fx[i].t==="MH"});
+        var other=c.some(function(i){return fx[i].t!=="MH"});
+        return has&&other;
+      });
+      if(mixed){ ok=false;
+        out.push(["no","“I said movers on their own universe”",
+          "You've mixed movers with washes or blinders on the same chain. At 32 channels each, eight movers is 256 channels — but that's not why I asked.<br><br><b>I'm re-patching those movers all day.</b> If they're alone on a universe I can renumber them without touching anything else. Mixed in, every change risks the rest of the rig."]);
+      }
+    }
+    var longest=Math.max.apply(null,chains.map(function(c){return c.length}).concat([0]));
+    if(longest>32){ ok=false;
+      out.push(["no","“Too many devices on one run”",
+        "You've got "+longest+" on a single chain. DMX tops out at <b>32 devices</b>. Past that the far end goes unreliable and you'll be chasing it all night."]);
+    }
+    if(!term && cabled){ ok=false;
+      out.push(["warn","“No terminator”",
+        "It'll probably work in an empty room. Then the room fills, the run gets longer, and the last few fixtures start flickering — and you'll spend an hour on it because the cable tests fine. <b>Terminate every chain, every time.</b>"]);
+    }
+
+    if(ok){
+      out.unshift(["ok","“That'll do — nice work”",
+        "Everything on a circuit, nothing over "+r.maxA+" A, conventionals dimmed and intelligents constant"+
+        (r.hazeAlone?", hazer isolated":"")+
+        (r.splitter?", split into branches":"")+
+        (r.moversAlone?", movers on their own":"")+
+        ", terminated. <b>That's a truss I can trust at trim.</b>"]);
+    }
+    document.getElementById("tsFeed").innerHTML=out.map(function(o){
+      return '<div class="fb '+o[0]+'"><b class="h">'+o[1]+'</b>'+o[2]+'</div>' }).join("");
+  };
+
+  brief(); build();
+})();
+
+/* ═══════════ eos trainer — levels 1-4 ═══════════ */
 (function(){
   var host=document.getElementById("eosSim"); if(!host) return;
 
-  var KEYS=["1","2","3","4","5","6","7","8","9","0",
-            "Thru","+","-","At","Full","Out",
-            "Group","Record","Record Only","Update","Cue","Time","Sneak"];
-
-  var T=[
-   {t:"Select channel 1 and bring it to full.",
-    a:[["1","Full"]],
-    hint:"Channel number, then Full. Full is a one-press level — it does not need Enter after it.",
-    why:{}},
-   {t:"Select channels 1 through 10 and set them to 50%.",
-    a:[["1","Thru","10","At","50"]],
-    hint:"Range with Thru, then At and the level.",
-    why:{}},
-   {t:"Select channels 1 through 10, but not channel 5, and take them out.",
-    a:[["1","Thru","10","-","5","Out"]],
-    hint:"Build the range first, subtract with minus, then Out.",
-    why:{"+":"Plus <b>adds</b> to a selection. You want to remove channel 5 from the range, which is minus."}},
-   {t:"Select channels 1 and 5 together and set them to 75%.",
-    a:[["1","+","5","At","75"]],
-    hint:"Plus joins two separate channels into one selection.",
-    why:{"Thru":"Thru gives you a <b>continuous range</b> — 1 through 5 would grab 2, 3 and 4 as well. You want only 1 and 5, so use plus."}},
-   {t:"Select group 3 and bring it to full.",
-    a:[["Group","3","Full"]],
-    hint:"The Group key comes first, then the number.",
-    why:{}},
-   {t:"Record what is on stage right now as cue 1.",
-    a:[["Record","Cue","1"]],
-    hint:"Record, then what you are recording into.",
-    why:{"Record Only":"<b>Record Only</b> captures just the parameters you touched manually, leaving everything else to track from the previous cue. Useful — but the task said record what is on stage, which is a full Record."}},
-   {t:"Record only the changes you made manually into cue 5.",
-    a:[["Record Only","Cue","5"]],
-    hint:"There is a dedicated key for this.",
-    why:{"Record":"Plain <b>Record</b> captures everything currently live, including values that tracked in from earlier cues. That bakes in values you did not intend to set here, and it makes later edits behave unexpectedly."}},
-   {t:"Give cue 4 a five second fade time.",
-    a:[["Cue","4","Time","5"]],
-    hint:"Address the cue, then the attribute you are changing.",
-    why:{}},
-   {t:"Release your manual changes and let the cue take back over.",
-    a:[["Sneak"]],
-    hint:"One key. It hands control back to the background state.",
-    why:{"Out":"<b>Out</b> takes your selection to zero — the lights go dark. Sneak hands control back to whatever the cue says it should be, which is usually what you actually want."}},
-   {t:"Push the change you just made into the cue that is currently running.",
-    a:[["Update"]],
-    hint:"One key, then Enter.",
-    why:{"Record":"<b>Record</b> would overwrite the whole cue with everything live. <b>Update</b> pushes just your modification into the existing cue and leaves the rest alone."}}
+  var BANKS=[
+   ["Numbers",["1","2","3","4","5","6","7","8","9","0","/"]],
+   ["Levels & selection",["At","Full","Out","Thru","+","-","Rem Dim","Sneak","Home","Flip","Highlight","Offset","Select Last","Capture"]],
+   ["Targets",["Chan","Group","Sub","Cue","Part","Preset","Color Palette","Focus Palette","Beam Palette","Effect","Macro","Snapshot","Address","Curve"]],
+   ["Actions",["Record","Record Only","Update","Copy To","Move To","Recall From","Delete","Label","Query","Learn","Park","Block","Assert","Mark"]],
+   ["Modes & time",["Live","Blind","Go To Cue","Time","Delay","Follow","Link"]],
+   ["Softkeys",["{Cue Only/Track}","{Make Absolute}","{Trace}","{Last Ref}","{Break Nested}","{Scene}","{Hold}","{By Type}","{Locked}","{Moves Only}","{Unpatched}","{Priority}","{Release}"]]
   ];
 
-  var order=[], idx=0, cmd=[], score=0, asked=0;
+  var T=[
+  /* ───── LEVEL 1 · ESSENTIALS ───── */
+   {L:1,tp:"Selection",t:"Select channel 1 and bring it to full.",a:[["1","Full"]],
+    h:"Channel number, then Full. Full is a one-press level."},
+   {L:1,tp:"Selection",t:"Select channels 1 through 10 and set them to 50%.",a:[["1","Thru","10","At","50"]],
+    h:"Range with Thru, then At and the level."},
+   {L:1,tp:"Selection",t:"Select channels 1 through 10, but not channel 5, and take them out.",
+    a:[["1","Thru","10","-","5","Out"]],h:"Build the range, subtract, then Out.",
+    w:{"+":"Plus <b>adds</b> to a selection. You're removing channel 5 from the range — that's minus."}},
+   {L:1,tp:"Selection",t:"Select channels 1 and 5 only, and set them to 75%.",a:[["1","+","5","At","75"]],
+    h:"Plus joins two separate channels.",
+    w:{"Thru":"Thru gives a <b>continuous range</b> — 1 Thru 5 grabs 2, 3 and 4 as well. You want only 1 and 5."}},
+   {L:1,tp:"Selection",t:"From channels 1 through 20, select every second one.",a:[["1","Thru","20","Offset","2"]],
+    h:"There's a modifier for stepping through a range.",
+    w:{}},
+   {L:1,tp:"Selection",t:"Re-select the channels you just had selected.",a:[["Select Last"]],
+    h:"One key. Saves you retyping the whole selection."},
+   {L:1,tp:"Selection",t:"Bring channel 5 to full and take everything else to zero so you can see it alone.",
+    a:[["5","Full","Rem Dim"]],h:"Remainder Dim.",
+    w:{"Out":"Out takes <b>your selection</b> to zero — the opposite of what you want. Rem Dim takes the <i>remainder</i> down."}},
+   {L:1,tp:"Groups",t:"Select group 3 and bring it to full.",a:[["Group","3","Full"]],h:"Target key first, then the number."},
+   {L:1,tp:"Groups",t:"Store the channels you have selected as group 7.",a:[["Record","Group","7"]],h:"Record, then the target."},
+   {L:1,tp:"Groups",t:"Delete group 7.",a:[["Delete","Group","7"]],h:"Delete, then the target."},
+   {L:1,tp:"Submasters",t:"Store what's on stage onto submaster 5.",a:[["Record","Sub","5"]],h:"Same Record grammar, different target."},
+   {L:1,tp:"Submasters",t:"Delete submaster 5.",a:[["Delete","Sub","5"]],h:"Delete, then the target."},
+   {L:1,tp:"Cues",t:"Record what is on stage right now as cue 1.",a:[["Record","Cue","1"]],
+    h:"Record, then what you're recording into.",
+    w:{"Record Only":"<b>Record Only</b> captures just what you touched manually and lets the rest track in. The task said record what's on stage — that's a full Record."}},
+   {L:1,tp:"Cues",t:"Record only the changes you made manually into cue 5.",a:[["Record Only","Cue","5"]],
+    h:"There's a dedicated key.",
+    w:{"Record":"Plain <b>Record</b> captures everything live, including values that tracked in from earlier cues. That bakes in values you didn't set here and makes later edits behave strangely."}},
+   {L:1,tp:"Cues",t:"Give cue 4 a five second fade time.",a:[["Cue","4","Time","5"]],h:"Address the cue, then the attribute."},
+   {L:1,tp:"Cues",t:"Give cue 6 a two second delay before it starts.",a:[["Cue","6","Delay","2"]],
+    h:"Delay holds the start. Time controls the length.",
+    w:{"Time":"<b>Time</b> is how long the fade takes. <b>Delay</b> is how long it waits before starting. Different jobs."}},
+   {L:1,tp:"Cues",t:"Make cue 6 auto-follow four seconds after it starts.",a:[["Cue","6","Follow","4"]],
+    h:"Follow fires the next cue automatically.",
+    w:{"Delay":"<b>Delay</b> holds this cue's own start. <b>Follow</b> automatically triggers the <i>next</i> cue."}},
+   {L:1,tp:"Cues",t:"Make cue 6 jump to cue 1 when it finishes.",a:[["Cue","6","Link","1"]],h:"Link redirects the playback order."},
+   {L:1,tp:"Cues",t:"Put a label on cue 3.",a:[["Cue","3","Label"]],h:"Address the cue, press Label, then type."},
+   {L:1,tp:"Cues",t:"Delete cue 8.",a:[["Delete","Cue","8"]],h:"Delete, then the target."},
+   {L:1,tp:"Playback",t:"Jump straight to cue 5.",a:[["Go To Cue","5"]],
+    h:"One key, then the number.",
+    w:{"Cue":"Typing <b>Cue 5</b> addresses cue 5 for editing — it doesn't take you there. <b>Go To Cue</b> moves playback."}},
+   {L:1,tp:"Playback",t:"Clear the stage and reset playback to before the first cue.",a:[["Go To Cue","Out"]],
+    h:"Go To Cue, then the level key that means nothing."},
+   {L:1,tp:"Tracking",t:"Block cue 10 so nothing tracks through it.",a:[["Cue","10","Block"]],
+    h:"Address the cue, then the flag."},
+   {L:1,tp:"Tracking",t:"Assert cue 10 so it re-plays its values even if playback arrives from elsewhere.",
+    a:[["Cue","10","Assert"]],h:"Address the cue, then the flag.",
+    w:{"Block":"<b>Block</b> stops values tracking <i>forward</i> out of the cue. <b>Assert</b> forces the cue's own values to re-execute on arrival. Blackouts want both."}},
+   {L:1,tp:"Update",t:"Push the change you just made into the cue that's running.",a:[["Update"]],
+    h:"One key, then Enter.",
+    w:{"Record":"<b>Record</b> overwrites the whole cue with everything live. <b>Update</b> pushes only your modification in and leaves the rest alone."}},
+   {L:1,tp:"Update",t:"Update cue 3, but keep the change out of every cue after it.",
+    a:[["Update","Cue","3","{Cue Only/Track}"]],h:"There's a softkey that toggles tracking behaviour.",
+    w:{}},
+   {L:1,tp:"Movers",t:"Send channel 21's parameters back to their default positions.",a:[["21","Home"]],
+    h:"One key after the selection."},
+   {L:1,tp:"Movers",t:"Flip channel 21 so it hits the same spot from the other side of its yoke.",a:[["21","Flip"]],
+    h:"One key. Gets the head out of a bind without losing focus."},
+   {L:1,tp:"Patch",t:"Bring DMX address 12 to full to confirm the fixture is alive.",a:[["Address","12","Full"]],
+    h:"Address talks to the output directly, ignoring patch.",
+    w:{"Chan":"<b>Channel</b> goes through patch. If the patch is wrong the channel won't respond even though the fixture is fine. <b>Address</b> checks the actual output."}},
+   {L:1,tp:"Park",t:"Park channel 12 at full so nothing can change it.",a:[["12","At","Full","Park"]],
+    h:"Park comes at the end — it's a terminator, not a target."},
+   {L:1,tp:"Park",t:"Un-park channel 12.",a:[["12","Park"]],h:"Same key with no level toggles it off."},
+   {L:1,tp:"Presets",t:"Record what's on stage as preset 1.",a:[["Record","Preset","1"]],h:"Record, then the target."},
+   {L:1,tp:"Displays",t:"Leave your manual changes and hand control back to the cue.",a:[["Sneak"]],
+    h:"One key.",
+    w:{"Out":"<b>Out</b> takes your selection to zero — the lights go dark. <b>Sneak</b> hands control back to whatever the cue says, which is usually what you want."}},
+   {L:1,tp:"Displays",t:"Go to blind and look at cue 5 without affecting the stage.",a:[["Blind","Cue","5"]],
+    h:"Change mode first, then address the target."},
+   {L:1,tp:"Displays",t:"Get back to the live display.",a:[["Live"]],h:"One key."},
 
-  function shuffle(){ order=T.map(function(_,i){return i}).sort(function(){return Math.random()-.5}) }
+  /* ───── LEVEL 2 · ENHANCED ───── */
+   {L:2,tp:"Copy & recall",t:"Copy channel 1's look onto channel 5.",a:[["1","Copy To","5"]],
+    h:"Source, the action, destination."},
+   {L:2,tp:"Copy & recall",t:"Pull cue 3's values onto the channels you have selected.",a:[["Recall From","Cue","3"]],
+    h:"The action comes first, then where you're pulling from.",
+    w:{"Copy To":"<b>Copy To</b> pushes what you have <i>out</i> to a target. <b>Recall From</b> pulls data <i>in</i> from a target onto your current selection."}},
+   {L:2,tp:"Palettes",t:"Record the current colour as colour palette 2.",a:[["Record","Color Palette","2"]],
+    h:"Record, then the palette type, then the number."},
+   {L:2,tp:"Palettes",t:"Record the current positions as focus palette 4.",a:[["Record","Focus Palette","4"]],h:"Same grammar, different palette type."},
+   {L:2,tp:"Palettes",t:"Record the current gobo and edge settings as beam palette 1.",a:[["Record","Beam Palette","1"]],h:"Beam covers gobo, edge, zoom, shutter."},
+   {L:2,tp:"Palettes",t:"Apply colour palette 2 to channels 1 through 5.",a:[["1","Thru","5","Color Palette","2"]],
+    h:"Select first, then apply the palette — no At needed."},
+   {L:2,tp:"Palettes",t:"Update colour palette 2 with what's on stage now.",a:[["Update","Color Palette","2"]],h:"Update, then the target."},
+   {L:2,tp:"Update",t:"Update cue 5 and turn its referenced values into hard numbers.",
+    a:[["Update","Cue","5","{Make Absolute}"]],h:"A softkey breaks the reference.",
+    w:{}},
+   {L:2,tp:"Snapshots",t:"Save the current screen layout as snapshot 1.",a:[["Record","Snapshot","1"]],h:"Record, then the target."},
+   {L:2,tp:"Snapshots",t:"Recall snapshot 1.",a:[["Snapshot","1"]],h:"Just the target and the number."},
+   {L:2,tp:"Submasters",t:"Give submaster 3 a five second fade time.",a:[["Sub","3","Time","5"]],h:"Same Time grammar as cues."},
+   {L:2,tp:"Submasters",t:"Set submaster 2 to hold its level when you pull the fader down.",a:[["Sub","2","{Hold}"]],h:"A softkey on the sub."},
+   {L:2,tp:"Cues",t:"Create part 2 of cue 4.",a:[["Cue","4","Part","2"]],h:"Address the cue, then the part."},
+   {L:2,tp:"Cues",t:"Mark cue 10 so movers pre-position in the dark before it.",a:[["Cue","10","Mark"]],
+    h:"Address the cue, then the flag.",
+    w:{"Block":"A <b>Mark</b> moves lights to position while they're dark, so the audience never sees the move. <b>Block</b> is about tracking, not movement."}},
+   {L:2,tp:"Cues",t:"Start a new scene at cue 10.",a:[["Cue","10","{Scene}"]],h:"A softkey on the cue creates the break."},
+   {L:2,tp:"Cues",t:"Renumber cue 5 as cue 12.",a:[["Cue","5","Move To","12"],["Cue","5","Move To","Cue","12"]],
+    h:"Move To renumbers in place.",
+    w:{"Copy To":"<b>Copy To</b> leaves the original where it is and makes a duplicate. <b>Move To</b> renumbers it."}},
+   {L:2,tp:"Cues",t:"Put curve 2 on cue 5.",a:[["Cue","5","Curve","2"]],h:"Address the cue, then the attribute."},
+   {L:2,tp:"Timing",t:"Give the selected channels a discrete eight second time of their own.",a:[["5","Time","8"]],
+    h:"Select the channel, then give it its own time. Use channel 5."},
+   {L:2,tp:"Effects",t:"Run effect 1 on the channels you have selected.",a:[["Effect","1"]],h:"Target and number."},
+   {L:2,tp:"Effects",t:"Stop the effect on the channels you have selected.",a:[["Effect","Out"],["Effect"]],
+    h:"Target with nothing after it, or take it out."},
+   {L:2,tp:"Effects",t:"Copy effect 1 to effect 5 so you can modify it safely.",a:[["Effect","1","Copy To","5"]],
+    h:"Never edit the stock effect — copy it first."},
+   {L:2,tp:"Effects",t:"Delete effect 5.",a:[["Delete","Effect","5"]],h:"Delete, then the target."},
+
+  /* ───── LEVEL 3 · ESSENTIALS ───── */
+   {L:3,tp:"Macros",t:"Start recording a macro into macro 1 by watching what you press.",
+    a:[["Learn","Macro","1"]],h:"Learn watches your keystrokes. Press it again to stop."},
+   {L:3,tp:"Macros",t:"Fire macro 1.",a:[["Macro","1"]],h:"Target and number."},
+   {L:3,tp:"Query",t:"Find every channel that moves in the current cue.",a:[["Query","{Moves Only}"]],
+    h:"Query plus a modifier softkey."},
+   {L:3,tp:"Query",t:"Find every channel that has no address patched to it.",a:[["Query","{Unpatched}"]],
+    h:"Query plus a modifier softkey. This is how you catch a missing patch before the LD does."},
+   {L:3,tp:"Highlight",t:"Put the desk into highlight mode so the selected channel pops up bright while you focus it.",
+    a:[["Highlight"]],h:"One key. It's a mode, not a level."},
+   {L:3,tp:"Fan",t:"Fan channels 1 through 5 from 10% up to 50%.",a:[["1","Thru","5","At","10","Thru","50"]],
+    h:"A range of channels taking a range of levels. The desk spreads them.",
+    w:{}},
+   {L:3,tp:"RemDim",t:"Bring channel 5 to full and take everything else down to 50% instead of out.",
+    a:[["5","Full","Rem Dim","50"]],h:"Rem Dim will take a level.",
+    w:{}},
+   {L:3,tp:"Update",t:"Update the cue and push the change back to where the value first appeared.",
+    a:[["Update","{Trace}"]],h:"A modifier that walks the change backwards through the cue list.",
+    w:{"{Cue Only/Track}":"<b>Cue Only</b> confines the change to this cue. <b>Trace</b> does the opposite — it pushes the change <i>backwards</i> to the cue where that value was first set, so the move happens where it should have."}},
+   {L:3,tp:"Update",t:"Update and write the change into the last palette or preset that was referenced.",
+    a:[["Update","{Last Ref}"]],h:"A modifier that targets the reference instead of the cue."},
+   {L:3,tp:"Update",t:"Update but break the nested reference so the change lands in the cue, not the palette.",
+    a:[["Update","{Break Nested}"]],h:"A modifier that severs the reference on the way in."},
+   {L:3,tp:"Referenced data",t:"Turn the selected channels' referenced values into hard numbers.",
+    a:[["5","{Make Absolute}"]],h:"Select channel 5 and apply the softkey."},
+
+  /* ───── LEVEL 4 · PROFICIENT ───── */
+   {L:4,tp:"Cue lists",t:"Record what's on stage as cue 1 in a brand new cue list 2.",
+    a:[["Record","Cue","2","/","1"]],h:"The slash separates the list from the cue number.",
+    w:{}},
+   {L:4,tp:"Cue lists",t:"Jump to cue 5 in cue list 2.",a:[["Go To Cue","2","/","5"]],h:"List slash cue."},
+   {L:4,tp:"Cue lists",t:"Assert every cue in cue list 2.",a:[["Cue","2","/","Assert"]],
+    h:"Address the whole list with a slash and nothing after it."},
+   {L:4,tp:"Cue lists",t:"Give cue list 2 a priority of 5.",a:[["Cue","2","/","{Priority}","5"]],
+    h:"A softkey on the cue list."},
+   {L:4,tp:"Palettes",t:"Record colour palette 5 as a by-type palette so it works on every fixture of that type.",
+    a:[["Record","Color Palette","5","{By Type}"]],h:"A modifier softkey after the target.",
+    w:{}},
+   {L:4,tp:"Palettes",t:"Lock colour palette 5 so it can't be updated by accident.",
+    a:[["Color Palette","5","{Locked}"]],h:"Address the palette, then the softkey."},
+   {L:4,tp:"Capture",t:"Latch-capture channels 1 through 10 so they hold against playback.",
+    a:[["1","Thru","10","Capture"]],h:"Selection, then the key.",
+    w:{"Park":"<b>Park</b> locks a value at the output — nothing on the desk can move it, and it survives everything. <b>Capture</b> holds a channel manually against playback but releases when you let it go. Park is a hammer; capture is a hand."}},
+   {L:4,tp:"Release",t:"Release channel 5 back to the cue list that owns it.",a:[["5","{Release}"]],
+    h:"Selection, then the softkey."}
+  ];
+
+  var lvl=0, order=[], idx=0, cmd=[], score=0, asked=0;
+
+  function pool(){ return T.map(function(q,i){return i}).filter(function(i){ return !lvl || T[i].L===lvl }) }
+  function shuffle(){ order=pool().sort(function(){return Math.random()-.5}) }
 
   function render(){
-    var s=cmd.map(function(k){ return /^\d+$/.test(k)?k:"["+k+"]" }).join(" ");
-    document.getElementById("eoCmd").textContent=s;
+    document.getElementById("eoCmd").textContent=
+      cmd.map(function(k){ return /^\d+$/.test(k)||k==="/"?k:(k[0]==="{"?k:"["+k+"]") }).join(" ");
   }
   function tally(){ document.getElementById("eoScore").textContent="Score "+score+" / "+asked }
 
@@ -2687,64 +3120,70 @@ SCN.forEach(function(s,i){
     cmd=[];
     var q=T[order[idx]];
     document.getElementById("eoTask").innerHTML=
-      "<h4>Task</h4><p>"+q.t+"</p><div class='brief'>Hint: "+q.hint+"</div>";
+      "<span class='topictag'>L"+q.L+" · "+q.tp+"</span><h4>Task</h4><p>"+q.t+
+      "</p><div class='brief'>Hint: "+q.h+"</div>";
     document.getElementById("eoFeed").innerHTML="";
     render(); tally();
   }
 
   var kb=document.getElementById("eoKeys");
-  KEYS.forEach(function(k){
-    var b=document.createElement("button");
-    b.className="eokey "+(/^\d$/.test(k)?"num":"mod");
-    b.textContent=k;
-    b.onclick=function(){
-      // merge consecutive digits into one number
-      if(/^\d$/.test(k) && cmd.length && /^\d+$/.test(cmd[cmd.length-1])) cmd[cmd.length-1]+=k;
-      else cmd.push(k);
-      render();
-    };
-    kb.appendChild(b);
+  BANKS.forEach(function(bk){
+    var wrap=document.createElement("div"); wrap.className="keybank";
+    var lab=document.createElement("span"); lab.textContent=bk[0]; wrap.appendChild(lab);
+    var row=document.createElement("div"); row.className="eokeys";
+    bk[1].forEach(function(k){
+      var b=document.createElement("button");
+      b.className="eokey "+(/^[\d\/]$/.test(k)?"num":"mod");
+      b.textContent=k;
+      b.onclick=function(){
+        if(/^\d$/.test(k) && cmd.length && /^\d+$/.test(cmd[cmd.length-1])) cmd[cmd.length-1]+=k;
+        else cmd.push(k);
+        render();
+      };
+      row.appendChild(b);
+    });
+    wrap.appendChild(row); kb.appendChild(wrap);
   });
-  document.getElementById("eoClear").onclick=function(){ cmd=[]; render();
-    document.getElementById("eoFeed").innerHTML=""; };
-  document.getElementById("eoBack").onclick=function(){
+
+  var lt=document.getElementById("eoLvls");
+  [[0,"All levels"],[1,"L1 Essentials"],[2,"L2 Enhanced"],[3,"L3 Essentials"],[4,"L4 Proficient"]]
+  .forEach(function(p){
+    var b=document.createElement("button");
+    b.className="lvltab"+(p[0]===0?" on":""); b.textContent=p[1]+" ("+
+      (p[0]?T.filter(function(q){return q.L===p[0]}).length:T.length)+")";
+    b.onclick=function(){
+      lvl=p[0]; [].forEach.call(lt.children,function(c){c.className="lvltab"});
+      b.className="lvltab on"; score=0; asked=0; shuffle(); idx=0; load();
+    };
+    lt.appendChild(b);
+  });
+
+  document.getElementById("eoClear").onclick=function(){ cmd=[]; render() };
+  document.getElementById("eoBack").onclick =function(){
     if(!cmd.length) return;
     var last=cmd[cmd.length-1];
-    if(/^\d\d+$/.test(last)) cmd[cmd.length-1]=last.slice(0,-1);
-    else cmd.pop();
+    if(/^\d\d+$/.test(last)) cmd[cmd.length-1]=last.slice(0,-1); else cmd.pop();
     render();
   };
-  document.getElementById("eoSkip").onclick=function(){ idx++; load() };
+  document.getElementById("eoSkip").onclick =function(){ idx++; load() };
 
   document.getElementById("eoEnter").onclick=function(){
-    var q=T[order[idx]];
-    if(!cmd.length){
-      document.getElementById("eoFeed").innerHTML=
-        '<div class="fb no"><b class="h">Empty command line</b>Nothing to send. Build the command first.</div>';
-      return;
-    }
-    var got=cmd.join(" ");
-    var right=q.a.some(function(a){ return a.join(" ")===got });
+    var q=T[order[idx]], f=document.getElementById("eoFeed");
+    var hit=q.a.some(function(ans){ return ans.length===cmd.length &&
+      ans.every(function(k,i){ return k===cmd[i] }) });
     asked++;
-    if(right){
-      score++;
-      document.getElementById("eoFeed").innerHTML=
-        '<div class="fb ok"><b class="h">Correct</b><code>'+
-        cmd.map(function(k){return /^\d+$/.test(k)?k:"["+k+"]"}).join(" ")+
-        '</code><br><br>'+q.hint+'</div>';
-      tally();
-      setTimeout(function(){ idx++; load() },1900);
+    if(hit){ score++;
+      f.innerHTML='<div class="fb ok"><b class="h">Correct</b>That\'s the syntax. '+
+        'Say it in your head as a sentence — that\'s how it stays in your hands.</div>';
+      setTimeout(function(){ idx++; load() },1500);
     } else {
-      // find the most instructive wrong key present
-      var note="";
-      for(var k in q.why){ if(cmd.indexOf(k)>=0){ note=q.why[k]; break } }
-      var want=q.a[0].map(function(k){return /^\d+$/.test(k)?k:"["+k+"]"}).join(" ");
-      document.getElementById("eoFeed").innerHTML=
-        '<div class="fb no"><b class="h">Not the command</b>'+
-        (note?note+"<br><br>":"")+
-        'You sent <code>'+cmd.map(function(k){return /^\d+$/.test(k)?k:"["+k+"]"}).join(" ")+'</code><br>'+
-        'The command is <code>'+want+'</code><br><br>'+q.hint+'</div>';
-      tally();
+      var extra="";
+      if(q.w) for(var k in q.w) if(cmd.indexOf(k)>=0) extra+="<br><br>"+q.w[k];
+      f.innerHTML='<div class="fb no"><b class="h">Not the syntax</b>'+
+        'You built <code>'+(cmd.map(function(k){return /^\d+$/.test(k)||k==="/"?k:(k[0]==="{"?k:"["+k+"]")}).join(" ")||"nothing")+'</code>.'+
+        '<br>Correct: <code>'+q.a[0].map(function(k){return /^\d+$/.test(k)||k==="/"?k:(k[0]==="{"?k:"["+k+"]")}).join(" ")+'</code> then <b>Enter</b>.'+
+        extra+'</div>';
+      cmd=[]; render(); tally();
     }
   };
 
