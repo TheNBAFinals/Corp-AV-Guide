@@ -306,6 +306,73 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
 .statgrid b{display:block;font-size:10px;letter-spacing:.6px;color:var(--dimmer);text-transform:uppercase}
 .statgrid span{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
 
+/* ---------- patch challenge ---------- */
+.fixcard{background:#05080b;border:1px solid var(--line);border-left:3px solid var(--warn);
+  border-radius:11px;padding:15px 17px;margin-bottom:14px}
+.fixcard h4{margin:0 0 6px;font-size:16px;letter-spacing:-.2px}
+.fixcard p{margin:0;color:var(--dim);font-size:13.5px;line-height:1.6}
+.fixcard .brief{margin-top:9px;font-size:12.5px;color:var(--warn);font-weight:600}
+.slots4{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:9px;margin-bottom:14px}
+.slot{background:var(--bg3);border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+  cursor:pointer;transition:.15s}
+.slot:hover{border-color:var(--dimmer)}
+.slot.active{border-color:var(--warn);background:rgba(227,179,65,.07)}
+.slot.ok{border-color:var(--audio)} .slot.no{border-color:var(--power)}
+.slot b{display:block;font-size:9.5px;letter-spacing:.7px;color:var(--dimmer);margin-bottom:5px}
+.slot .pick{font-size:13px;font-weight:600;color:var(--dim)}
+.slot.filled .pick{color:var(--txt)}
+.banklab{font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--dimmer);
+  text-transform:uppercase;margin:0 0 7px}
+.bank{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.opt2{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:8px 12px;
+  font-size:12.5px;font-weight:600;cursor:pointer;color:var(--txt);transition:.15s}
+.opt2:hover{border-color:var(--dimmer)}
+.opt2.on{border-color:var(--warn);background:rgba(227,179,65,.12)}
+.fb{border-left:3px solid var(--line);background:var(--bg3);border-radius:0 9px 9px 0;
+  padding:11px 14px;margin-top:9px;font-size:13.5px;line-height:1.65}
+.fb b.h{display:block;font-size:11.5px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px}
+.fb.ok{border-left-color:var(--audio)} .fb.ok b.h{color:var(--audio)}
+.fb.no{border-left-color:var(--power)} .fb.no b.h{color:var(--power)}
+
+/* ---------- run the call ---------- */
+.callbrief{background:#05080b;border:1px solid var(--line);border-left:3px solid var(--rf);
+  border-radius:11px;padding:14px 16px;margin-bottom:14px;font-size:13.5px;line-height:1.65;color:var(--dim)}
+.callbrief b{color:var(--txt)}
+.callbrief table{width:100%;margin-top:10px;font-size:12.5px;border-collapse:collapse}
+.callbrief td{padding:3px 0;border-bottom:1px solid var(--line)}
+.callbrief td:last-child{text-align:right;color:var(--txt);font-variant-numeric:tabular-nums}
+.prog{height:5px;background:var(--bg3);border-radius:99px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--warn);width:0;transition:width .3s}
+.cbq{font-size:16px;font-weight:600;line-height:1.5;margin:0 0 14px}
+.report{margin-top:16px}
+.rline{border-left:3px solid var(--line);background:var(--bg3);border-radius:0 9px 9px 0;
+  padding:11px 14px;margin-bottom:9px;font-size:13.5px;line-height:1.65}
+.rline b.h{display:block;font-size:11px;letter-spacing:.6px;text-transform:uppercase;margin-bottom:4px}
+.rline.good{border-left-color:var(--audio)} .rline.good b.h{color:var(--audio)}
+.rline.bad{border-left-color:var(--power)} .rline.bad b.h{color:var(--power)}
+.rline.warn{border-left-color:var(--warn)} .rline.warn b.h{color:var(--warn)}
+.grade{text-align:center;padding:20px;background:var(--bg3);border:1px solid var(--line);
+  border-radius:12px;margin-bottom:16px}
+.grade .g{font-size:46px;font-weight:800;letter-spacing:-2px;line-height:1}
+.grade .gs{font-size:14px;color:var(--dim);margin-top:6px}
+
+/* ---------- fixture menu trainer ---------- */
+.fixpanel{background:#0a0d11;border:1px solid var(--line);border-radius:13px;padding:18px;
+  max-width:340px;margin:0 auto}
+.lcd{background:#0d2818;border:2px solid #1f3a2a;border-radius:6px;padding:14px 12px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#5dfba0;
+  text-shadow:0 0 8px rgba(93,251,160,.4);min-height:76px;margin-bottom:16px}
+.lcd .l1{font-size:15px;font-weight:700;letter-spacing:1px}
+.lcd .l2{font-size:20px;font-weight:700;letter-spacing:1.5px;margin-top:7px}
+.lcd .l3{font-size:11px;opacity:.6;margin-top:7px;letter-spacing:.5px}
+.lcd.saved{border-color:#3fb950;box-shadow:0 0 14px rgba(63,185,80,.25)}
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.fkey{background:var(--bg3);border:1px solid var(--line);color:var(--txt);border-radius:8px;
+  padding:13px 4px;font:700 12px/1 inherit;cursor:pointer;transition:.1s}
+.fkey:hover{border-color:var(--dimmer)}
+.fkey:active{background:var(--warn);color:#1a1206;border-color:var(--warn)}
+.keyhint{font-size:10.5px;color:var(--dimmer);text-align:center;margin-top:11px;line-height:1.5}
+
 .homelink{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--dim);
   text-decoration:none;margin-bottom:12px;padding:5px 11px;border:1px solid var(--line);
   border-radius:99px;transition:.15s}
@@ -600,7 +667,86 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
   </div>
 </section>
 <section class="panel" id="p-sim">
-  <h2>DMX Rig Builder</h2>
+  <h2>Fixture Menu Trainer</h2>
+  <p class="lede">The back of a moving light. Four buttons and a tiny screen — and on a real call somebody hands you forty of these and expects you to set them all. <b>The menu tree below is how almost every mover on the market is laid out.</b> Learn it here and the first real one you touch is familiar.</p>
+
+  <div class="sim" id="fmSim">
+    <div class="row" style="margin:0 0 12px">
+      <span class="counter" id="fmTask"></span>
+      <button class="btn" id="fmNew" style="margin-left:auto">New task</button>
+    </div>
+
+    <div class="fixpanel">
+      <div class="lcd" id="fmLcd"></div>
+      <div class="keys">
+        <button class="fkey" data-k="menu">MENU</button>
+        <button class="fkey" data-k="up">▲</button>
+        <button class="fkey" data-k="down">▼</button>
+        <button class="fkey" data-k="enter">ENTER</button>
+      </div>
+      <div class="keyhint">MENU steps back · ▲▼ move or change a value · ENTER goes in or confirms</div>
+    </div>
+
+    <div id="fmFeed"></div>
+    <div class="row" style="margin:12px 0 0">
+      <span class="counter" id="fmPresses"></span>
+      <button class="btn" id="fmHint" style="margin-left:auto">Hint</button>
+    </div>
+  </div>
+
+  <div class="key">
+    <b>Why this one matters.</b> Every other skill on a lighting call is useless if you can't set an address. The menu labels differ slightly between brands — <i>Address</i> vs <i>DMX Addr</i>, <i>Mode</i> vs <i>Personality</i> vs <i>Channel Mode</i> — but the <b>shape</b> is identical on every fixture you will ever pick up. Get fluent here and you can drive a fixture you have never seen in about ten seconds.
+  </div>
+
+  <h2>Run the Call</h2>
+  <p class="lede">One rig, start to doors. Ten decisions — judgement, order, addressing, power and cable. <b>Every choice carries forward.</b> At the end you get a show report describing what actually happens in the room because of what you did.</p>
+
+  <div class="sim" id="callSim">
+    <div class="callbrief" id="cbBrief"></div>
+    <div class="prog"><i id="cbBar"></i></div>
+    <div class="counter" id="cbStep" style="margin:8px 0 14px"></div>
+    <div id="cbHost"></div>
+    <div id="cbFeed"></div>
+    <div class="row" style="margin:14px 0 0">
+      <button class="btn" id="cbRestart">Start over</button>
+      <button class="btn pri" id="cbNext" style="margin-left:auto">Next</button>
+    </div>
+  </div>
+
+  <h2>Patch Challenge</h2>
+  <p class="lede">A fixture arrives on the truss. Choose <b>what feeds it</b> and <b>what connector gets it there</b> — power and data. Every wrong pick gets explained. Some fixtures need no data at all; some need no cable at all.</p>
+
+  <div class="sim" id="pxSim">
+    <div class="row" style="margin:0 0 14px">
+      <span class="counter" id="pxScore"></span>
+      <span class="counter" id="pxStreak" style="margin-left:14px"></span>
+      <button class="btn" id="pxSkip" style="margin-left:auto">Skip</button>
+    </div>
+
+    <div class="fixcard" id="pxFix"></div>
+
+    <div class="slots4">
+      <div class="slot" data-s="psrc"><b>POWER SOURCE</b><div class="pick" id="pk-psrc">— choose —</div></div>
+      <div class="slot" data-s="pcab"><b>POWER CABLE</b><div class="pick" id="pk-pcab">— choose —</div></div>
+      <div class="slot" data-s="dsrc"><b>DATA SOURCE</b><div class="pick" id="pk-dsrc">— choose —</div></div>
+      <div class="slot" data-s="dcab"><b>DATA CABLE</b><div class="pick" id="pk-dcab">— choose —</div></div>
+    </div>
+
+    <div id="pxBank"></div>
+
+    <div class="row" style="margin:14px 0 0">
+      <button class="btn" id="pxReset">Clear picks</button>
+      <button class="btn pri" id="pxCheck" style="margin-left:auto">Patch it</button>
+    </div>
+
+    <div id="pxResult"></div>
+  </div>
+
+  <div class="key">
+    <b>What it's drilling.</b> Dimmed vs. constant power and why that choice can destroy a fixture. True1 vs. powerCON vs. Edison vs. stage pin — which body goes with which fixture. When a fixture needs no data line, when it needs no cable at all, and where a node actually sits in the chain.
+  </div>
+
+<h2>DMX Rig Builder</h2>
   <p class="lede">Cable the rig yourself. Tap the console output, then tap fixtures in the order you want the chain to run. The rig reacts the way a real one would — including failing quietly in the ways real ones do.</p>
 
   <div class="sim" id="dmxSim">
@@ -1745,6 +1891,538 @@ SCN.forEach(function(s,i){
   }
   [pw,ph,pp,pv].forEach(function(el){ el.oninput=render });
   render();
+})();
+
+/* ═══════════ patch challenge ═══════════ */
+(function(){
+  var host=document.getElementById("pxSim"); if(!host) return;
+
+  var OPTS={
+    psrc:[["dim","Dimmer circuit"],["hot","Constant / non-dim"],["batt","Internal battery"]],
+    pcab:[["stagepin","Stage pin (2P&G)"],["edison","Edison"],["true1","True1"],
+          ["powercon","powerCON"],["soca","Socapex + fan-out"],["none","No power cable"]],
+    dsrc:[["console","Console DMX out"],["node","Art-Net node"],["wireless","Wireless DMX TX"],
+          ["switch","Network switch"],["none","No data needed"]],
+    dcab:[["dmx5","5-pin DMX"],["dmx3","3-pin DMX"],["mic","Mic XLR"],
+          ["cat6","Cat6"],["none","No data cable"]]
+  };
+  var LBL={};
+  for(var k in OPTS) OPTS[k].forEach(function(o){ LBL[k+":"+o[0]]=o[1] });
+
+  // universal wrong-answer explanations
+  var WHY={
+    "pcab:mic":null,
+    "dcab:mic":"<b>Mic cable is not DMX cable.</b> It fits, and on a short run it will even appear to work. But mic cable is ~60 Ω and DMX needs 110–120 Ω. The impedance mismatch causes reflections — random flicker and dropouts, usually on the far end of the chain, usually once you're in show. It is the hardest fault on a rig to trace because the cable tests fine.",
+    "dcab:cat6":"<b>Cat6 does not plug into a fixture.</b> Networked lighting data (Art-Net/sACN) runs from the console to a <b>node</b>. The node converts it to physical DMX, and <i>that</i> is what reaches the fixture. Cat6 only goes as far as the node.",
+    "psrc:dim":"<b>Never put an intelligent fixture on a dimmed circuit.</b> A dimmer varies the voltage. Anything with a power supply — LED fixtures, movers, hazers, nodes — needs constant voltage and controls its own intensity over DMX. On a dimmer you get erratic behaviour at best and a damaged power supply at worst.",
+    "psrc:batt":"<b>This fixture has no battery.</b> Internal battery is only for the cordless uplights and set-piece fixtures built for it."
+  };
+
+  var FIX=[
+   {n:"ETC Source Four 575 W ellipsoidal",
+    d:"A conventional. No electronics inside — just a lamp, a reflector, shutters and a lens. Its intensity is controlled by varying the voltage feeding it.",
+    b:"Theatre-style hang, house dimmer rack available.",
+    a:{psrc:"dim",pcab:"stagepin",dsrc:"none",dcab:"none"},
+    w:{psrc:{hot:"A conventional on a constant circuit is <b>always on at full</b> — you have no way to dim it. Its intensity comes from the dimmer, not from data."},
+       pcab:{edison:"Edison works electrically, but theatre dimmer racks and conventionals are <b>stage pin (2P&G)</b>. Different connector body, and on a proper rig everything will be stage pin.",
+             true1:"True1 is for fixtures with a link-through mains input. A Source Four has a plain pigtail — stage pin on a theatre rig."},
+       dsrc:{console:"A conventional has <b>no data input at all.</b> There is nowhere to plug DMX. The console controls it by telling the <i>dimmer</i> what to do — one DMX channel per dimmer circuit."},
+       dcab:{dmx5:"There is no DMX socket on this fixture. Look at the back of a Source Four — power in, and that's it."}}},
+
+   {n:"LED moving head — True1 in and thru",
+    d:"An LED profile mover with a True1 mains input and a True1 link-through output, plus 5-pin DMX in and out.",
+    b:"Truss hang, DMX chain from the console.",
+    a:{psrc:"hot",pcab:"true1",dsrc:"console",dcab:"dmx5"},
+    w:{pcab:{powercon:"<b>powerCON and True1 are not interchangeable.</b> True1 is the newer connector, rated to be connected and disconnected under load, and it is what modern touring fixtures use. The bodies physically will not mate. Check the socket, not your memory.",
+             edison:"The fixture has a True1 inlet. An Edison plug has nowhere to go — and you would lose the link-through that lets you daisy-chain power to the next fixture.",
+             stagepin:"Stage pin is dimmer-rack hardware for conventionals. Wrong connector and wrong idea for an intelligent fixture."}}},
+
+   {n:"LED uplight — powerCON blue inlet",
+    d:"A static LED wash can, powerCON blue in and powerCON grey thru, 3-pin DMX in and out.",
+    b:"Twelve of them around a ballroom perimeter.",
+    a:{psrc:"hot",pcab:"powercon",dsrc:"console",dcab:"dmx3"},
+    w:{pcab:{true1:"<b>True1 will not mate with a powerCON inlet.</b> Older fixtures use powerCON (blue = in, grey = out); newer ones use True1. They look similar at a glance and are not compatible."},
+       dcab:{dmx5:"Not wrong in principle — 5-pin is the standard — but this fixture has a <b>3-pin</b> socket, so you need 3-pin cable or a turnaround. The real trap: 3-pin DMX is physically identical to mic cable. Label yours.",
+             mic:WHY["dcab:mic"]}}},
+
+   {n:"Six PAR64 cans on one dimmer pack",
+    d:"Six conventional cans hanging on a bar, all to be dimmed, fed from one dimmer output on the rack.",
+    b:"Get six dimmer circuits from the rack to the bar in one run.",
+    a:{psrc:"dim",pcab:"soca",dsrc:"none",dcab:"none"},
+    w:{pcab:{stagepin:"You could run six individual stage-pin cables — and on a short bar people do. But <b>Socapex carries six circuits in one 19-pin connector</b>, then fans out to six stage pin at the bar. One cable instead of six.",
+             edison:"Wrong connector family for a dimmer rack, and still six separate runs."},
+       dsrc:{console:"Conventionals have no data input. The console addresses the <b>dimmer</b>, not the cans."}}},
+
+   {n:"Hazer",
+    d:"A haze machine with an Edison mains lead and a 5-pin DMX input for remote fan and output control.",
+    b:"Upstage left, controlled from the console.",
+    a:{psrc:"hot",pcab:"edison",dsrc:"console",dcab:"dmx5"},
+    w:{psrc:{dim:"<b>A hazer on a dimmer is a destroyed hazer.</b> It has a heater and a pump that need full constant voltage. Dimming it will damage it — and it is one of the more expensive things on the cart."},
+       dsrc:{none:"You <i>can</i> run a hazer standalone on its own knobs. But on DMX you control output and fan from the desk, which means you can build haze into cues and stop chasing it manually."}}},
+
+   {n:"Art-Net node at the truss",
+    d:"A 4-port gateway. Takes networked lighting data over ethernet and converts it to physical DMX for the fixtures on this truss.",
+    b:"Feeding four DMX universes to this truss from a console at FOH.",
+    a:{psrc:"hot",pcab:"edison",dsrc:"switch",dcab:"cat6"},
+    w:{psrc:{dim:WHY["psrc:dim"]},
+       dsrc:{console:"Close — the data does originate at the console. But it travels over the <b>network</b>, so the node plugs into a switch, not into a console DMX port. If you had a spare DMX port you would not need the node.",
+             node:"This <i>is</i> the node. It is the thing being fed."},
+       dcab:{dmx5:"Backwards. DMX comes <i>out</i> of a node's ports and goes to fixtures. What goes <i>in</i> is <b>Cat6 carrying Art-Net or sACN.</b>"}}},
+
+   {n:"Battery uplight on a bar top",
+    d:"A cordless LED can with an internal battery and a built-in wireless DMX receiver. Sitting on a glass bar in the middle of the room.",
+    b:"No cable can reach it and none would be acceptable if it could.",
+    a:{psrc:"batt",pcab:"none",dsrc:"wireless",dcab:"none"},
+    w:{psrc:{hot:"There is nowhere to run a cable to a bar top in the middle of a room — and a cable across a guest walkway is a trip hazard and an eyesore. <b>This is exactly what battery fixtures exist for.</b>"},
+       pcab:{edison:"If you are running a cable to it, it is not doing the job it was rented for."},
+       dsrc:{console:"You would need a DMX cable to it, which defeats the purpose. <b>Wireless DMX</b> — a transmitter at the console end, the receiver already inside this fixture."},
+       dcab:{dmx5:"Same problem — any cable to this fixture defeats the point. The receiver is built in."}}},
+
+   {n:"Moving light on a truss with a node already fitted",
+    d:"Same LED mover as before — True1 power, 5-pin DMX. There is an Art-Net node mounted on this truss with spare DMX ports.",
+    b:"Cable this fixture using what is already on the truss.",
+    a:{psrc:"hot",pcab:"true1",dsrc:"node",dcab:"dmx5"},
+    w:{dsrc:{console:"You could run DMX all the way from FOH — but the node is <b>right there on the truss</b> with spare ports. That is the entire reason it was hung. A short DMX run from the node beats a long one from front of house.",
+             switch:"The switch feeds the node, not the fixture. The fixture has no ethernet port."},
+       dcab:{cat6:WHY["dcab:cat6"]}}}
+  ];
+
+  var order=[], idx=0, sel={}, active=null, score=0, asked=0, streak=0, best=0;
+
+  function shuffle(){ order=FIX.map(function(_,i){return i}).sort(function(){return Math.random()-.5}) }
+
+  function load(){
+    if(idx>=order.length){ shuffle(); idx=0 }
+    var f=FIX[order[idx]];
+    sel={}; active=null;
+    document.getElementById("pxFix").innerHTML=
+      "<h4>"+f.n+"</h4><p>"+f.d+"</p><div class='brief'>"+f.b+"</div>";
+    ["psrc","pcab","dsrc","dcab"].forEach(function(s){
+      var el=document.getElementById("pk-"+s);
+      el.textContent="— choose —";
+      var sl=el.parentNode; sl.className="slot"; 
+    });
+    document.getElementById("pxResult").innerHTML="";
+    document.getElementById("pxBank").innerHTML="";
+    tally();
+  }
+  function tally(){
+    document.getElementById("pxScore").textContent="Score "+score+" / "+asked;
+    document.getElementById("pxStreak").textContent="Streak "+streak+(best?"  ·  best "+best:"");
+  }
+
+  function showBank(slot){
+    active=slot;
+    document.querySelectorAll(".slot").forEach(function(s){
+      s.classList.toggle("active", s.dataset.s===slot);
+    });
+    var b=document.getElementById("pxBank");
+    b.innerHTML="<p class='banklab'>"+
+      ({psrc:"What feeds it",pcab:"Which power connector",dsrc:"Where its data comes from",dcab:"Which data cable"}[slot])+"</p>";
+    var row=document.createElement("div"); row.className="bank";
+    OPTS[slot].forEach(function(o){
+      var btn=document.createElement("button");
+      btn.className="opt2"+(sel[slot]===o[0]?" on":"");
+      btn.textContent=o[1];
+      btn.onclick=function(){
+        sel[slot]=o[0];
+        var el=document.getElementById("pk-"+slot);
+        el.textContent=o[1]; el.parentNode.classList.add("filled");
+        showBank(slot);
+      };
+      row.appendChild(btn);
+    });
+    b.appendChild(row);
+  }
+  document.querySelectorAll(".slot").forEach(function(s){
+    s.onclick=function(){ showBank(s.dataset.s) };
+  });
+
+  document.getElementById("pxReset").onclick=function(){
+    sel={}; document.getElementById("pxBank").innerHTML="";
+    document.getElementById("pxResult").innerHTML="";
+    ["psrc","pcab","dsrc","dcab"].forEach(function(s){
+      document.getElementById("pk-"+s).textContent="— choose —";
+      document.getElementById("pk-"+s).parentNode.className="slot";
+    });
+  };
+  document.getElementById("pxSkip").onclick=function(){ idx++; load() };
+
+  document.getElementById("pxCheck").onclick=function(){
+    var f=FIX[order[idx]], out=[], allRight=true, missing=[];
+    ["psrc","pcab","dsrc","dcab"].forEach(function(s){
+      if(!sel[s]) missing.push(s);
+    });
+    if(missing.length){
+      document.getElementById("pxResult").innerHTML=
+        "<div class='fb no'><b class='h'>Incomplete</b>Fill all four slots before you patch. If a fixture genuinely needs nothing in a slot, there is an option that says so — choosing it is part of the answer.</div>";
+      return;
+    }
+    ["psrc","pcab","dsrc","dcab"].forEach(function(s){
+      var right=f.a[s], got=sel[s], sl=document.querySelector('.slot[data-s="'+s+'"]');
+      if(got===right){
+        sl.classList.add("ok"); sl.classList.remove("no");
+        out.push("<div class='fb ok'><b class='h'>"+
+          ({psrc:"Power source",pcab:"Power cable",dsrc:"Data source",dcab:"Data cable"}[s])+
+          " — correct</b>"+LBL[s+":"+right]+"</div>");
+      } else {
+        allRight=false;
+        sl.classList.add("no"); sl.classList.remove("ok");
+        var why = (f.w && f.w[s] && f.w[s][got]) || WHY[s+":"+got] ||
+          "That is not what this fixture takes. The correct answer is <b>"+LBL[s+":"+right]+"</b>.";
+        out.push("<div class='fb no'><b class='h'>"+
+          ({psrc:"Power source",pcab:"Power cable",dsrc:"Data source",dcab:"Data cable"}[s])+
+          " — you chose "+LBL[s+":"+got]+"</b>"+why+
+          "<br><br><b>Correct: "+LBL[s+":"+right]+"</b></div>");
+      }
+    });
+    asked++;
+    if(allRight){ score++; streak++; if(streak>best) best=streak;
+      out.unshift("<div class='fb ok'><b class='h'>Patched correctly</b>All four right. Next fixture.</div>");
+    } else { streak=0; }
+    tally();
+    document.getElementById("pxResult").innerHTML=out.join("");
+    if(allRight) setTimeout(function(){ idx++; load() },2600);
+  };
+
+  shuffle(); load();
+})();
+
+/* ═══════════ run the call ═══════════ */
+(function(){
+  var host=document.getElementById("callSim"); if(!host) return;
+
+  var BRIEF='<b>The call:</b> corporate general session, ballroom, doors at 6pm. One truss.<br>'+
+    '<table>'+
+    '<tr><td>12 × LED moving head — True1, 5-pin DMX</td><td>32 ch · 450 W</td></tr>'+
+    '<tr><td>8 × LED wash — powerCON, 3-pin DMX</td><td>16 ch · 300 W</td></tr>'+
+    '<tr><td>4 × Source Four 575 W</td><td>dimmed · no data</td></tr>'+
+    '<tr><td>1 × hazer</td><td>2 ch · 1200 W</td></tr>'+
+    '</table>'+
+    '<div style="margin-top:9px">Console at FOH, 120 V distro at the truss, house dimmer rack available.</div>';
+
+  var Q=[
+   {q:"The truck is unloaded and the truss is on the deck. What is your first move?",
+    o:[["Start hanging fixtures — daylight is burning","rush"],
+       ["Read the plot and confirm each fixture's DMX mode with the LD","plan"],
+       ["Run power to the truss so you can test as you go","power"],
+       ["Set the console up at FOH","console"]],
+    a:"plan",
+    e:{rush:"Hanging before you know the modes is how you address forty fixtures twice. <b>The mode changes the channel count, which changes every address and your whole universe plan.</b>",
+       power:"Power is useful early, but it does not tell you the one thing that governs everything downstream — the channel count per fixture.",
+       console:"The console can wait. Nothing you do there is right until you know the fixture modes."},
+    ok:"Confirming the mode before anything else is what stops you doing the whole address pass twice."},
+
+   {q:"The LD confirms the movers are in <b>32-channel extended mode</b> and the washes are 16-channel. How many universes does this rig need?",
+    o:[["One — it's only 25 fixtures","1"],
+       ["Two","2"],
+       ["Three","3"],
+       ["Depends on the console","dep"]],
+    a:"2",
+    e:{"1":"Do the maths: 12 × 32 = <b>384</b>, 8 × 16 = <b>128</b>, hazer 2. That is <b>514 channels</b> — fourteen over a universe. Two channels over is the same problem as two hundred over.",
+       "3":"514 channels fits comfortably in two universes with room left. Three is more nodes, more runs and more to go wrong for nothing.",
+       dep:"Consoles differ in how many universes they output, but the arithmetic is fixed: 514 channels needs two universes regardless of desk."},
+    ok:"384 + 128 + 2 = 514. Fourteen channels over the line — so two universes, and now you know you need a second run or a node."},
+
+   {q:"Where do you set the DMX addresses on the fixtures?",
+    o:[["At trim, once everything is hung and you can see the whole rig","trim"],
+       ["On the deck, before anything flies","deck"],
+       ["Remotely from the console using RDM","rdm"],
+       ["After focus, so you know which fixture is which","focus"]],
+    a:"deck",
+    e:{trim:"Addressing at trim means a ladder or a lift for every fixture. What takes twenty minutes on the deck takes two hours in the air — and the room is usually needed by then.",
+       rdm:"RDM is real and useful when the whole chain supports it, but you cannot count on it, and if it fails you are back to a lift. <b>Address on the deck and RDM becomes a bonus, not a dependency.</b>",
+       focus:"Focus happens after trim. You would be addressing in the air, which is the thing to avoid."},
+    ok:"Everything you can do at deck height, do at deck height. This is the single biggest time saver on a lighting call."},
+
+   {q:"Movers start at address 1 in universe 1. What address does the <b>second</b> mover get?",
+    o:[["2","2"],["17","17"],["33","33"],["32","32"]],
+    a:"33",
+    e:{"2":"Address 2 would sit inside the first fixture's block. Fixture 1 occupies channels <b>1–32</b>, so they would share 31 channels and move together permanently.",
+       "17":"That is the spacing for a 16-channel fixture. These are in 32-channel mode — 17 lands halfway inside fixture 1's block.",
+       "32":"Off by one. Fixture 1 uses channels 1 through 32 <b>inclusive</b>, so the next free channel is 33. This is the most common addressing error there is."},
+    ok:"Fixture 1 occupies 1–32, so the next one starts at 33. Address + channel count = next address."},
+
+   {q:"Twelve movers at 32 channels fills 384 of universe 1. Where do the <b>8 washes</b> go?",
+    o:[["Universe 1 starting at 385 — they fit","u1_385"],
+       ["Universe 2 starting at 1","u2_1"],
+       ["Universe 1 starting at 401, rounded up for tidiness","u1_401"],
+       ["Split them across both universes","split"]],
+    a:"u2_1",
+    e:{u1_385:"8 × 16 = 128 channels. 385 + 128 = 513. <b>You are one channel over.</b> Seven washes would fit and the eighth would be dead — and it would look like a broken fixture, not an addressing error.",
+       u1_401:"Tidier numbers, worse maths — 401 + 128 = 529, further over the ceiling. Universe 1 has 128 channels free above 384, and you need exactly 128, with no margin.",
+       split:"Splitting a group across universes means two runs, two chains and two chances to get it wrong, for no benefit. Keep a group together."},
+    ok:"Universe 1 is effectively full at 384. The washes get universe 2 from address 1 — a clean block with room to spare."},
+
+   {q:"Power for the twelve movers. 450 W each, 120 V, and the distro gives you 20 A circuits. What do you do?",
+    o:[["All twelve on one 20 A circuit — LEDs draw very little","one"],
+       ["Split across four circuits, three or four fixtures each","four"],
+       ["Put them on the house dimmer rack","dim"],
+       ["Two circuits, six each","two"]],
+    a:"four",
+    e:{one:"12 × 450 W = <b>5400 W = 45 A</b>. That is more than double a 20 A circuit. It trips instantly — or worse, holds just long enough to be a fire risk.",
+       dim:"<b>Never put an intelligent fixture on a dimmer.</b> LED movers need constant voltage and control their own intensity over DMX. A dimmed circuit damages the power supply.",
+       two:"45 A over two circuits is 22.5 A each — still over a 20 A breaker, and well over the 16 A continuous derate. Closer, still wrong."},
+    ok:"450 W ÷ 120 V = 3.75 A each. Derate a 20 A circuit to 16 A continuous and you get four fixtures per circuit. Three or four circuits each — four is comfortable."},
+
+   {q:"You are out of 3-pin DMX cable for the washes. There is plenty of mic XLR on the cart and it fits perfectly. What do you do?",
+    o:[["Use the mic cable — it's the same connector","mic"],
+       ["Use 5-pin DMX with 5-to-3 turnarounds","turn"],
+       ["Skip DMX and run the washes in standalone mode","standalone"],
+       ["Use mic cable only for the short runs","short"]],
+    a:"turn",
+    e:{mic:"It fits and it will appear to work. Mic cable is <b>~60 Ω</b>; DMX needs <b>110–120 Ω</b>. The mismatch causes reflections — intermittent flicker and dropouts that show up hours later, in show, on the far end of the chain. It is the hardest fault on a rig to find because the cable tests fine.",
+       standalone:"Standalone means no console control — no cues, no colour changes on command. You would be handing the LD a rig they cannot use.",
+       short:"The failure is intermittent and gets worse with length and load — but 'short runs are fine' is exactly the reasoning that puts mic cable in a rig, and then somebody extends it later and nobody remembers."},
+    ok:"Turnarounds cost nothing and keep the whole chain at the right impedance. This is what they are for."},
+
+   {q:"All 21 data-driven fixtures on one truss. How do you run the DMX?",
+    o:[["One chain through everything, terminator at the end","one"],
+       ["Two chains from an opto-splitter, one per universe, terminate each","split"],
+       ["One chain, no terminator — it's only 21 fixtures","noterm"],
+       ["Y-split the console output into two runs","ysplit"]],
+    a:"split",
+    e:{one:"You have <b>two universes</b> — they cannot share one chain. A chain carries one universe. This does not physically work.",
+       noterm:"Same universe problem, plus no terminator. Short chains often work without one, right up until the run they don't, and then you are chasing intermittent flicker with the room full.",
+       ysplit:"<b>Never passively split DMX.</b> A Y-cable causes reflections on both legs. Use a powered opto-splitter — it isolates each branch, so one shorted data line kills one branch instead of the rig."},
+    ok:"Two universes means two chains. An opto-splitter gives you that plus electrical isolation, and you terminate the end of each."},
+
+   {q:"Everything is hung, addressed, powered and cabled. The L1 says fly it. What do you do first?",
+    o:[["Fly it — you can test at trim","fly"],
+       ["Power up and prove every fixture on the deck","prove"],
+       ["Check safety cables only, then fly","safety"],
+       ["Wait for the LD to focus first","ld"]],
+    a:"prove",
+    e:{fly:"A dead fixture at deck height is a two-minute swap. At trim it is a lift, a cleared floor and a stopped rehearsal. <b>This is the decision that separates crews.</b>",
+       safety:"Safeties are non-negotiable — but they are not a test. A safetied fixture that does not strike is still a lift call at trim.",
+       ld:"Focus happens after trim. By then it is far too late to find a dead fixture cheaply."},
+    ok:"Every fixture strikes, every fixture answers its own address, pan and tilt sweep, colour changes. Twenty minutes on the deck buys back hours."},
+
+   {q:"The client wants haze. What happens first?",
+    o:[["Load fluid and start hazing early to build a base","early"],
+       ["Get written venue approval and let their fire officer isolate detection","approve"],
+       ["Aim the hazer away from the detectors","aim"],
+       ["Run it at low output so it doesn't trigger anything","low"]],
+    a:"approve",
+    e:{early:"Building base haze early is right — <b>after</b> the fire system is dealt with. Do it first and you evacuate the building.",
+       aim:"Haze fills a room. That is the entire point of it. There is no aiming away from detection in an enclosed space.",
+       low:"Detection is more sensitive than people assume, and 'low enough' is not a thing you can judge. It either has approval or it does not."},
+    ok:"Approval in writing, and the venue's own fire officer isolates their system — never you, never the LD. Some venues refuse outright, and the design has to survive that answer."}
+  ];
+
+  var step=0, ans=[], locked=false;
+
+  function render(){
+    document.getElementById("cbBrief").innerHTML=BRIEF;
+    document.getElementById("cbBar").style.width=(step/Q.length*100)+"%";
+    document.getElementById("cbFeed").innerHTML="";
+    locked=false;
+    if(step>=Q.length){ report(); return; }
+    var q=Q[step];
+    document.getElementById("cbStep").textContent="Decision "+(step+1)+" of "+Q.length;
+    var h='<p class="cbq">'+q.q+'</p>';
+    q.o.forEach(function(o,i){ h+='<button class="opt" data-v="'+o[1]+'">'+o[0]+'</button>' });
+    document.getElementById("cbHost").innerHTML=h;
+    document.getElementById("cbNext").textContent="Next";
+    document.getElementById("cbNext").disabled=true;
+    document.querySelectorAll("#cbHost .opt").forEach(function(b){
+      b.onclick=function(){
+        if(locked) return; locked=true;
+        var v=b.dataset.v, right=(v===q.a);
+        ans.push({i:step,v:v,ok:right});
+        document.querySelectorAll("#cbHost .opt").forEach(function(x){
+          x.disabled=true;
+          if(x.dataset.v===q.a) x.classList.add("right");
+          else if(x===b) x.classList.add("wrong");
+        });
+        document.getElementById("cbFeed").innerHTML=
+          '<div class="fb '+(right?"ok":"no")+'"><b class="h">'+(right?"Correct":"Not that one")+'</b>'+
+          (right?q.ok:(q.e[v]||"")+"<br><br><b>The right call:</b> "+q.ok)+'</div>';
+        document.getElementById("cbNext").disabled=false;
+      };
+    });
+  }
+
+  function report(){
+    document.getElementById("cbStep").textContent="Show report";
+    var right=ans.filter(function(a){return a.ok}).length;
+    var pct=Math.round(right/Q.length*100);
+    var lines=[];
+    function bad(i){ return ans[i] && !ans[i].ok }
+
+    lines.push(bad(0)||bad(1)
+      ? ['bad','Pre-production','You went in without confirming modes or miscounted the universes. Somewhere around hour three somebody discovers the addressing does not fit and the whole pass gets done again — in the air, with the room booked.']
+      : ['good','Pre-production','Modes confirmed and universe count right before a single fixture went up. Everything downstream had a foundation.']);
+
+    lines.push(bad(2)
+      ? ['bad','Addressing','You addressed at trim. That is a lift, a spotter, and roughly two hours you did not have — and the room was needed at 4pm.']
+      : ['good','Addressing','Addressed on the deck. Twenty minutes, no lift, done before the truss moved.']);
+
+    lines.push(bad(3)||bad(4)
+      ? ['bad','Patch','Addresses overlap or run past 512. On the desk it looks like fixtures moving in pairs, or one fixture that simply will not respond. The LD loses cue-building time while you find it — and it reads as a broken fixture, not an addressing mistake, so you look in the wrong place first.']
+      : ['good','Patch','Clean blocks, no overlaps, nothing past the ceiling. Every fixture answers only to itself.']);
+
+    lines.push(bad(5)
+      ? ['bad','Power','The circuit trips. If you are lucky it trips at power-up and you re-plan. If you are unlucky it holds through soundcheck, warms up, and drops the truss mid-session in front of the room.']
+      : ['good','Power','Load spread properly inside the derate. Nothing near a breaker, room to add a fixture later.']);
+
+    lines.push(bad(6)
+      ? ['bad','Data cable','Mic cable in the DMX chain. It works all through focus. At 6:40pm, room full, the last few washes start flickering and dropping out — and because the cable tests fine, you will not find it tonight.']
+      : ['good','Data cable','Correct impedance the whole way. That entire class of intermittent fault cannot happen to you.']);
+
+    lines.push(bad(7)
+      ? ['bad','Topology','Either the two universes are fighting over one chain, or there is no terminator, or you passively split the line. All three produce the same thing: fixtures that mostly work, which is the worst kind of fault.']
+      : ['good','Topology','Splitter, one chain per universe, terminated at both ends. A fault on one branch cannot take the rig.']);
+
+    lines.push(bad(8)
+      ? ['bad','Pre-flight','You flew it untested. Two fixtures do not strike. The lift comes back out, rehearsal stops, and the production manager now knows your name for the wrong reason.']
+      : ['good','Pre-flight','Proved on the deck. Whatever was dead got swapped while it was still cheap.']);
+
+    lines.push(bad(9)
+      ? ['bad','Haze','The fire panel goes. Two thousand people leave the building, the fire service attends, and the session is gone. This is a career event, not an inconvenience.']
+      : ['good','Haze','Approval in writing, venue isolated their own system. Base haze built early, beams read from the back of the room.']);
+
+    var g = pct===100?"Clean":pct>=80?"Solid":pct>=60?"Rough":"Bad night";
+    var gsub = pct===100?"Nothing to fix. This is the call you want to have."
+      : pct>=80?"Show happened. A couple of things cost you time you did not need to spend."
+      : pct>=60?"It got through, but somebody senior noticed."
+      : "Several of these compound. Read the report and run it again.";
+    var col = pct>=80?"var(--audio)":pct>=60?"var(--warn)":"var(--power)";
+
+    document.getElementById("cbHost").innerHTML=
+      '<div class="grade"><div class="g" style="color:'+col+'">'+pct+'%</div>'+
+      '<div class="gs"><b style="color:'+col+'">'+g+'</b> — '+right+' of '+Q.length+' decisions right<br>'+gsub+'</div></div>'+
+      '<div class="report">'+lines.map(function(l){
+        return '<div class="rline '+l[0]+'"><b class="h">'+l[1]+'</b>'+l[2]+'</div>' }).join("")+'</div>';
+    document.getElementById("cbNext").textContent="Run it again";
+    document.getElementById("cbNext").disabled=false;
+  }
+
+  document.getElementById("cbNext").onclick=function(){
+    if(step>=Q.length){ step=0; ans=[]; }
+    else step++;
+    render();
+  };
+  document.getElementById("cbRestart").onclick=function(){ step=0; ans=[]; render() };
+  render();
+})();
+
+/* ═══════════ fixture menu trainer ═══════════ */
+(function(){
+  var host=document.getElementById("fmSim"); if(!host) return;
+
+  var MODES=["16ch BASIC","24ch STANDARD","32ch EXTENDED"];
+  var MENU=["DMX ADDRESS","FIXTURE MODE","DISPLAY","FAN MODE","INFO"];
+
+  var st={}, task=null, presses=0, done=false, run={k:null,n:0};
+
+  function newTask(){
+    var addr = [1,33,65,97,129,161][Math.floor(Math.random()*6)];
+    var mode = Math.floor(Math.random()*3);
+    task={addr:addr, mode:mode};
+    st={screen:"main", sel:0, addr:1, mode:0, editing:false, saved:false};
+    presses=0; done=false; run={k:null,n:0};
+    document.getElementById("fmTask").innerHTML=
+      "Set this fixture to address <b>"+addr+"</b> in <b>"+MODES[mode]+"</b> mode";
+    document.getElementById("fmFeed").innerHTML="";
+    draw();
+  }
+
+  function pad(n){ return ("00"+n).slice(-3) }
+
+  function draw(){
+    var lcd=document.getElementById("fmLcd"), l1,l2,l3;
+    lcd.className="lcd"+(st.saved?" saved":"");
+    if(st.screen==="main"){
+      l1="MAIN MENU"; l2=MENU[st.sel]; l3="["+(st.sel+1)+"/"+MENU.length+"]  ENTER to open";
+    } else if(st.screen==="addr"){
+      l1="DMX ADDRESS"; l2="A"+pad(st.addr)+(st.editing?" *":"");
+      l3=st.editing?"▲▼ change · ENTER save":"ENTER to edit · MENU back";
+    } else if(st.screen==="mode"){
+      l1="FIXTURE MODE"; l2=MODES[st.mode]+(st.editing?" *":"");
+      l3=st.editing?"▲▼ change · ENTER save":"ENTER to edit · MENU back";
+    } else if(st.screen==="display"){
+      l1="DISPLAY"; l2="INVERT: OFF"; l3="MENU back";
+    } else if(st.screen==="fan"){
+      l1="FAN MODE"; l2="AUTO"; l3="MENU back";
+    } else if(st.screen==="info"){
+      l1="INFO"; l2="FW 2.14"; l3="MENU back";
+    }
+    lcd.innerHTML='<div class="l1">'+l1+'</div><div class="l2">'+l2+'</div><div class="l3">'+l3+'</div>';
+    document.getElementById("fmPresses").textContent=presses+" button press"+(presses===1?"":"es");
+  }
+
+  function feed(cls,head,body){
+    document.getElementById("fmFeed").innerHTML=
+      '<div class="fb '+cls+'"><b class="h">'+head+'</b>'+body+'</div>';
+  }
+
+  function check(){
+    if(st.addr===task.addr && st.mode===task.mode && !done){
+      done=true;
+      var par = 12 + Math.ceil(Math.min(task.addr-1, 512-task.addr+1)/10) + task.mode;
+      feed("ok","Fixture set",
+        "Address <b>"+task.addr+"</b>, <b>"+MODES[task.mode]+"</b>. Done in <b>"+presses+"</b> presses (par ~"+par+")"+
+        (presses<=par?" — that is fluent. On a real call that is about ten seconds per fixture."
+                     :". A confident hand does this in around "+par+". Run it again — the point is to stop thinking about the menu.")+
+        "<br><br><b>Why mode matters as much as address:</b> in "+MODES[task.mode]+" this fixture claims <b>"+
+        [16,24,32][task.mode]+" channels</b>. Set it to the wrong mode and every fixture addressed after it in the universe is wrong too — and the symptom looks like broken fixtures, not a mode error.");
+      document.getElementById("fmLcd").className="lcd saved";
+    }
+  }
+
+  function key(k){
+    if(done && k!=="menu") return;
+    if(k===run.k) run.n++; else { run.k=k; run.n=1; }
+    presses++;
+    if(st.screen==="main"){
+      if(k==="up")   st.sel=(st.sel-1+MENU.length)%MENU.length;
+      if(k==="down") st.sel=(st.sel+1)%MENU.length;
+      if(k==="enter") st.screen=["addr","mode","display","fan","info"][st.sel];
+      if(k==="menu") feed("no","Already at the top","MENU steps <i>back</i>. You are at the root of the tree — there is nowhere further out. Use ▲▼ to move through the menu and ENTER to go in.");
+    } else {
+      if(k==="menu"){
+        if(st.editing){ st.editing=false; feed("no","Edit cancelled","You backed out without confirming, so the value did not change. On most fixtures MENU during an edit discards it — <b>ENTER is what commits.</b>"); }
+        else st.screen="main";
+      }
+      else if(st.screen==="addr"){
+        if(k==="enter"){
+          if(st.editing){ st.editing=false; st.saved=true; check();
+            if(!done) feed("ok","Address saved","Now check the other half of the job — the <b>fixture mode</b>. Address alone is not the task.");
+          } else st.editing=true;
+        }
+        if(st.editing && (k==="up"||k==="down")){
+          var stepv = run.n>=6 ? 10 : 1;
+          if(k==="up")   st.addr = st.addr+stepv>512 ? 1 : st.addr+stepv;
+          else           st.addr = st.addr-stepv<1 ? 512 : st.addr-stepv;
+        }
+      }
+      else if(st.screen==="mode"){
+        if(k==="enter"){
+          if(st.editing){ st.editing=false; st.saved=true; check();
+            if(!done) feed("ok","Mode saved","Now set the <b>address</b> if you have not already.");
+          } else st.editing=true;
+        }
+        if(st.editing && k==="up")   st.mode=(st.mode+1)%3;
+        if(st.editing && k==="down") st.mode=(st.mode+2)%3;
+      }
+    }
+    draw();
+  }
+
+  document.querySelectorAll("#fmSim .fkey").forEach(function(b){
+    b.onclick=function(){ key(b.dataset.k) };
+  });
+  document.getElementById("fmNew").onclick=newTask;
+  document.getElementById("fmHint").onclick=function(){
+    var need=[];
+    if(st.addr!==task.addr) need.push("<b>DMX ADDRESS</b> → ENTER to edit → ▲▼ to "+task.addr+" → ENTER to save");
+    if(st.mode!==task.mode) need.push("<b>FIXTURE MODE</b> → ENTER to edit → ▲▼ to "+MODES[task.mode]+" → ENTER to save");
+    feed("no","Hint", need.length? "From the main menu:<br>• "+need.join("<br>• ")+"<br><br><b>Tip:</b> keep pressing the same arrow and it accelerates to steps of 10 — same as holding the button on a real fixture."
+      : "Both values are already set. Anything else you press is extra.");
+  };
+
+  newTask();
 })();
 
 </script>
