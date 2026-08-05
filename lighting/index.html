@@ -1103,25 +1103,85 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
 
   <h2>ETC ColorSource</h2>
   <div class="key">
-    <b>ColorSource is the opposite design philosophy from Eos.</b> Eos gives you a command line and expects you to build sentences. ColorSource gives you <b>faders and a colour picker</b> and expects you to touch things directly. It is Eos's little sibling in family, not in operation — do not walk up expecting Eos syntax.
+    <b>ColorSource is the opposite design philosophy from Eos.</b> Eos gives you a command line and expects you to build sentences. ColorSource gives you <b>faders, bump buttons and a touchscreen</b> and expects you to touch things directly. It shares the ETC badge and the fixture library — <b>it does not share the syntax.</b> Do not walk up expecting Eos commands.
+  </div>
+
+  <h3>The two models</h3>
+  <p class="lede"><b>ColorSource 20</b> and <b>ColorSource 40</b> — the number is the fader count. Same software, same layout, different width. The 40 gives you more looks under your fingers without paging.</p>
+
+  <h3>Rear panel</h3>
+  <table class="tbl">
+    <tr><th>Connector</th><th>What it's for</th></tr>
+    <tr><td><b>DMX port</b></td><td>Your output to the rig</td></tr>
+    <tr><td><b>DC power input</b></td><td>External supply — this desk does not take a mains lead directly</td></tr>
+    <tr><td><b>USB ports</b></td><td>Show files, and a keyboard or mouse if you want one</td></tr>
+    <tr><td><b>Ethernet</b></td><td>Networked output and remote apps</td></tr>
+    <tr><td><b>Kensington lock</b></td><td>Physical security — use it in an unattended room</td></tr>
+  </table>
+
+  <div class="card L rf">
+    <h4>Power up — the order that matters</h4>
+    <ol class="steps" style="margin:8px 0 0">
+      <li><b>DMX cable into the DMX port first.</b></li>
+      <li>Power supply into the DC input on the rear.</li>
+      <li>Plug the supply into your source.</li>
+      <li><b>It powers itself on as soon as it sees power</b> — there is no power switch to hunt for. Surprises people the first time.</li>
+      <li>From the startup screen, press <b>Start</b> to get into the console software.</li>
+    </ol>
+  </div>
+
+  <div class="card L power">
+    <h4>Power down — do not just pull the plug</h4>
+    <p><b>Press and hold the Stage Map / Shutdown button.</b> When the shutdown display opens, choose shutdown or cancel.</p>
+    <p>Shutdown puts the console into <b>sleep mode</b>. Only then is it safe to remove power. If you leave it asleep, pressing that same button wakes it.</p>
+    <p><b>Why it matters:</b> yanking power on any console mid-write risks the show file. Thirty seconds of shutdown protects a day of programming.</p>
+  </div>
+
+  <h3>The vocabulary — this is where ColorSource differs most</h3>
+  <p class="lede">These words mean specific things on this desk, and several of them do <b>not</b> mean what they mean on Eos. Learning this table is most of learning the console.</p>
+
+  <table class="tbl">
+    <tr><th>Term</th><th>What it means here</th></tr>
+    <tr><td><b>Channel</b></td><td>One numeric handle the console controls. Could be a dimmer, a group of dimmers, or a whole moving light.</td></tr>
+    <tr><td><b style="color:var(--warn)">Dimmer</b></td><td><b>Single-address, intensity only.</b> A conventional on a dimmer circuit.</td></tr>
+    <tr><td><b style="color:var(--audio)">Device</b></td><td><b>Multi-address with parameters</b> — position, colour, beam, intensity. An LED wash or a mover.</td></tr>
+    <tr><td><b>Bump</b></td><td>The buttons directly under the faders.</td></tr>
+    <tr><td><b>Playback</b></td><td>One look — or a sequence of several looks — living on a fader.</td></tr>
+    <tr><td><b>Sequence</b></td><td>A playback made of <b>steps</b>, with fade and step timing. This is how you get a chase.</td></tr>
+    <tr><td><b>Cue</b></td><td>A recorded stage look: intensity, colour, beam and effects together.</td></tr>
+    <tr><td><b>Crossfader</b></td><td>Manual control over the fade between cues instead of using Go.</td></tr>
+    <tr><td><b>Go</b></td><td>Advances the cue list using the recorded times.</td></tr>
+    <tr><td><b style="color:var(--rf)">Independents</b></td><td>Control for <b>on/off devices</b> — motors, smoke machines, foggers.</td></tr>
+    <tr><td><b>Effects</b></td><td>Patterns applied to selected lights. <b>Four kinds: colour, shape (motion), intensity, parameter.</b></td></tr>
+  </table>
+
+  <div class="key" style="border-color:rgba(227,179,65,.35)">
+    <b>Dimmer vs. Device is the distinction to internalise.</b> A <b>Dimmer</b> is one address and intensity only. A <b>Device</b> claims several addresses and has parameters you can push. Patch a mover as a dimmer and you get intensity and nothing else — no colour, no position, and it will look like the fixture is broken.<br><br>
+    It is the same trap as fixture mode on the rig, showing up in the patch instead.
   </div>
 
   <div class="card L rf">
-    <h4>How it actually works</h4>
-    <p><b>Faders are the interface.</b> Each fader is a channel or a recorded look. You push it up, the light comes up. There is no command line to learn.</p>
-    <p><b>The colour picker</b> is the standout feature — a touchscreen colour space where you pick a colour and the desk works out the emitter mix for whatever LED fixture is patched. This is why it lands in so many corporate and worship rooms: someone non-technical can drive it.</p>
-    <p><b>Cues</b> record and play back in a list with a Go button, same as any desk.</p>
-    <p><b>Patch</b> is a simple fixture-picker: choose the fixture from the library, give it an address, done.</p>
+    <h4>Bump button modes — Flash vs. Solo</h4>
+    <p>The bump buttons have a mode setting, and the difference is dramatic in a live room:</p>
+    <p><b>Flash</b> — pressing a bump brings that playback's channels up to the level of the <b>Bump Master</b>. Everything else keeps doing what it was doing.</p>
+    <p><b>Solo</b> — pressing a bump brings that playback up <b>and takes every other playback to zero.</b></p>
+    <p><b>Know which mode you are in before you touch a bump during a show.</b> Reaching for a flash and getting a solo blacks out everything else on stage in front of the room.</p>
+  </div>
+
+  <div class="card L data">
+    <h4>Independents — the one people forget exists</h4>
+    <p>Independents drive things that are <b>on or off</b> rather than dimmed: fog and smoke machines, motors, practical effects.</p>
+    <p>This connects directly to your atmospherics: a <b>fogger on an independent</b> can be triggered from the desk without living on a fader where somebody might drag it up by accident.</p>
   </div>
 
   <div class="card L rf">
     <h4>What to expect on a call</h4>
-    <p>ColorSource turns up when the room needs <b>competent, simple control</b> rather than deep programming — corporate breakouts, houses of worship, small venues, and anywhere the client will be driving it after you leave.</p>
-    <p><b>The handover matters more than the programming.</b> If a client is running it themselves, record clean looks onto faders, label them, and leave a card explaining what each fader does. That is the job.</p>
+    <p>ColorSource turns up where the room needs <b>competent, simple control</b> rather than deep programming — corporate breakouts, worship, small venues, and anywhere the client drives it after you leave.</p>
+    <p><b>The handover is the job.</b> Record clean looks onto faders, label the strip, set the bump mode deliberately, and leave a card saying what each fader does and who to call.</p>
   </div>
 
   <div class="key" style="border-color:rgba(227,179,65,.35)">
-    <b>Verify specifics against the manual on the desk in front of you.</b> ETC updates the ColorSource line and the exact fader counts, universe outputs and feature set differ by model and software version. The <b>operating model</b> above is stable; the numbers are not. ETC publishes every manual free at their documentation search — check the version on the console's own about screen and match it.
+    <b>Verify against the desk in front of you.</b> ETC revises the ColorSource line and exact I/O, fader counts and features differ by model and software version. The operating model and vocabulary above are stable; specific numbers are not. Check the console's own About screen and match it to the current manual — ETC publishes all of them free.
   </div>
 
   <h2>Console Log</h2>
@@ -1262,7 +1322,22 @@ var CARDS=[
 ["Safety cable — when?","<b>Every fixture that flies, every time.</b> Through the yoke and around the truss chord. No exceptions."],
 ["What does the L1 do?","<b>Lead / Master Electrician.</b> Owns execution of the plot, runs the crew, makes practical calls on hang and power."],
 ["Followspot — set the iris before or after opening the douser?","<b>Before.</b> Never hunt for your size with the light live on the artist."],
-["Why keep power and DMX on opposite sides of the truss?","Mains next to data <b>induces noise into the data</b>, and the symptom — intermittent flicker — looks like every other DMX fault. Rule it out by construction."]
+["Why keep power and DMX on opposite sides of the truss?","Mains next to data <b>induces noise into the data</b>, and the symptom — intermittent flicker — looks like every other DMX fault. Rule it out by construction."],
+["ColorSource: Dimmer vs Device?","<b>Dimmer</b> = single address, <b>intensity only</b>. <b>Device</b> = multi-address with parameters (position, colour, beam, intensity). Patch a mover as a dimmer and you get intensity and nothing else."],
+["ColorSource: Flash vs Solo bump mode?","<b>Flash</b> brings that playback up to the Bump Master level, leaving everything else alone. <b>Solo</b> brings it up and takes <b>every other playback to zero</b>. Know which mode you are in before you touch a bump in show."],
+["ColorSource: what is a Sequence?","A playback made of <b>steps</b> with fade and step timing — this is how you build a chase."],
+["ColorSource: what are Independents for?","<b>On/off devices</b> — motors, smoke and fog machines. Not dimmed, just triggered."],
+["ColorSource: how do you power it down?","<b>Press and hold Stage Map / Shutdown</b>, confirm, and it goes to sleep. Only then remove power. Pulling the plug mid-write risks the show file."],
+["ColorSource: how does it power up?","<b>It powers on as soon as it sees power</b> — no switch. DMX in first, then the DC supply, then press Start on the startup screen."],
+["ColorSource: the four effect types?","<b>Colour, shape (motion), intensity, parameter.</b>"],
+["Eos: what shape does every command follow?","<b>WHAT → HOW MUCH → ENTER.</b> You are building a sentence. Read the command line before you commit it."],
+["Eos: select channels 1 to 10 at 50%?","<code>1 [Thru] 10 [At] 50 [Enter]</code>"],
+["Eos: select 1 and 5 but not a range?","<code>1 [+] 5 [Enter]</code>. Thru gives a continuous range; plus joins separate channels."],
+["Eos: Record vs Record Only?","<b>Record</b> captures everything live including tracked values. <b>Record Only</b> captures just what you touched manually, leaving the rest to track."],
+["Eos: what does Sneak do?","Releases your manual changes and hands control back to the cue. Not the same as Out, which takes things to zero."],
+["Eos: Live vs Blind?","<b>Live</b> is real output — the room sees your changes. <b>Blind</b> edits a cue without affecting output. Check which you are in before touching anything."],
+["Eos: what does tracking mean?","A value stays as it is until something explicitly changes it, and edits ripple forward into later cues. When the LD says it tracked forward, that is the desk working correctly."],
+["Five questions for any console you have never used?","Where is <b>patch</b> · how do I <b>select</b> · how do I get a <b>parameter on an encoder</b> · how do I <b>record</b> · how do I <b>play back and get out of trouble</b>."]
 ];
 var fcQueue=[],fcIdx=0,fcCard=document.getElementById("fcCard");
 function fcInit(sh){
