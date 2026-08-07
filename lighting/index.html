@@ -426,6 +426,98 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
   padding:3px 7px;border-radius:4px;background:#131a22;color:#8b98a5;
   border:1px solid var(--line);margin:0 0 7px}
 
+/* electric sims */
+.camrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:8px;margin:12px 0 0}
+.camb{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:11px 8px;
+  cursor:pointer;text-align:center;font:700 11px/1.35 var(--f);color:#c9d1d9;transition:.12s}
+.camb:hover{border-color:#484f58}
+.camb.done{opacity:.4;pointer-events:none;border-color:#3fb950}
+.camb .dot{display:block;width:20px;height:20px;border-radius:50%;margin:0 auto 6px;border:3px solid}
+.camb small{display:block;color:#5c6773;font-size:9px;font-weight:600;margin-top:3px}
+.steps{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.stepc{background:#131a22;border:1px solid var(--line);border-radius:20px;
+  padding:5px 11px;font:700 10px/1 var(--f);color:#8b98a5}
+.stepc.ok{border-color:#3fb950;color:#3fb950}
+.stepc.bad{border-color:#f85149;color:#f85149}
+.loadrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:12px 0 0}
+.lditem{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:10px}
+.lditem b{display:block;font-size:11.5px;color:#c9d1d9;margin-bottom:3px}
+.lditem .amps{font:800 14px/1 var(--f);color:var(--warn);margin:4px 0}
+.legbtns{display:flex;gap:5px;margin-top:7px}
+.legb{flex:1;background:#161b22;border:1px solid var(--line);border-radius:5px;
+  padding:6px 0;font:800 10px/1 var(--f);color:#8b98a5;cursor:pointer}
+.legb.on{background:rgba(227,179,65,.16);border-color:var(--warn);color:#e3b341}
+.diagrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin:12px 0 0}
+.diagb{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:11px;
+  cursor:pointer;font:600 11.5px/1.4 var(--f);color:#c9d1d9;text-align:left}
+.diagb:hover{border-color:#484f58}
+.diagb.used{opacity:.45;pointer-events:none}
+.diagb i{display:block;font-style:normal;font-size:9px;color:#5c6773;margin-top:4px}
+.ecopt{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:12px 0 0}
+.ecb{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:11px;
+  cursor:pointer;font:700 12px/1.3 var(--f);color:#c9d1d9;text-align:center}
+.ecb:hover{border-color:#484f58}
+
+/* home run trainer */
+.hrbuild{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:8px;margin:12px 0 0}
+.hrsel{background:#0d1117;border:1px solid var(--line);border-radius:8px;padding:9px}
+.hrsel label{display:block;font:800 9px/1 var(--f);letter-spacing:.12em;color:#5c6773;margin:0 0 6px}
+.hrsel select{width:100%;background:#161b22;color:#c9d1d9;border:1px solid var(--line);
+  border-radius:5px;padding:7px;font:600 11.5px/1 var(--f)}
+.runlist{margin:12px 0 0;display:flex;flex-direction:column;gap:6px}
+.runrow{display:flex;align-items:center;gap:9px;background:#0d1117;border:1px solid var(--line);
+  border-left:3px solid var(--dimmer);border-radius:7px;padding:9px 11px;font:600 11.5px/1.3 var(--f)}
+.runrow .x{margin-left:auto;cursor:pointer;color:#5c6773;font-weight:800;padding:0 4px}
+.runrow .x:hover{color:var(--power)}
+.runrow .cb{font-size:10px;color:#8b98a5}
+.runrow.pw{border-left-color:var(--power)} .runrow.dt{border-left-color:var(--sdi)}
+.poscol{display:grid;grid-template-columns:repeat(auto-fit,minmax(206px,1fr));gap:10px;margin:12px 0 0}
+.posbox{background:#0d1117;border:1px solid var(--line);border-radius:9px;padding:11px}
+.posbox>b{display:block;font-size:12px;color:#c9d1d9;margin:0 0 3px}
+.posbox>i{display:block;font-style:normal;font-size:9.5px;color:#5c6773;margin:0 0 9px}
+.fxrow{display:flex;align-items:center;gap:6px;padding:6px 0;border-top:1px solid #161b22}
+.fxrow .nm{flex:1;font:600 11px/1.3 var(--f);color:#c9d1d9}
+.fxrow .nm em{display:block;font-style:normal;font-size:9px;color:#5c6773}
+.ckpick{display:flex;gap:3px}
+.ckb{width:22px;height:22px;background:#161b22;border:1px solid var(--line);border-radius:4px;
+  font:800 9.5px/1 var(--f);color:#8b98a5;cursor:pointer}
+.ckb.on{background:rgba(227,179,65,.18);border-color:var(--warn);color:#e3b341}
+.ckb.full{border-color:var(--power);color:var(--power)}
+
+/* ── call sheet: the shared brief header for every sim ── */
+.callsheet{background:linear-gradient(180deg,#0e141b,#0b1016);border:1px solid var(--line);
+  border-radius:11px;overflow:hidden;margin:0 0 14px}
+.cshead{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:9px 13px;
+  background:#11181f;border-bottom:1px solid var(--line)}
+.csshow{font:800 10px/1 var(--f);letter-spacing:.09em;text-transform:uppercase;
+  padding:5px 9px;border-radius:5px;background:rgba(88,166,255,.14);color:#8cc2ff;
+  border:1px solid rgba(88,166,255,.3)}
+.csven{font:600 10.5px/1 var(--f);color:#8b98a5}
+.csclock{margin-left:auto;display:flex;align-items:center;gap:8px}
+.csdoors{font:700 10px/1 var(--f);color:var(--warn)}
+.cstime{font:800 15px/1 var(--f);color:#c9d1d9;font-variant-numeric:tabular-nums;
+  background:#0d1117;border:1px solid var(--line);border-radius:5px;padding:5px 9px}
+.cstime.over{color:var(--power);border-color:rgba(248,81,73,.4)}
+.csbody{padding:12px 14px}
+.csrole{font:700 10px/1.4 var(--f);color:#5c6773;margin:0 0 9px}
+.csrole b{color:#8b98a5}
+.cswho{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;margin:0 0 6px}
+.cswho .nm{font:800 12px/1.3 var(--f);color:var(--warn)}
+.cswho .mn{font:400 10.5px/1.3 var(--f);color:#5c6773;font-style:italic}
+.cssay{margin:0 0 10px;font:400 14px/1.6 var(--f);color:#d5dde5}
+.csreqs{margin:0;padding:0 0 0 17px;list-style:none}
+.csreqs li{position:relative;font:400 12.5px/1.55 var(--f);color:#a8b3bd;margin:0 0 4px}
+.csreqs li:before{content:"";position:absolute;left:-14px;top:7px;width:5px;height:5px;
+  border-radius:50%;background:var(--warn)}
+.csgrade{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0;padding:10px 0 0;
+  border-top:1px solid var(--line)}
+.csg{flex:1;min-width:104px;background:#0d1117;border:1px solid var(--line);
+  border-radius:7px;padding:8px 10px}
+.csg span{display:block;font:800 8.5px/1 var(--f);letter-spacing:.11em;color:#5c6773;margin:0 0 4px}
+.csg b{font:800 14px/1 var(--f);color:#c9d1d9}
+.csg.good b{color:var(--audio)} .csg.warn b{color:var(--warn)} .csg.bad b{color:var(--power)}
+@media(max-width:560px){.cstime{font-size:13px}.cssay{font-size:13px}}
+
 .homelink{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--dim);
   text-decoration:none;margin-bottom:12px;padding:5px 11px;border:1px solid var(--line);
   border-radius:99px;transition:.15s}
@@ -720,6 +812,58 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
   </div>
 </section>
 <section class="panel" id="p-sim">
+  <h2>Home Runs</h2>
+  <p class="lede">The runs from the source to where they land. Power leaves the distro, data leaves the console, and both have to arrive at the right position on the right cable. Then you daisy-chain locally &mdash; and how many fixtures fit on one circuit comes from <b>the fixture's manual</b>, not from what looks reasonable.</p>
+
+  <div class="sim" id="hrSim">
+    <div class="ldbrief" id="hrBrief"></div>
+
+    <div class="row" style="margin:0 0 12px">
+      <button class="btn" id="hrP1">1 &middot; Home runs</button>
+      <button class="btn" id="hrP2">2 &middot; Daisy chains</button>
+      <span class="counter" id="hrMode" style="margin-left:auto"></span>
+    </div>
+
+    <div class="rigwrap">
+      <svg id="hrSvg" viewBox="0 0 700 320" role="img" aria-label="Stage plan showing home runs from distro and console to lighting positions"></svg>
+    </div>
+
+    <div id="hrPanel"></div>
+
+    <div class="row" style="margin:12px 0 0">
+      <button class="btn" id="hrClear">Clear pass</button>
+      <button class="btn" id="hrJob">Next job</button>
+      <button class="btn pri" id="hrCheck" style="margin-left:auto">Show the LD</button>
+    </div>
+
+    <div id="hrFeed"></div>
+  </div>
+
+  <div class="key">
+    <b>What a home run actually is.</b> The cable from the source to its destination, run once, in one piece. Power home runs leave the <b>distro</b> &mdash; usually as Socapex carrying six circuits &mdash; and land at a <b>breakout</b> on the position. Data home runs leave the <b>console</b> at FOH, land at a <b>splitter</b> near the stage, and branch out from there. Everything after the breakout or the splitter is a local run, and that is where the daisy chains live.
+  </div>
+
+  <div class="grid">
+    <div class="card L power">
+      <h4>Why the splitter goes near the stage, not at FOH</h4>
+      <p>One long DMX home run from the console to a splitter at the deck, then short branches to each position. That is <b>one long cable instead of four</b>.</p>
+      <p><b>The real payoff is troubleshooting.</b> An opto-splitter isolates each branch, so a fault on one position cannot take down the others. When a truss goes dark you know instantly which branch it is on, and the rest of the rig keeps working while you find it.</p>
+    </div>
+    <div class="card L warn">
+      <h4>Why the manual beats your arithmetic</h4>
+      <p>You can work out that 16&nbsp;A &divide; 3.75&nbsp;A means four movers fit on a 20&nbsp;A circuit. Then the manual says <b>three</b>.</p>
+      <p>The manual is lower because it accounts for <b>inrush</b> &mdash; the surge when several fixtures strike at once &mdash; and for the current rating of the <b>link-through connector</b> on the fixture itself, which is often the real limit rather than the breaker. <b>The connector melts before the breaker trips.</b></p>
+      <p>Your maths tells you the ceiling. The manual tells you the answer. When they disagree, the manual wins.</p>
+    </div>
+    <div class="card L data">
+      <h4>powerCON vs True1 in a daisy chain</h4>
+      <p>Both chain fixture to fixture. The difference is what you are allowed to do while the circuit is live.</p>
+      <p><b>Original powerCON</b> is not rated to connect or disconnect under load. If you need to break that chain, kill the circuit first.</p>
+      <p><b>True1</b> is rated for it, and sealed. This is why it became the standard on modern fixtures &mdash; you can pull one out of a live chain without shutting down the position.</p>
+      <p><b>Blue is in, grey is out</b> on powerCON, and they are keyed so you cannot chain backwards.</p>
+    </div>
+  </div>
+
   <h2>Cable the Truss</h2>
   <p class="lede">The LD tells you how they want it. You do the <b>power pass</b>, then the <b>data pass</b>. Mixed fixture types, real load maths, and constraints that change every job. Get it wrong and the LD tells you why.</p>
 
@@ -1288,6 +1432,68 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:24px 0 0;
 </div>
 
 <script>
+/* ═══════════ call sheet — shared brief + clock for every sim ═══════════ */
+window.CallSheet=(function(){
+  var reg={};
+  function fmt(s){
+    var m=Math.floor(s/60), r=s%60;
+    return m+":"+(r<10?"0":"")+r;
+  }
+  function render(hostId,b){
+    var el=document.getElementById(hostId); if(!el) return;
+    var st=reg[hostId];
+    if(st&&st.iv) clearInterval(st.iv);
+    st=reg[hostId]={brief:b,elapsed:0,iv:null,stopped:false};
+
+    el.className="callsheet";
+    el.innerHTML=
+      '<div class="cshead">'+
+        '<span class="csshow">'+b.show+'</span>'+
+        '<span class="csven">'+b.venue+'</span>'+
+        '<span class="csclock"><span class="csdoors">'+b.clock+'</span>'+
+        '<span class="cstime" id="'+hostId+'_t">0:00</span></span>'+
+      '</div>'+
+      '<div class="csbody">'+
+        '<p class="csrole">YOU ARE <b>'+b.role+'</b> &nbsp;&middot;&nbsp; TARGET <b>'+b.target+' min</b></p>'+
+        '<div class="cswho"><span class="nm">'+b.boss+'</span><span class="mn">'+b.manner+'</span></div>'+
+        '<p class="cssay">&ldquo;'+b.say+'&rdquo;</p>'+
+        '<ul class="csreqs">'+b.reqs.map(function(r){return "<li>"+r+"</li>"}).join("")+'</ul>'+
+      '</div>';
+
+    st.iv=setInterval(function(){
+      if(st.stopped) return;
+      st.elapsed++;
+      var t=document.getElementById(hostId+"_t");
+      if(!t){ clearInterval(st.iv); return }
+      t.textContent=fmt(st.elapsed);
+      if(st.elapsed>b.target*60) t.className="cstime over";
+    },1000);
+  }
+  function stop(hostId){
+    var st=reg[hostId]; if(!st) return 0;
+    st.stopped=true; return st.elapsed;
+  }
+  /* returns a grade block to append to feedback, plus a verdict string */
+  function grade(hostId){
+    var st=reg[hostId]; if(!st) return {html:"",late:false,mins:0};
+    var mins=st.elapsed/60, t=st.brief.target;
+    var late = mins>t;
+    var cls = mins<=t*0.75 ? "good" : (late ? "bad" : "warn");
+    var note = mins<=t*0.75
+        ? "Ahead of the call."
+        : (!late ? "Inside the window." : "Over the window by "+Math.ceil(mins-t)+" min.");
+    return {
+      late:late, mins:mins,
+      html:'<div class="csgrade">'+
+        '<div class="csg '+cls+'"><span>YOUR TIME</span><b>'+fmt(st.elapsed)+'</b></div>'+
+        '<div class="csg"><span>THE CALL ALLOWED</span><b>'+t+':00</b></div>'+
+        '<div class="csg '+cls+'"><span>PACE</span><b>'+note+'</b></div>'+
+      '</div>'
+    };
+  }
+  return {render:render, stop:stop, grade:grade, fmt:fmt};
+})();
+
 
 (function(){
 "use strict";
@@ -2681,29 +2887,71 @@ SCN.forEach(function(s,i){
   };
 
   var JOBS=[
-   {ld:"Standard corporate general session. Nothing exotic — I just want it clean.",
-    reqs:["Conventionals on the <b>house dimmers</b>. Everything else on <b>constant</b>.",
-          "Nothing over <b>16 A</b> on a circuit. I don't want to be chasing breakers.",
-          "<b>Hazer on its own circuit.</b> I want to be able to kill it without touching anything else.",
-          "One universe is fine. Terminate the end."],
-    fx:["MH","MH","MH","MH","WA","WA","WA","WA","S4","S4","HZ"],
-    rules:{maxA:16, hazeAlone:true, splitter:false, universes:1}},
+   {cs:{show:"Corporate \u00b7 general session", venue:"Hotel ballroom", role:"Lighting hand",
+        boss:"Show Producer", manner:"headset on, walking away mid-sentence",
+        clock:"Client in the room in 2 hrs", target:6,
+        say:"Standard general session. Nothing exotic \u2014 I just want it clean, and I want the hazer where I can kill it on its own if the client says anything.",
+        reqs:["Conventionals on the <b>house dimmers</b>. Everything else on <b>constant</b>.",
+              "Nothing over <b>16 A</b> on a circuit.",
+              "<b>Hazer on its own circuit.</b>",
+              "One universe is fine. Terminate the end."]},
+    rules:{maxA:16, hazeAlone:true, splitter:false, universes:1},
+    fx:["MH","MH","MH","MH","WA","WA","WA","WA","S4","S4","HZ"]},
 
-   {ld:"Festival side stage. I've been burned by this venue's power and I'm not losing a truss to one bad data cable.",
-    reqs:["<b>Splitter in line.</b> Two branches minimum — I'm not running one long snake.",
-          "Keep every circuit under <b>12 A</b>. I don't trust the distro here.",
-          "Conventionals on dimmers, intelligents on constant.",
-          "Terminate every branch."],
-    fx:["MH","MH","MH","MH","MH","MH","BL","BL","WA","WA","S4","S4"],
-    rules:{maxA:12, hazeAlone:false, splitter:true, universes:1}},
+   {cs:{show:"Festival \u00b7 side stage", venue:"Outdoor, questionable house power",
+        role:"Local lighting hand", boss:"Lighting Crew Chief",
+        manner:"already behind, shouting over the last band", clock:"Next band in 25 min", target:5,
+        say:"I have been burned by this venue's power before and I am not losing a truss to one bad data cable. Splitter in line, two branches minimum, and keep every circuit well under so we are not chasing breakers all night.",
+        reqs:["<b>Splitter in line.</b> Two branches minimum.",
+              "Every circuit under <b>12 A</b> \u2014 I do not trust this distro.",
+              "Conventionals dimmed, intelligents constant.",
+              "Terminate every branch."]},
+    rules:{maxA:12, hazeAlone:false, splitter:true, universes:1},
+    fx:["MH","MH","MH","MH","MH","MH","BL","BL","WA","WA","S4","S4"]},
 
-   {ld:"Big corporate. Movers are in 32-channel extended mode and I'll be re-patching them all day.",
-    reqs:["<b>Movers get their own universe.</b> Don't mix them with anything else.",
-          "Washes and blinders on universe 2.",
-          "16 A ceiling per circuit.",
-          "Hazer on its own circuit. Terminate both universes."],
-    fx:["MH","MH","MH","MH","MH","MH","MH","MH","WA","WA","WA","BL","BL","HZ"],
-    rules:{maxA:16, hazeAlone:true, splitter:false, universes:2, moversAlone:true}}
+   {cs:{show:"Rock concert", venue:"Arena, tour package in", role:"Lighting hand, local crew",
+        boss:"Head LD", manner:"on comms, re-patching as he talks",
+        clock:"Doors in 3 hrs", target:6,
+        say:"Movers are in 32-channel extended mode and I will be re-patching them all day. Keep them on their own universe so I can renumber without touching anything else. Washes and blinders go on two.",
+        reqs:["<b>Movers get their own universe.</b> Do not mix them with anything.",
+              "Washes and blinders on universe 2.",
+              "16 A ceiling per circuit.",
+              "Hazer on its own circuit. Terminate both universes."]},
+    rules:{maxA:16, hazeAlone:true, splitter:false, universes:2, moversAlone:true},
+    fx:["MH","MH","MH","MH","MH","MH","MH","MH","WA","WA","WA","BL","BL","HZ"]},
+
+   {cs:{show:"Rap \u00b7 hip-hop", venue:"Club, low trim, sensitive fire panel",
+        role:"Lighting hand", boss:"Production Manager",
+        manner:"plan changed ten minutes ago", clock:"Doors in 2 hrs", target:5,
+        say:"Blinder count went up and the fire panel in here is twitchy, so the hazer is coming on and off all night. Put it somewhere I can kill it without losing a single light, and watch those blinders \u2014 they are what trips us.",
+        reqs:["<b>Hazer completely isolated.</b> I will be killing it repeatedly.",
+              "Blinders are 800 W each. Do the maths before you land them.",
+              "Nothing over <b>16 A</b>.",
+              "Conventionals dimmed, everything else constant. Terminate."]},
+    rules:{maxA:16, hazeAlone:true, splitter:false, universes:1},
+    fx:["MH","MH","MH","BL","BL","BL","BL","WA","WA","S4","HZ"]},
+
+   {cs:{show:"Sports \u00b7 broadcast", venue:"Arena bowl, truck on site",
+        role:"Lighting hand, house crew", boss:"Broadcast Lighting Director",
+        manner:"truck is asking every four minutes", clock:"Camera check in 75 min", target:5,
+        say:"Broadcast means no second chances and no flicker on camera. Split it so a fault on one branch does not cost me the bowl, and keep the legs light \u2014 I would rather run more circuits than sit anything near its limit.",
+        reqs:["<b>Splitter required.</b> Two branches minimum \u2014 isolation is the point.",
+              "Every circuit under <b>12 A</b>. Run more circuits, not fuller ones.",
+              "Conventionals dimmed, intelligents constant.",
+              "Terminate every branch."]},
+    rules:{maxA:12, hazeAlone:false, splitter:true, universes:1},
+    fx:["MH","MH","MH","MH","WA","WA","WA","WA","WA","BL","BL","S4"]},
+
+   {cs:{show:"Theatre \u00b7 musical", venue:"Proscenium house", role:"Electrician on the hang crew",
+        boss:"Master Electrician", manner:"clipboard, does not miss anything",
+        clock:"Focus call at 6pm", target:6,
+        say:"We are conventional-heavy in here and half the plot is on house dimmers, so get the dimmed and non-dimmed circuits right or you will cook something expensive. Hazer isolated \u2014 this house has an alarm I do not want to explain.",
+        reqs:["Conventionals on <b>D circuits</b>. Intelligents on <b>C circuits</b>. No exceptions.",
+              "Nothing over <b>16 A</b>.",
+              "<b>Hazer alone.</b>",
+              "One universe. Terminate."]},
+    rules:{maxA:16, hazeAlone:true, splitter:false, universes:1},
+    fx:["S4","S4","S4","S4","MH","MH","WA","WA","WA","HZ"]}
   ];
 
   var CKT=["C1","C2","C3","C4","C5","C6","D1","D2"];
@@ -2822,12 +3070,7 @@ SCN.forEach(function(s,i){
     f.innerHTML='<div class="fb '+cls+'"><b class="h">'+head+'</b>'+body+'</div>';
   }
 
-  function brief(){
-    var j=J();
-    document.getElementById("tsBrief").innerHTML=
-      '<div class="who">The LD, walking away from you</div><p>“'+j.ld+'”</p><ul>'+
-      j.reqs.map(function(r){return "<li>"+r+"</li>"}).join("")+'</ul>';
-  }
+  function brief(){ CallSheet.render("tsBrief", J().cs); }
 
   document.getElementById("tsPower").onclick=function(){ mode="power"; sel=null; draw(); panel(); feed("") };
   document.getElementById("tsData").onclick =function(){ mode="data";  sel=null; draw(); panel(); feed("") };
@@ -2924,8 +3167,16 @@ SCN.forEach(function(s,i){
         (r.moversAlone?", movers on their own":"")+
         ", terminated. <b>That's a truss I can trust at trim.</b>"]);
     }
+    var g=CallSheet.grade("tsBrief");
+    if(ok){
+      CallSheet.stop("tsBrief");
+      if(g.late) out.push(["warn","\u201cRight, but slow\u201d",
+        "The truss is correct and that is what counts most. But the call had you at "+
+        J().cs.target+" minutes and you took "+Math.ceil(g.mins)+
+        ".<br><br>Nobody on a real call is timing you with a stopwatch \u2014 they are noticing whether you <b>hesitate</b>. Decide before you move."]);
+    }
     document.getElementById("tsFeed").innerHTML=out.map(function(o){
-      return '<div class="fb '+o[0]+'"><b class="h">'+o[1]+'</b>'+o[2]+'</div>' }).join("");
+      return '<div class="fb '+o[0]+'"><b class="h">'+o[1]+'</b>'+o[2]+'</div>' }).join("")+g.html;
   };
 
   brief(); build();
@@ -3188,6 +3439,1238 @@ SCN.forEach(function(s,i){
   };
 
   shuffle(); load();
+})();
+
+/* ═══════════ electric · cam-lok sequence ═══════════ */
+(function(){
+  var host=document.getElementById("camSim"); if(!host) return;
+  var NS="http://www.w3.org/2000/svg", svg=document.getElementById("cmSvg");
+  function m(t,a,x){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);
+    if(x!=null)e.appendChild(document.createTextNode(x));return e;}
+
+  var CON=[
+    {k:"GND", n:"GROUND", c:"#3fb950", t:"Green"},
+    {k:"NEU", n:"NEUTRAL",c:"#f0f6fc", t:"White"},
+    {k:"A",   n:"PHASE A",c:"#8b949e", t:"Black"},
+    {k:"B",   n:"PHASE B",c:"#f85149", t:"Red"},
+    {k:"C",   n:"PHASE C",c:"#58a6ff", t:"Blue"}
+  ];
+  var PREP=[
+    {k:"KILL",  n:"Kill the source", s:"open the disconnect"},
+    {k:"LOCK",  n:"Lock and tag",    s:"your lock, your key"},
+    {k:"VERIFY",n:"Verify dead",     s:"meter it, live-dead-live"}
+  ];
+
+  var ON=["KILL","LOCK","VERIFY","GND","NEU","A","B","C"];
+  var OFF=["KILL","LOCK","VERIFY","C","B","A","NEU","GND"];
+
+  var mode="on", done=[], score=0, tries=0, failed=false;
+
+  function seq(){ return mode==="on"?ON:OFF }
+
+  var CMSHOWS=[
+   {show:"Rock concert", venue:"Arena loading dock, 400 A company switch",
+    boss:"Head Electrician", manner:"watching you the whole time", clock:"Load-in, doors in 5 hrs"},
+   {show:"Festival \u00b7 outdoor", venue:"Site power, genset feed",
+    boss:"Site Power Tech", manner:"rain coming in an hour", clock:"Gates in 3 hrs"},
+   {show:"Corporate \u00b7 general session", venue:"Hotel ballroom, house company switch",
+    boss:"Head Electrician", manner:"quiet room, client nearby", clock:"Set in 4 hrs"},
+   {show:"Sports \u00b7 broadcast", venue:"Arena, house service",
+    boss:"House Electrician", manner:"does this every week and still checks", clock:"Truck arrives in 2 hrs"}
+  ];
+  var cmShow=0;
+  function brief(){
+    var S=CMSHOWS[cmShow];
+    CallSheet.render("cmBrief", {
+      show:S.show, venue:S.venue, role:"Electric hand", boss:S.boss, manner:S.manner,
+      clock:S.clock, target:2,
+      say: mode==="on"
+        ? "Tie the distro in. I am watching, so do it properly \u2014 and do the two steps everybody forgets before you touch a single connector."
+        : "Strike it. Same discipline going out as coming in, and remember the order reverses.",
+      reqs: mode==="on"
+        ? ["Make the source safe <b>before</b> anything else.",
+           "<b>Ground on first.</b> Phases on last.",
+           "Seat every connector and turn the collar."]
+        : ["Source dead and locked <b>first</b>, always.",
+           "<b>Phases off first.</b> Ground off last.",
+           "The equipment stays bonded until the very last move."]
+    });
+  }
+
+  function draw(){
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    svg.appendChild(m("rect",{class:"sf",x:14,y:64,width:96,height:70,rx:6,style:"stroke:#f85149"}));
+    var live = done.indexOf("KILL")<0;
+    svg.appendChild(m("text",{x:62,y:88,"text-anchor":"middle",
+      style:"font-size:10px;font-weight:800;fill:#f85149"},"SERVICE"));
+    svg.appendChild(m("text",{x:62,y:106,"text-anchor":"middle",
+      style:"font-size:11px;font-weight:800;fill:"+(live?"#f85149":"#3fb950")},live?"LIVE":"DEAD"));
+    svg.appendChild(m("text",{x:62,y:122,"text-anchor":"middle",
+      style:"font-size:8.5px;fill:#8b98a5"},done.indexOf("LOCK")>=0?"locked + tagged":"not locked"));
+
+    CON.forEach(function(c,i){
+      var y=26+i*36, on=done.indexOf(c.k)>=0;
+      svg.appendChild(m("path",{d:"M110 "+y+" H"+(on?496:300),
+        stroke:on?c.c:"#21262d","stroke-width":on?4:2,"stroke-linecap":"round",
+        "stroke-dasharray":on?"":"6 5"}));
+      svg.appendChild(m("circle",{cx:on?496:300,cy:y,r:8,
+        fill:"#0d1117",stroke:c.c,"stroke-width":3}));
+      svg.appendChild(m("text",{x:on?514:318,y:y+4,
+        style:"font-size:9.5px;font-weight:800;fill:"+c.c},c.n));
+      if(!on) svg.appendChild(m("text",{x:376,y:y+4,
+        style:"font-size:8.5px;fill:#484f58"},"not connected"));
+    });
+
+    svg.appendChild(m("rect",{class:"sf",x:496,y:12,width:130,height:186,rx:6,
+      style:"stroke:#30363d;fill:none"}));
+    svg.appendChild(m("text",{x:561,y:194,"text-anchor":"middle",
+      style:"font-size:9px;font-weight:800;fill:#8b98a5"},"DISTRO"));
+  }
+
+  function panel(){
+    var el=document.getElementById("cmPanel"), s=seq(), nxt=s[done.length];
+    document.getElementById("cmPhase").textContent =
+      mode==="on" ? "Connecting — step "+(done.length+1)+" of 8"
+                  : "Disconnecting — step "+(done.length+1)+" of 8";
+    document.getElementById("cmScore").textContent="Clean runs "+score+" / "+tries;
+
+    var h='<div class="steps">';
+    s.forEach(function(k,i){
+      var all=PREP.concat(CON).filter(function(x){return x.k===k})[0];
+      h+='<span class="stepc'+(i<done.length?" ok":"")+'">'+(i+1)+' · '+
+         (all.n||all.k)+'</span>';
+    });
+    h+='</div>';
+
+    if(done.length>=8){
+      el.innerHTML=h+'<div class="row" style="margin:14px 0 0"><button class="btn pri" id="cmNext" style="margin-left:auto">'+
+        (mode==="on"?"Now strike it →":"Run it again →")+'</button></div>';
+      document.getElementById("cmNext").onclick=function(){
+        if(mode==="off") cmShow=(cmShow+1)%CMSHOWS.length;
+        mode = mode==="on" ? "off" : "on"; done=[]; failed=false;
+        brief(); draw(); panel(); document.getElementById("cmFeed").innerHTML="";
+      };
+      return;
+    }
+
+    h+='<p class="banklab" style="margin-top:14px">What do you do next?</p><div class="camrow">';
+    PREP.concat(CON).forEach(function(o){
+      var isDone=done.indexOf(o.k)>=0;
+      var col=o.c||"#e3b341";
+      h+='<div class="camb'+(isDone?" done":"")+'" data-k="'+o.k+'">'+
+         '<span class="dot" style="border-color:'+col+'"></span>'+
+         (o.n)+'<small>'+(o.t||o.s)+'</small></div>';
+    });
+    h+='</div>';
+    el.innerHTML=h;
+    el.querySelectorAll(".camb").forEach(function(b){
+      b.onclick=function(){ pick(b.dataset.k) };
+    });
+  }
+
+  var WHY={
+    KILL:"You reached for a connector with the source still live. <b>Everything else is irrelevant if this step is missed.</b> Feeder current does not give you a second chance — a connector made up live can arc, and at service level that arc is an explosion, not a spark.",
+    LOCK:"The source is off but nothing is stopping anyone from turning it back on while your hands are in it. <b>Your lock, your key.</b> A disconnect that somebody else can close is not a safe source.",
+    VERIFY:"You locked it out but never confirmed it is actually dead. Disconnects get mislabelled, and a rig can be fed from somewhere you did not expect. <b>Meter it — test the meter on a known live source first and again after</b>, because a dead meter reads zero on a live conductor and that is how people die confident.",
+    GND:"<b>Ground goes on first and comes off last.</b> Every intermediate state of this connection must have the equipment bonded. Connect a phase before the ground and the distro chassis is floating with voltage on it — the ground path becomes whoever touches it next.",
+    NEU:"Neutral goes on after ground and before any phase. It is the return path; without it a fault has nowhere to go but through the equipment.",
+    A:"Phases go on last, after ground and neutral are both made up and locked.",
+    B:"Phases go on last, after ground and neutral are both made up and locked.",
+    C:"Phases go on last, after ground and neutral are both made up and locked."
+  };
+  var WHYOFF={
+    GND:"<b>Ground comes off last.</b> You pulled it while phases were still connected — the exact moment the equipment most needs a bond is while conductors are still landed on it.",
+    NEU:"Neutral comes off after the phases and before the ground.",
+    C:"Phases come off first, in reverse order. C, then B, then A.",
+    B:"Phases come off first, in reverse order. C, then B, then A.",
+    A:"Phases come off first, in reverse order. C, then B, then A."
+  };
+
+  function pick(k){
+    var s=seq(), want=s[done.length], f=document.getElementById("cmFeed");
+    if(k===want){
+      done.push(k);
+      if(done.length===8){
+        tries++; if(!failed) score++;
+        CallSheet.stop("cmBrief");
+        f.innerHTML='<div class="fb '+(failed?"warn":"ok")+'"><b class="h">'+
+          (failed?"“Got there — but you had to be told”":"“That’s how it’s done”")+'</b>'+
+          (mode==="on"
+            ? "Source killed, locked, verified dead. Ground on first, then neutral, then the three phases. <b>Every connector seated and collared.</b>"
+            : "Source killed and locked before anything came apart. Phases off first, then neutral, ground last. <b>The distro stayed bonded until the final move.</b>")+
+          (failed?"<br><br>Run it again clean before you call it learned." : "")+'</div>';
+      } else f.innerHTML="";
+      draw(); panel(); return;
+    }
+    failed=true;
+    var lib = mode==="on" ? WHY : (WHYOFF[k]?WHYOFF:WHY);
+    var msg = (mode==="on"?WHY:(WHYOFF[k]||WHY[k]));
+    if(typeof msg!=="string") msg=WHY[k];
+    var head = (k==="KILL"||k==="LOCK"||k==="VERIFY")
+      ? "“Stop — the source isn’t safe yet”" : "“Wrong order”";
+    if(done.indexOf("KILL")<0 && k!=="KILL")
+      { head="“STOP.”"; msg=WHY.KILL; }
+    f.innerHTML='<div class="fb no"><b class="h">'+head+'</b>'+msg+
+      '<br><br><b>The correct next step:</b> '+
+      PREP.concat(CON).filter(function(x){return x.k===want})[0].n+'.</div>';
+    panel();
+  }
+
+  document.getElementById("cmReset").onclick=function(){
+    mode="on"; done=[]; failed=false; brief(); draw(); panel();
+    document.getElementById("cmFeed").innerHTML="";
+  };
+  brief(); draw(); panel();
+})();
+
+/* ═══════════ electric · phase balance ═══════════ */
+(function(){
+  var host=document.getElementById("phSim"); if(!host) return;
+  var NS="http://www.w3.org/2000/svg", svg=document.getElementById("phSvg");
+  function m(t,a,x){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);
+    if(x!=null)e.appendChild(document.createTextNode(x));return e;}
+
+  var JOBS=[
+   {cs:{show:"Corporate \u00b7 general session", venue:"Hotel ballroom, 200 A house service",
+        role:"Electric hand", boss:"Head Electrician", manner:"reading the meters over your shoulder",
+        clock:"Client walkthrough in 2 hrs", target:5,
+        say:"Two hundred amp service and I want the legs even before we bring the rig up. I would rather spend five minutes now than chase a tripped main with a room full of people in it.",
+        reqs:["Service is <b>200 A</b> per leg, 120/208 V three phase.",
+              "Keep the three legs within <b>10%</b> of each other.",
+              "No leg over <b>80%</b> of the main \u2014 that is 160 A."]},
+    main:200, tol:10,
+    fx:[["Mover bar",1800,4],["LED wash bar",1200,4],["S4 x4 bar",2300,3],
+        ["Blinder pair",1600,2],["Hazer",1200,1],["Followspot",1200,2]]},
+
+   {cs:{show:"Rock concert \u00b7 side stage", venue:"Club, 100 A service, no headroom",
+        role:"Local electric hand", boss:"Lighting Crew Chief",
+        manner:"has already tripped this service once tonight", clock:"Doors in 90 min", target:4,
+        say:"One hundred amps and no room for error. I tripped this thing during load-in already, so get it tight \u2014 under eight percent spread and nothing sitting near the top.",
+        reqs:["Service is <b>100 A</b> per leg.",
+              "Spread under <b>8%</b>. Tighter than usual because there is no headroom.",
+              "No leg over <b>80 A</b>."]},
+    main:100, tol:8,
+    fx:[["Mover bar",1800,3],["LED wash bar",1200,3],["Blinder pair",1600,2],
+        ["Hazer",1200,1],["Uplight pack",600,4]]},
+
+   {cs:{show:"Sports \u00b7 broadcast", venue:"Arena, 400 A service", role:"House electric hand",
+        boss:"Broadcast Lighting Director", manner:"truck is watching the feed for flicker",
+        clock:"Camera check in 75 min", target:5,
+        say:"Plenty of capacity today, so the only way you get this wrong is by being lazy about it. Broadcast picks up things the eye does not \u2014 an overloaded leg sagging under load shows on camera before it ever trips a breaker.",
+        reqs:["Service is <b>400 A</b> per leg.",
+              "Spread under <b>10%</b>.",
+              "No leg over <b>320 A</b>.",
+              "Capacity is not the point today. <b>Evenness is.</b>"]},
+    main:400, tol:10,
+    fx:[["Mover bar",1800,8],["LED wash bar",1200,6],["S4 x4 bar",2300,4],
+        ["Blinder pair",1600,4],["Hazer",1200,2],["Followspot",1200,3],["Video wall feed",3000,2]]},
+
+   {cs:{show:"Rap \u00b7 hip-hop", venue:"Club, 200 A, plan changed late",
+        role:"Electric hand", boss:"Production Manager",
+        manner:"just added two blinder bars to the plot", clock:"Doors in 2 hrs", target:5,
+        say:"Blinders got added twenty minutes ago so the numbers you had are wrong. Redo the balance with what is actually going up, not what was on the plot this morning.",
+        reqs:["Service is <b>200 A</b> per leg.",
+              "Spread under <b>10%</b>.",
+              "No leg over <b>160 A</b>.",
+              "<b>Balance what is going up</b>, not what was planned."]},
+    main:200, tol:10,
+    fx:[["Mover bar",1800,4],["Blinder pair",1600,4],["LED wash bar",1200,3],
+        ["Hazer",1200,1],["Uplight pack",600,3]]},
+
+   {cs:{show:"Festival \u00b7 generator power", venue:"Outdoor stage on a genset",
+        role:"Local electric hand", boss:"Site Power Tech",
+        manner:"one eye on the genset, one on you", clock:"Next band in 30 min", target:4,
+        say:"We are on a generator, which is less forgiving than a building. An unbalanced load makes the engine work harder on one phase and the voltage wanders \u2014 and audio hears that before anyone else does.",
+        reqs:["Genset gives you <b>200 A</b> per leg.",
+              "Spread under <b>10%</b>. On a genset this matters more, not less.",
+              "No leg over <b>160 A</b>.",
+              "If audio starts chasing a hum, this is a suspect."]},
+    main:200, tol:10,
+    fx:[["Mover bar",1800,4],["LED wash bar",1200,4],["Blinder pair",1600,3],
+        ["Hazer",1200,1],["Followspot",1200,1],["Uplight pack",600,2]]}
+  ];
+
+  var job=0, items=[], asn={};
+
+  function J(){ return JOBS[job] }
+  function build(){
+    items=[]; asn={};
+    J().fx.forEach(function(f){
+      for(var i=0;i<f[2];i++) items.push({id:items.length,n:f[0]+(f[2]>1?" "+(i+1):""),w:f[1]});
+    });
+    brief(); draw(); panel(); document.getElementById("phFeed").innerHTML="";
+  }
+  function ampsOn(L){
+    var w=0; items.forEach(function(it){ if(asn[it.id]===L) w+=it.w });
+    return w/120;
+  }
+  function spread(){
+    var a=[ampsOn("A"),ampsOn("B"),ampsOn("C")];
+    var mx=Math.max.apply(null,a), mn=Math.min.apply(null,a);
+    return mx===0?0:(mx-mn)/mx*100;
+  }
+
+  function brief(){ CallSheet.render("phBrief", J().cs); }
+
+  function draw(){
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var j=J(), lim=j.main, warn=lim*.8;
+    ["A","B","C"].forEach(function(L,i){
+      var x=60+i*196, a=ampsOn(L), h=Math.min(a/lim,1)*128;
+      var col = a>warn ? "#f85149" : (a>0?"#3fb950":"#30363d");
+      svg.appendChild(m("rect",{x:x,y:34,width:104,height:128,rx:5,
+        fill:"#0d1117",stroke:"#21262d","stroke-width":1}));
+      svg.appendChild(m("rect",{x:x,y:34+(128-h),width:104,height:h,rx:5,
+        fill:col,opacity:".22"}));
+      svg.appendChild(m("path",{d:"M"+x+" "+(34+128-warn/lim*128)+" h104",
+        stroke:"#e3b341","stroke-width":1.5,"stroke-dasharray":"5 4"}));
+      svg.appendChild(m("text",{x:x+52,y:24,"text-anchor":"middle",
+        style:"font-size:12px;font-weight:800;fill:#8b98a5"},"LEG "+L));
+      svg.appendChild(m("text",{x:x+52,y:104,"text-anchor":"middle",
+        style:"font-size:23px;font-weight:800;fill:"+col},a.toFixed(0)));
+      svg.appendChild(m("text",{x:x+52,y:124,"text-anchor":"middle",
+        style:"font-size:10px;fill:#8b98a5"},"amps"));
+      svg.appendChild(m("text",{x:x+52,y:180,"text-anchor":"middle",
+        style:"font-size:9px;fill:#5c6773"},Math.round(a/lim*100)+"% of "+lim+" A"));
+    });
+    svg.appendChild(m("text",{x:596,y:52,"text-anchor":"end",
+      style:"font-size:9px;fill:#e3b341"},"— — 80% line"));
+    var sp=spread();
+    svg.appendChild(m("text",{x:320,y:212,"text-anchor":"middle",
+      style:"font-size:11px;font-weight:800;fill:"+(sp>J().tol?"#f85149":"#3fb950")},
+      "Spread across legs: "+sp.toFixed(0)+"%   (target under "+J().tol+"%)"));
+  }
+
+  function panel(){
+    var el=document.getElementById("phPanel"), un=items.filter(function(i){return !asn[i.id]}).length;
+    document.getElementById("phTotal").textContent =
+      un ? un+" still unassigned" : "All "+items.length+" assigned";
+    var h='<div class="loadrow">';
+    items.forEach(function(it){
+      h+='<div class="lditem"><b>'+it.n+'</b><span style="font-size:10px;color:#5c6773">'+
+        it.w+' W</span><div class="amps">'+(it.w/120).toFixed(1)+' A</div><div class="legbtns">'+
+        ["A","B","C"].map(function(L){
+          return '<button class="legb'+(asn[it.id]===L?" on":"")+'" data-i="'+it.id+'" data-l="'+L+'">'+L+'</button>';
+        }).join("")+'</div></div>';
+    });
+    el.innerHTML=h+'</div>';
+    el.querySelectorAll(".legb").forEach(function(b){
+      b.onclick=function(){
+        var i=+b.dataset.i;
+        asn[i] = asn[i]===b.dataset.l ? null : b.dataset.l;
+        draw(); panel();
+      };
+    });
+  }
+
+  document.getElementById("phClear").onclick=function(){ asn={}; draw(); panel();
+    document.getElementById("phFeed").innerHTML=""; };
+  document.getElementById("phJob").onclick=function(){ job=(job+1)%JOBS.length; build(); };
+  document.getElementById("phAuto").onclick=function(){
+    asn={};
+    // 1. longest-processing-time greedy: heaviest load onto the lightest leg
+    items.slice().sort(function(a,b){return b.w-a.w}).forEach(function(it){
+      var best="A", bw=Infinity;
+      ["A","B","C"].forEach(function(L){ var w=ampsOn(L); if(w<bw){bw=w;best=L} });
+      asn[it.id]=best;
+    });
+    // 2. refine: move or swap anything that reduces the spread. Greedy alone
+    //    leaves a few percent on the table when the loads are chunky.
+    var LG=["A","B","C"];
+    for(var pass=0; pass<80; pass++){
+      var before=spread(), moved=false;
+      for(var a=0; a<items.length && !moved; a++){
+        for(var l=0; l<3 && !moved; l++){
+          var was=asn[items[a].id];
+          if(was===LG[l]) continue;
+          asn[items[a].id]=LG[l];
+          if(spread()<before-0.01) moved=true; else asn[items[a].id]=was;
+        }
+      }
+      for(var x=0; x<items.length && !moved; x++){
+        for(var y=x+1; y<items.length && !moved; y++){
+          var wx=asn[items[x].id], wy=asn[items[y].id];
+          if(wx===wy) continue;
+          asn[items[x].id]=wy; asn[items[y].id]=wx;
+          if(spread()<before-0.01) moved=true;
+          else { asn[items[x].id]=wx; asn[items[y].id]=wy; }
+        }
+      }
+      if(!moved) break;
+    }
+    draw(); panel();
+    document.getElementById("phFeed").innerHTML=
+      '<div class="fb warn"><b class="h">Auto-balanced — spread now '+spread().toFixed(0)+'%</b><b>Step one, and this is the bit worth copying:</b> sort every load heaviest first, then drop each one onto whichever leg is currently lightest. That is exactly what you do by eye on a call, and it gets you most of the way.<br><br><b>Step two:</b> look for any single load you could move, or any pair you could swap, that would tighten it further. Repeat until nothing helps. Greedy alone leaves a few percent on the table when the loads are chunky — and chunky is what a real rig looks like.</div>';
+  };
+
+  document.getElementById("phCheck").onclick=function(){
+    var j=J(), f=document.getElementById("phFeed"), out=[], ok=true;
+    var un=items.filter(function(i){return !asn[i.id]});
+    if(un.length){ ok=false;
+      out.push(["no","“"+un.length+" loads aren’t on anything”",
+        "Every load needs a leg. An unassigned circuit is a fixture that will not come on, and you will find it during rehearsal instead of now."]);
+    }
+    var a={A:ampsOn("A"),B:ampsOn("B"),C:ampsOn("C")}, warn=j.main*.8;
+    var over=["A","B","C"].filter(function(L){ return a[L]>warn });
+    if(over.length){ ok=false;
+      out.push(["no","“You’ve overloaded leg "+over.join(" and ")+"”",
+        over.map(function(L){ return "<b>Leg "+L+"</b> is at "+a[L].toFixed(0)+" A on a "+j.main+" A service — that is "+
+          Math.round(a[L]/j.main*100)+"%."}).join("<br>")+
+        "<br><br><b>Why 80% and not 100%:</b> a breaker is rated for continuous duty at 80% of its number. Lighting runs for hours, which is the definition of continuous. Sitting a leg at 95% does not trip immediately — it trips two hours in, during the general session."]);
+    }
+    var sp=spread();
+    if(sp>j.tol){ ok=false;
+      var hi=["A","B","C"].sort(function(x,y){return a[y]-a[x]});
+      out.push(["no","“That’s not balanced”",
+        "Spread is <b>"+sp.toFixed(0)+"%</b> and I asked for under "+j.tol+"%. Leg "+hi[0]+" is carrying "+
+        a[hi[0]].toFixed(0)+" A while leg "+hi[2]+" is on "+a[hi[2]].toFixed(0)+" A."+
+        "<br><br><b>Why it matters even with capacity to spare:</b> a breaker protects one leg and has no idea what the other two are doing. You will trip a main while using a fraction of the service. And the imbalance pushes current down the neutral, which is sized assuming it mostly cancels — that is a conductor heating up with no breaker watching it."+
+        "<br><br><b>The fix is to move circuits, not fixtures.</b> Take the heaviest thing on leg "+hi[0]+" and put it on "+hi[2]+"."]);
+    }
+    if(ok){
+      out.push(["ok","“That’ll hold all night”",
+        "Legs at <b>"+a.A.toFixed(0)+" / "+a.B.toFixed(0)+" / "+a.C.toFixed(0)+" A</b>, spread "+
+        sp.toFixed(0)+"%, nothing over 80% of the main. "+
+        "<b>Read the meters again once the rig is fully up</b> — the number that matters is the one under real load, not the one you calculated."]);
+    }
+    var g=CallSheet.grade("phBrief");
+    if(ok){
+      CallSheet.stop("phBrief");
+      if(g.late) out.push(["warn","\u201cRight, but slow\u201d",
+        "The balance is good. But the call had you at "+J().cs.target+" minutes and you took "+
+        Math.ceil(g.mins)+".<br><br><b>The fast way is the greedy way:</b> heaviest load first, onto whichever leg is currently lightest. Repeat. You do not need to be clever, you need to not deliberate."]);
+    }
+    f.innerHTML=out.map(function(o){
+      return '<div class="fb '+o[0]+'"><b class="h">'+o[1]+'</b>'+o[2]+'</div>' }).join("")+g.html;
+  };
+
+  build();
+})();
+
+/* ═══════════ electric · socapex fault finder ═══════════ */
+(function(){
+  var host=document.getElementById("soSim"); if(!host) return;
+  var NS="http://www.w3.org/2000/svg", svg=document.getElementById("soSvg");
+  function m(t,a,x){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);
+    if(x!=null)e.appendChild(document.createTextNode(x));return e;}
+
+  var FAULTS=[
+   {cs:{show:"Corporate \u00b7 general session", venue:"Ballroom, front truss",
+       role:"Electric hand", boss:"Head Electrician", manner:"radio in hand, producer already asking",
+       clock:"Doors in 90 min", target:4,
+       say:"Circuit four is dead on the front truss and the other five on that multi are fine. Find it \u2014 and find it in the order that costs the least time, because I need you on the uplights after this.",
+       reqs:["One dead circuit, five good ones <b>on the same multi</b>.",
+             "Work cheapest check first. Every check costs minutes.",
+             "Do not swap hardware to make a diagnosis."]},
+  sym:"Circuit 4 is dead. The other five on that multi are fine.",
+    dead:[4], cause:"PIN",
+    ans:"A bent or pushed-back pin in the Socapex, or a broken conductor on circuit 4.",
+    why:"<b>One dead circuit out of six on the same multi is almost never the rack.</b> The rack feeds all six through one connector — if the rack or the feed were the problem you would have lost the whole multi. A single circuit failing points at a single conductor path: pin 7 (hot) or pin 8 (neutral) for circuit 4.<br><br><b>Check the connector faces first.</b> A pushed-back pin is visible in ten seconds from the ground. Climbing to swap a fixture you have not proven is bad costs twenty minutes.",
+    order:["FACE","SWAPC","BREAKER","SWAPF","RACK"]},
+
+   {cs:{show:"Rock concert", venue:"Arena, US truss", role:"Local electric hand",
+       boss:"Lighting Crew Chief", manner:"on comms, LD wants the truss back",
+       clock:"Doors in 2 hrs", target:3,
+       say:"Whole breakout is dark upstage \u2014 all six. Rest of the truss is fine. Before you climb anything, think about what six circuits have in common.",
+       reqs:["<b>All six</b> circuits on one breakout, dead together.",
+             "The rest of the truss is unaffected.",
+             "Six conductors do not fail at the same instant."]},
+  sym:"All six circuits on one breakout are dead. The rest of the truss is fine.",
+    dead:[1,2,3,4,5,6], cause:"MULTI",
+    ans:"The multi run itself, or the connection at either end of it.",
+    why:"<b>Six for six is a whole-path failure.</b> Six separate conductors do not fail at the same instant — something common to all of them did. That means the multi is unplugged, half-seated, damaged, or the rack outputs feeding it are off.<br><br><b>Start at the connections, not the cable.</b> Unseated Socapex is far more common than a severed multi, and checking it costs nothing.",
+    order:["ENDS","BREAKER","SWAPM","FACE","SWAPF"]},
+
+   {cs:{show:"Theatre \u00b7 musical", venue:"Proscenium house, 2nd electric",
+       role:"Electrician", boss:"Master Electrician", manner:"quiet, but this one worries him",
+       clock:"Focus call in 60 min", target:4,
+       say:"Circuit two is at half and it flickers when anyone walks the catwalk. I want that found before focus, and I want it treated as urgent \u2014 that symptom is not just an annoyance.",
+       reqs:["Half brightness, <b>flickers when the truss is disturbed</b>.",
+             "Responds to physical movement.",
+             "<b>Treat as a fire risk</b>, not a nuisance."]},
+  sym:"Circuit 2 works at half brightness and flickers when someone walks past the truss.",
+    dead:[2], cause:"LOOSE",
+    ans:"A loose or spread connection — most likely the stage pin at the fixture, or a conductor breaking at the multi's strain relief.",
+    why:"<b>Flicker that responds to movement is mechanical, not electrical.</b> Nothing in a dimmer or a rack cares whether someone walked past. A connection that changes when the cable moves is a connection that is barely making contact.<br><br><b>Two usual suspects:</b> spread stage-pin contacts that have lost their grip, or a conductor fatigued and broken right where the cable enters the Socapex connector — the point that flexes most.<br><br><b>This one is a fire risk, not just an annoyance.</b> A partial connection carrying current is a heater. Find it now.",
+    order:["WIGGLE","FACE","SWAPC","SWAPF","RACK"]},
+
+   {cs:{show:"Sports \u00b7 broadcast", venue:"Arena bowl, far-side truss",
+       role:"House electric hand", boss:"Broadcast Lighting Director",
+       manner:"truck is asking, so is everyone else", clock:"Camera check in 40 min", target:3,
+       say:"Far-side truss is completely dark. Near side is fine and it is on the same rack. Use that \u2014 the difference between the two is your answer.",
+       reqs:["<b>Whole truss</b> dead.",
+             "Another truss on the <b>same rack</b> still works.",
+             "The comparison is the diagnosis. Do not climb first."]},
+  sym:"Every circuit on this truss is dead. Another truss on the same rack is fine.",
+    dead:[1,2,3,4,5,6], cause:"FEED",
+    ans:"The feed to that section — a breaker at the rack, or the sub-feed serving it.",
+    why:"<b>The comparison is the diagnosis.</b> Another truss on the same rack still works, so the rack has power and the console is talking. What is different about this truss is its own feed path.<br><br><b>Go to the rack and look</b> before you touch anything on the truss. A tripped breaker announces itself, and if it did trip, something caused it — resetting without asking what changed just means you trip it again during the show.",
+    order:["BREAKER","ENDS","SWAPM","FACE","SWAPF"]}
+  ];
+
+  var CHECKS={
+    FACE:   {n:"Look into both Socapex connector faces", t:2, i:"free — do it from the ground"},
+    ENDS:   {n:"Check the multi is fully seated at both ends", t:2, i:"free — the most common fault"},
+    BREAKER:{n:"Walk to the rack and read the breakers", t:5, i:"cheap, and tells you a lot"},
+    WIGGLE: {n:"Flex the cable at the connector and watch", t:3, i:"finds intermittents nothing else finds"},
+    SWAPC:  {n:"Move the fixture to a known-good circuit", t:8, i:"splits the problem in half"},
+    SWAPM:  {n:"Swap in a spare multi", t:15, i:"proves the run, costs a cable pull"},
+    SWAPF:  {n:"Climb and swap the fixture", t:20, i:"expensive — prove it first"},
+    RACK:   {n:"Pull and swap the dimmer module", t:25, i:"last resort, and rarely the answer"}
+  };
+
+  var job=0, used=[], spent=0, solved=false;
+  function F(){ return FAULTS[job] }
+
+  function brief(){ CallSheet.render("soBrief", F().cs); }
+
+  function draw(){
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var f=F();
+    svg.appendChild(m("rect",{class:"sf",x:12,y:56,width:84,height:64,rx:5,style:"stroke:#e3b341"}));
+    svg.appendChild(m("text",{x:54,y:82,"text-anchor":"middle",
+      style:"font-size:10px;font-weight:800;fill:#e3b341"},"RACK"));
+    svg.appendChild(m("text",{x:54,y:98,"text-anchor":"middle",
+      style:"font-size:8px;fill:#8b98a5"},"6 circuits"));
+
+    var multiBad = f.cause==="MULTI"||f.cause==="FEED";
+    svg.appendChild(m("path",{d:"M96 88 H206",stroke:multiBad?"#f85149":"#8b949e",
+      "stroke-width":5,"stroke-linecap":"round","stroke-dasharray":multiBad?"8 6":""}));
+    svg.appendChild(m("text",{x:151,y:76,"text-anchor":"middle",
+      style:"font-size:8.5px;fill:#8b98a5"},"19-pin multi"));
+
+    svg.appendChild(m("rect",{class:"sf",x:206,y:50,width:74,height:76,rx:5,style:"stroke:#bc8cff"}));
+    svg.appendChild(m("text",{x:243,y:76,"text-anchor":"middle",
+      style:"font-size:9.5px;font-weight:800;fill:#bc8cff"},"BREAK"));
+    svg.appendChild(m("text",{x:243,y:90,"text-anchor":"middle",
+      style:"font-size:9.5px;font-weight:800;fill:#bc8cff"},"OUT"));
+    svg.appendChild(m("text",{x:243,y:110,"text-anchor":"middle",
+      style:"font-size:8px;fill:#8b98a5"},"6 outlets"));
+
+    for(var c=1;c<=6;c++){
+      var y=22+(c-1)*26, bad=f.dead.indexOf(c)>=0;
+      var col = bad ? (f.cause==="LOOSE"?"#e3b341":"#f85149") : "#3fb950";
+      svg.appendChild(m("path",{d:"M280 88 Q330 88 360 "+y,
+        stroke:col,"stroke-width":2,fill:"none",opacity:bad?"1":".45"}));
+      svg.appendChild(m("rect",{x:360,y:y-11,width:64,height:22,rx:4,
+        fill:"#0d1117",stroke:col,"stroke-width":bad?2:1}));
+      svg.appendChild(m("text",{x:392,y:y+4,"text-anchor":"middle",
+        style:"font-size:9px;font-weight:800;fill:"+col},"CKT "+c));
+      svg.appendChild(m("text",{x:436,y:y+4,
+        style:"font-size:8.5px;fill:"+col},
+        bad ? (f.cause==="LOOSE"?"flickering":"DEAD") : "ok"));
+    }
+    svg.appendChild(m("text",{x:530,y:26,
+      style:"font-size:9px;font-weight:800;fill:#8b98a5"},"TIME SPENT"));
+    svg.appendChild(m("text",{x:530,y:56,
+      style:"font-size:26px;font-weight:800;fill:"+(spent>20?"#f85149":spent>10?"#e3b341":"#3fb950")},
+      spent+" min"));
+    svg.appendChild(m("text",{x:530,y:76,
+      style:"font-size:8.5px;fill:#5c6773"},used.length+" checks made"));
+  }
+
+  function panel(){
+    var el=document.getElementById("soPanel");
+    document.getElementById("soSteps").textContent="Time spent: "+spent+" min";
+    if(solved){ el.innerHTML=""; return }
+    var h='<p class="banklab">What do you check?</p><div class="diagrow">';
+    for(var k in CHECKS){
+      h+='<div class="diagb'+(used.indexOf(k)>=0?" used":"")+'" data-k="'+k+'">'+
+         CHECKS[k].n+'<i>'+CHECKS[k].t+' min · '+CHECKS[k].i+'</i></div>';
+    }
+    el.innerHTML=h+'</div>';
+    el.querySelectorAll(".diagb").forEach(function(b){
+      b.onclick=function(){ check(b.dataset.k) };
+    });
+  }
+
+  var RESULT={
+    FACE:{PIN:"good",MULTI:"neutral",LOOSE:"neutral",FEED:"neutral"},
+    ENDS:{PIN:"neutral",MULTI:"good",LOOSE:"neutral",FEED:"neutral"},
+    BREAKER:{PIN:"neutral",MULTI:"neutral",LOOSE:"neutral",FEED:"good"},
+    WIGGLE:{PIN:"neutral",MULTI:"neutral",LOOSE:"good",FEED:"neutral"},
+    SWAPC:{},SWAPM:{},SWAPF:{},RACK:{}
+  };
+
+  function check(k){
+    if(used.indexOf(k)>=0) return;
+    used.push(k); spent+=CHECKS[k].t;
+    var f=F(), fb=document.getElementById("soFeed");
+    var hit = RESULT[k] && RESULT[k][f.cause]==="good";
+    if(hit){
+      solved=true;
+      var grade = spent<=6 ? ["ok","“Found it — and fast”"]
+                : spent<=16 ? ["warn","“Found it, but you took the long way”"]
+                            : ["no","“Found it eventually”"];
+      var g=CallSheet.grade("soBrief"); CallSheet.stop("soBrief");
+      fb.innerHTML='<div class="fb '+grade[0]+'"><b class="h">'+grade[1]+'</b>'+
+        '<b>The fault:</b> '+f.ans+'<br><br>'+f.why+
+        '<br><br><b>You spent '+spent+' minutes of call time.</b> The cheapest route was <b>'+
+        f.order.slice(0,1).map(function(x){return CHECKS[x].n.toLowerCase()}).join("")+
+        '</b> — '+CHECKS[f.order[0]].t+' minutes.</div>'+g.html;
+      draw(); panel(); return;
+    }
+    var msg;
+    if(k==="SWAPF") msg="You climbed and swapped a fixture you had not proven was bad. It behaves exactly the same. <b>Twenty minutes gone.</b> Swapping hardware is how you confirm a diagnosis, not how you make one.";
+    else if(k==="SWAPM") msg="New multi, same symptom. That is fifteen minutes and a cable pull spent ruling out something the pattern already told you was unlikely.";
+    else if(k==="RACK") msg="You pulled a dimmer module. No change. <b>Modules are almost never the fault</b> — they are sealed, they are hot-swappable, and they either work or they are obviously dead.";
+    else if(k==="SWAPC") msg="You moved the fixture to a known-good circuit. It works there — so the fixture is fine and the problem is in the path. Useful information, but there were cheaper ways to get it.";
+    else msg="Nothing wrong there. Not a wasted check exactly — you have ruled something out — but the symptom was pointing somewhere else.";
+    fb.innerHTML='<div class="fb warn"><b class="h">'+CHECKS[k].n+' — '+CHECKS[k].t+' min</b>'+msg+'</div>';
+    draw(); panel();
+  }
+
+  document.getElementById("soJob").onclick=function(){
+    job=(job+1)%FAULTS.length; used=[]; spent=0; solved=false;
+    brief(); draw(); panel(); document.getElementById("soFeed").innerHTML="";
+  };
+  brief(); draw(); panel();
+})();
+
+/* ═══════════ electric · load calculator ═══════════ */
+(function(){
+  var host=document.getElementById("lcSim"); if(!host) return;
+  var FX=[["Source Four 575 W",575,120],["Source Four LED",180,120],["PAR 64 1kW",1000,120],
+          ["LED wash (small)",120,120],["LED wash (large)",300,120],["LED mover 450 W",450,120],
+          ["Large mover 1200 W",1200,208],["LED blinder",800,120],["Hazer",1200,120],
+          ["Followspot 1.2k",1200,120],["Video wall panel",200,120]];
+  var AMPS=[15,20,30,50], VOLTS=[120,208];
+  var sel=document.getElementById("lcFx");
+  FX.forEach(function(f,i){ var o=document.createElement("option");
+    o.value=i; o.textContent=f[0]+" — "+f[1]+" W"; sel.appendChild(o); });
+  sel.value=0;
+
+  function upd(){
+    var f=FX[+sel.value], n=+document.getElementById("lcN").value;
+    var amp=AMPS[+document.getElementById("lcA").value];
+    var v=VOLTS[+document.getElementById("lcV").value];
+    document.getElementById("lcFxV").textContent=f[0];
+    document.getElementById("lcNV").textContent=n;
+    document.getElementById("lcAV").textContent=amp+" A";
+    document.getElementById("lcVV").textContent=v+" V";
+    document.getElementById("lcMax").textContent=amp+" A";
+
+    var w=f[1]*n, a=w/v, derate=amp*0.8, pct=a/amp*100;
+    var fits=Math.floor(derate/(f[1]/v));
+
+    document.getElementById("lcStats").innerHTML=
+      '<div class="stat"><b>'+w.toLocaleString()+'</b><span>total watts</span></div>'+
+      '<div class="stat"><b style="color:'+(a>derate?"var(--power)":"var(--audio)")+'">'+a.toFixed(1)+'</b><span>amps drawn</span></div>'+
+      '<div class="stat"><b>'+derate.toFixed(0)+'</b><span>safe limit (80%)</span></div>'+
+      '<div class="stat"><b style="color:var(--warn)">'+fits+'</b><span>fit on one circuit</span></div>';
+
+    var bar=document.getElementById("lcBar");
+    bar.style.width=Math.min(pct,100)+"%";
+    bar.style.background = a>amp ? "var(--power)" : a>derate ? "var(--warn)" : "var(--audio)";
+
+    var v2=document.getElementById("lcV");
+    var mismatch = f[2]!==v;
+    var h="";
+    if(mismatch){
+      h='<b style="color:var(--power)">Voltage mismatch.</b> A '+f[0]+' expects <b>'+f[2]+' V</b> and you have set the circuit to <b>'+v+' V</b>. '+
+        (v>f[2]
+          ? 'Putting a 120 V fixture on 208 V does not trip a breaker — it destroys the power supply immediately. This is the L5-20 / L6-20 mistake.'
+          : 'A 208 V fixture on 120 V will either not start or will run badly and overheat.')+
+        '<br><br>The connector is supposed to prevent this. If it physically fits, check twice anyway.';
+    } else if(a>amp){
+      h='<b style="color:var(--power)">Over the breaker.</b> '+a.toFixed(1)+' A on a '+amp+' A circuit. This trips — maybe not instantly, but it trips. '+
+        '<b>'+fits+'</b> of these is the most you should put on one '+amp+' A circuit.';
+    } else if(a>derate){
+      h='<b style="color:var(--warn)">Over the 80% line.</b> '+a.toFixed(1)+' A is under the '+amp+' A breaker but above the '+derate.toFixed(0)+' A continuous rating. '+
+        '<b>A breaker is rated for 80% continuous</b>, and lighting runs for hours — that is the definition of continuous. This is the load that trips two hours into the show, not at focus.';
+    } else {
+      h='<b style="color:var(--audio)">Comfortable.</b> '+a.toFixed(1)+' A of a '+derate.toFixed(0)+' A working limit. '+
+        'You could add <b>'+(fits-n)+'</b> more before you hit 80%.';
+    }
+    h+='<br><br><span style="color:#8b98a5">'+w.toLocaleString()+' W &divide; '+v+' V = '+a.toFixed(1)+' A. That division is the whole job.</span>';
+    document.getElementById("lcV").parentNode; // no-op guard
+    document.getElementById("lcV") && 0;
+    document.querySelector("#lcSim .verdict").innerHTML=h;
+  }
+  ["lcFx","lcN","lcA","lcV"].forEach(function(id){
+    var e=document.getElementById(id);
+    e.addEventListener("input",upd); e.addEventListener("change",upd);
+  });
+  upd();
+})();
+
+/* ═══════════ electric · connector ID ═══════════ */
+(function(){
+  var host=document.getElementById("ecSim"); if(!host) return;
+  var NS="http://www.w3.org/2000/svg", svg=document.getElementById("ecSvg");
+  function m(t,a,x){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);
+    if(x!=null)e.appendChild(document.createTextNode(x));return e;}
+
+  var C=[
+   {n:"Edison 5-20",v:"120 V · 20 A",
+    d:"Flat blades, one T-shaped neutral, no locking ring.",
+    use:"Practicals, small LED, laptops, anything off a breakout duplex.",
+    tell:"<b>The T-slot is the tell.</b> A 5-20 has a T-shaped neutral so a 20 A plug cannot go into a 15 A outlet. No locking anything — it falls out, which is why it gets taped overhead.",
+    draw:function(){
+      svg.appendChild(m("rect",{x:100,y:36,width:100,height:100,rx:14,fill:"#0d1117",stroke:"#3fb950","stroke-width":3}));
+      svg.appendChild(m("rect",{x:128,y:58,width:7,height:24,rx:2,fill:"#c9d1d9"}));
+      svg.appendChild(m("path",{d:"M162 58 h7 v16 h6 v8 h-13 z",fill:"#c9d1d9"}));
+      svg.appendChild(m("circle",{cx:150,cy:108,r:8,fill:"none",stroke:"#3fb950","stroke-width":3}));
+    }},
+   {n:"Stage pin 2P&G",v:"120 V · 20 A",
+    d:"Three flat pins in a straight line, fibre body.",
+    use:"Conventionals, dimmer circuits, anything theatre.",
+    tell:"<b>Three pins in a row is unmistakable.</b> The failure mode to know: pins spread with age, lose contact pressure and run hot. The fix is a pin spreader on the <b>male</b> pins.",
+    draw:function(){
+      svg.appendChild(m("rect",{x:88,y:56,width:124,height:60,rx:8,fill:"#0d1117",stroke:"#e3b341","stroke-width":3}));
+      [116,150,184].forEach(function(x){
+        svg.appendChild(m("rect",{x:x-4,y:72,width:8,height:28,rx:2,fill:"#c9d1d9"}));
+      });
+    }},
+   {n:"L5-20 twist-lock",v:"120 V · 20 A",
+    d:"Round body, three curved blades, twists to lock.",
+    use:"Overhead runs and truss circuits where a dropped Edison is a problem.",
+    tell:"<b>Curved blades and a round shell.</b> The one that matters: L5-20 is 120 V and L6-20 is 208 V, and they look nearly identical. Count the ground — L5-20 has hot, neutral, ground.",
+    draw:function(){
+      svg.appendChild(m("circle",{cx:150,cy:86,r:50,fill:"#0d1117",stroke:"#3fb950","stroke-width":3}));
+      svg.appendChild(m("path",{d:"M139 56 a34 34 0 0 1 22 0 l-3 11 a23 23 0 0 0 -16 0 z",fill:"#3fb950"}));
+      svg.appendChild(m("path",{d:"M114 102 a34 34 0 0 1 -5 -20 l11 1 a23 23 0 0 0 3 14 z",fill:"#c9d1d9"}));
+      svg.appendChild(m("path",{d:"M182 84 a34 34 0 0 1 -6 23 l-9 -6 a23 23 0 0 0 4 -16 z",fill:"#c9d1d9"}));
+    }},
+   {n:"L6-20 twist-lock",v:"208 V · 20 A",
+    d:"Same round body as an L5-20 — but two hots and a ground, no neutral.",
+    use:"Large movers, motor controllers, some racks and processors.",
+    tell:"<b>This is the expensive one.</b> Identical size and shape to an L5-20 but double the voltage. Put a 120 V fixture on it and the power supply dies instantly. Blade geometry is the only difference — check it every time.",
+    draw:function(){
+      svg.appendChild(m("circle",{cx:150,cy:86,r:50,fill:"#0d1117",stroke:"#f85149","stroke-width":3}));
+      svg.appendChild(m("path",{d:"M139 56 a34 34 0 0 1 22 0 l-3 11 a23 23 0 0 0 -16 0 z",fill:"#3fb950"}));
+      svg.appendChild(m("path",{d:"M114 102 a34 34 0 0 1 -5 -20 l11 1 a23 23 0 0 0 3 14 z",fill:"#f85149"}));
+      svg.appendChild(m("path",{d:"M182 84 a34 34 0 0 1 -6 23 l-9 -6 a23 23 0 0 0 4 -16 z",fill:"#f85149"}));
+    }},
+   {n:"powerCON TRUE1",v:"120 V · up to 16 A",
+    d:"Rectangular Neutrik body with a twist collar, sealed.",
+    use:"Modern LED fixtures and movers — the standard fixture input now.",
+    tell:"<b>Rated to connect and disconnect under load</b>, unlike the original powerCON. Sealed to IP65 when mated. Blue is in, grey is out, and they are keyed so you cannot chain backwards.",
+    draw:function(){
+      svg.appendChild(m("rect",{x:96,y:52,width:108,height:68,rx:10,fill:"#0d1117",stroke:"#58a6ff","stroke-width":3}));
+      svg.appendChild(m("rect",{x:112,y:66,width:76,height:40,rx:6,fill:"none",stroke:"#30363d","stroke-width":2}));
+      svg.appendChild(m("circle",{cx:132,cy:86,r:6,fill:"#58a6ff"}));
+      svg.appendChild(m("circle",{cx:150,cy:86,r:6,fill:"#c9d1d9"}));
+      svg.appendChild(m("circle",{cx:168,cy:86,r:6,fill:"#3fb950"}));
+    }},
+   {n:"19-pin Socapex",v:"6 circuits · 20 A each",
+    d:"Large round multi-pin with a threaded locking ring.",
+    use:"Rack to truss. Six circuits down one cable, broken out at the far end.",
+    tell:"<b>Not a fixture connector.</b> Hots are odd pins 1–11, neutrals even 2–12, grounds 13–18, pin 19 blank. In the US the grounds are <b>not</b> commoned inside the connector.",
+    draw:function(){
+      svg.appendChild(m("circle",{cx:150,cy:86,r:52,fill:"#0d1117",stroke:"#bc8cff","stroke-width":3}));
+      svg.appendChild(m("circle",{cx:150,cy:86,r:42,fill:"none",stroke:"#21262d","stroke-width":1}));
+      var pts=[[150,54],[173,63],[182,86],[173,109],[150,118],[127,109],[118,86],[127,63],
+               [150,70],[166,86],[150,102],[134,86],[150,86]];
+      pts.forEach(function(p,i){
+        svg.appendChild(m("circle",{cx:p[0],cy:p[1],r:5,
+          fill:i<6?"#f85149":i<12?"#c9d1d9":"#3fb950"}));
+      });
+    }},
+   {n:"Cam-Lok E1016",v:"up to 400 A · single pole",
+    d:"One fat conductor per connector, colour-coded, twist collar.",
+    use:"Feeder only — service or generator to distro.",
+    tell:"<b>One conductor each.</b> Green ground, white neutral, black/red/blue phases. Ground on first and off last. Never made up live.",
+    draw:function(){
+      svg.appendChild(m("rect",{x:110,y:54,width:80,height:64,rx:12,fill:"#0d1117",stroke:"#f85149","stroke-width":3}));
+      svg.appendChild(m("circle",{cx:150,cy:86,r:19,fill:"none",stroke:"#f85149","stroke-width":3}));
+      svg.appendChild(m("circle",{cx:150,cy:86,r:8,fill:"#8b949e"}));
+      svg.appendChild(m("rect",{x:118,y:62,width:64,height:5,rx:2,fill:"#21262d"}));
+    }},
+   {n:"IEC 60309 pin & sleeve",v:"colour = voltage",
+    d:"Round industrial connector with a keyway and a sealed cap.",
+    use:"Sub-distro feeds, festival power, imported gear.",
+    tell:"<b>The colour is the voltage.</b> Blue is 120 V, red is three-phase 208 V. The keyway position changes with voltage and frequency so the wrong one physically will not mate.",
+    draw:function(){
+      svg.appendChild(m("circle",{cx:150,cy:86,r:50,fill:"#0d1117",stroke:"#58a6ff","stroke-width":3}));
+      svg.appendChild(m("path",{d:"M150 36 l9 14 h-18 z",fill:"#58a6ff"}));
+      [[136,78],[164,78],[150,102]].forEach(function(p){
+        svg.appendChild(m("circle",{cx:p[0],cy:p[1],r:8,fill:"#161b22",stroke:"#6e7681","stroke-width":2}));
+      });
+    }}
+  ];
+
+  var order=[], idx=0, score=0, asked=0, streak=0, best=0;
+  function shuffle(){ order=C.map(function(_,i){return i}).sort(function(){return Math.random()-.5}) }
+
+  function load(){
+    if(idx>=order.length){ shuffle(); idx=0 }
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    C[order[idx]].draw();
+    document.getElementById("ecFeed").innerHTML="";
+    document.getElementById("ecScore").textContent="Score "+score+" / "+asked;
+    document.getElementById("ecStreak").textContent="Streak "+streak+" (best "+best+")";
+
+    var right=order[idx];
+    var wrong=C.map(function(_,i){return i}).filter(function(i){return i!==right})
+      .sort(function(){return Math.random()-.5}).slice(0,3);
+    var opts=wrong.concat([right]).sort(function(){return Math.random()-.5});
+    document.getElementById("ecOpts").innerHTML=
+      '<p class="banklab">What is it?</p><div class="ecopt">'+
+      opts.map(function(i){ return '<div class="ecb" data-i="'+i+'">'+C[i].n+'</div>' }).join("")+'</div>';
+    document.querySelectorAll("#ecOpts .ecb").forEach(function(b){
+      b.onclick=function(){ answer(+b.dataset.i) };
+    });
+  }
+
+  function answer(i){
+    var right=order[idx], c=C[right], f=document.getElementById("ecFeed");
+    asked++;
+    if(i===right){ score++; streak++; if(streak>best) best=streak;
+      f.innerHTML='<div class="fb ok"><b class="h">'+c.n+' — '+c.v+'</b>'+
+        c.tell+'<br><br><b>Where you meet it:</b> '+c.use+'</div>';
+    } else {
+      streak=0;
+      f.innerHTML='<div class="fb no"><b class="h">That was a '+c.n+' — '+c.v+'</b>'+
+        '<b>'+c.d+'</b><br><br>'+c.tell+
+        '<br><br>You said <b>'+C[i].n+'</b>, which is '+C[i].v+'. '+
+        (C[i].v.indexOf("208")>=0 || c.v.indexOf("208")>=0
+          ? '<b style="color:var(--power)">Those are different voltages.</b> On a real call that mix-up kills a fixture.'
+          : 'Different connector, different job: '+C[i].use)+'</div>';
+    }
+    idx++;
+    setTimeout(function(){
+      document.getElementById("ecScore").textContent="Score "+score+" / "+asked;
+      document.getElementById("ecStreak").textContent="Streak "+streak+" (best "+best+")";
+    },10);
+    document.querySelectorAll("#ecOpts .ecb").forEach(function(b){ b.onclick=null; b.style.opacity=".45" });
+    var nx=document.createElement("div"); nx.className="row"; nx.style.margin="12px 0 0";
+    var bt=document.createElement("button"); bt.className="btn pri"; bt.style.marginLeft="auto";
+    bt.textContent="Next connector"; bt.onclick=load;
+    nx.appendChild(bt); f.appendChild(nx);
+  }
+
+  document.getElementById("ecSkip").onclick=function(){ idx++; streak=0; load() };
+  shuffle(); load();
+})();
+
+/* ═══════════ lighting · home run trainer ═══════════ */
+(function(){
+  var host=document.getElementById("hrSim"); if(!host) return;
+  var NS="http://www.w3.org/2000/svg", svg=document.getElementById("hrSvg");
+  function m(t,a,x){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);
+    if(x!=null)e.appendChild(document.createTextNode(x));return e;}
+
+  /* fixture library — maxChain is what the manual allows, not what the maths allows */
+  var FX={
+    MOVER:{n:"LED Spot Mover", w:450, conn:"True1",    max:3,  dim:false},
+    BEAM: {n:"Beam Mover",     w:300, conn:"True1",    max:5,  dim:false},
+    WASH: {n:"LED Wash",       w:120, conn:"powerCON", max:8,  dim:false},
+    BLIND:{n:"LED Blinder",    w:800, conn:"True1",    max:2,  dim:false},
+    PAR:  {n:"LED Par",        w:60,  conn:"powerCON", max:12, dim:false},
+    UP:   {n:"LED Uplight",    w:30,  conn:"Edison",   max:16, dim:false},
+    HAZE: {n:"Hazer",          w:1200,conn:"Edison",   max:1,  dim:false},
+    SPOT: {n:"Followspot",     w:1200,conn:"Edison",   max:1,  dim:false}
+  };
+
+  var CABLES=["Socapex","True1 jumper","powerCON jumper","Edison jumper",
+              "5-pin DMX","Cat5e / Cat6","Feeder (cam-lok)"];
+
+  var JOBS=[
+  {name:"Rock concert",
+   cs:{show:"Rock concert", venue:"2,400-cap theatre", role:"Lighting hand, local crew",
+       boss:"Head LD", manner:"on comms, halfway up a ladder", clock:"Doors in 4 hrs", target:7,
+       say:"Power off the distro stage left, data off my console at FOH. I want a splitter at the deck \u2014 I am not running four separate DMX lines the length of this room. Chains per the manual, and my spot and hazer each get their own circuit.",
+       reqs:["<b>One</b> DMX home run, console to splitter. Branches from there to every truss.",
+             "Power to every position on <b>Socapex</b> from the distro.",
+             "Daisy chains per the <b>fixture manual</b>, not per your maths.",
+             "<b>Followspot and hazer each get their own circuit.</b>"]},
+   src:[["DISTRO","Distro (SL)",56,232],["FOH","Console (FOH)",56,58]],
+   hub:["SPLIT","Splitter (deck)",300,58],
+   pos:[["DS","DS truss",520,44],["MS","MS truss",520,116],["US","US truss",520,188],["FLR","Floor pkg",520,260]],
+   fx:{DS:["MOVER","MOVER","MOVER","MOVER","SPOT"],
+       MS:["BEAM","BEAM","BEAM","BEAM","BEAM","BEAM","WASH","WASH"],
+       US:["BLIND","BLIND","BLIND","BLIND","WASH","WASH","WASH"],
+       FLR:["PAR","PAR","PAR","PAR","PAR","PAR","HAZE"]},
+   circuits:6},
+
+  {name:"Corporate general session",
+   cs:{show:"Corporate \u00b7 general session", venue:"Hotel ballroom, 800 seats",
+       role:"Lighting hand", boss:"Show Producer", manner:"headset on, client walking the room in an hour",
+       clock:"Client walkthrough in 2 hrs", target:6,
+       say:"Distro is in the back corner where the house panel is, console is at the tech table. Uplights go all the way round the room, so think about your run before you start pulling cable. And the hazer is on its own circuit \u2014 if the client complains I am killing it without losing anything else.",
+       reqs:["DMX home run from the tech table to a splitter, then branches.",
+             "Socapex to the front truss and the stage position.",
+             "Uplights are low draw but there are a lot of them \u2014 watch the <b>manual</b> limit.",
+             "<b>Hazer on its own circuit.</b>",
+             "Nothing crosses a guest walkway un-ramped."]},
+   src:[["DISTRO","Distro (corner)",56,232],["FOH","Console (tech table)",56,58]],
+   hub:["SPLIT","Splitter (stage)",300,58],
+   pos:[["FRONT","Front truss",520,44],["STAGE","Stage wash",520,116],
+        ["PERIM","Room uplights",520,188],["POD","Podium special",520,260]],
+   fx:{FRONT:["WASH","WASH","WASH","WASH","BEAM","BEAM"],
+       STAGE:["WASH","WASH","WASH","WASH"],
+       PERIM:["UP","UP","UP","UP","UP","UP","UP","UP","UP","UP","UP","UP"],
+       POD:["PAR","PAR","HAZE"]},
+   circuits:6},
+
+  {name:"Rap / hip-hop",
+   cs:{show:"Rap \u00b7 hip-hop", venue:"3,000-cap club, low trim",
+       role:"Lighting hand, local crew", boss:"Production Manager",
+       manner:"phone in one hand, artist rep just changed the plan", clock:"Doors in 2 hrs 30", target:6,
+       say:"Plan changed twenty minutes ago so listen carefully. Blinders went from four to six and they are all upstage now. Splitter at the deck, same as always. Do not improvise on the chains \u2014 those blinders are the thing that trips us every time.",
+       reqs:["Splitter at the deck, one DMX spine from FOH.",
+             "Socapex from the distro to every position.",
+             "<b>Blinders are the trap.</b> 800 W each, manual max is low \u2014 read it.",
+             "Hazer isolated. This room hazes heavy and the panel is sensitive."]},
+   src:[["DISTRO","Distro (SL)",56,232],["FOH","Console (FOH)",56,58]],
+   hub:["SPLIT","Splitter (deck)",300,58],
+   pos:[["DS","DS truss",520,44],["MS","MS truss",520,116],["US","US truss",520,188],["FLR","Floor pkg",520,260]],
+   fx:{DS:["MOVER","MOVER","MOVER","MOVER","MOVER","MOVER"],
+       MS:["BEAM","BEAM","BEAM","BEAM","WASH","WASH"],
+       US:["BLIND","BLIND","BLIND","BLIND","BLIND","BLIND"],
+       FLR:["PAR","PAR","PAR","PAR","HAZE"]},
+   circuits:6},
+
+  {name:"Sports / broadcast",
+   cs:{show:"Sports \u00b7 broadcast", venue:"Arena, centre-hung scoreboard",
+       role:"Lighting hand, house crew", boss:"Broadcast Lighting Director",
+       manner:"truck already asking for a look", clock:"Camera check in 90 min", target:6,
+       say:"The truck owns the clock today, not me. Get power and data to all four positions and do not touch anything of theirs \u2014 their cable is marked and it stays where it is. Splitter at the deck so when something drops I know which branch it is on instead of hunting the whole bowl.",
+       reqs:["Splitter at the deck. Branch per position \u2014 <b>troubleshooting is the whole reason.</b>",
+             "Socapex from the distro to all four positions.",
+             "Chains per the manual. No improvising on a broadcast.",
+             "Nothing shares with the followspot."]},
+   src:[["DISTRO","Distro (SL)",56,232],["FOH","Console (FOH)",56,58]],
+   hub:["SPLIT","Splitter (deck)",300,58],
+   pos:[["DS","Truss \u2014 near side",520,44],["MS","Truss \u2014 far side",520,116],
+        ["US","End truss",520,188],["FLR","Floor / tunnel",520,260]],
+   fx:{DS:["WASH","WASH","WASH","WASH","WASH","WASH"],
+       MS:["WASH","WASH","WASH","WASH","WASH","WASH"],
+       US:["BEAM","BEAM","BEAM","BEAM","SPOT"],
+       FLR:["PAR","PAR","PAR","PAR"]},
+   circuits:6},
+
+  {name:"Theatre / musical",
+   cs:{show:"Theatre \u00b7 musical", venue:"Proscenium house, 1,100 seats",
+       role:"Electrician on the hang crew", boss:"Master Electrician",
+       manner:"clipboard, been here since seven", clock:"Focus call at 6pm", target:7,
+       say:"We hang to the plot, we cable to the plot, and we do not deviate without telling me. Splitter downstage left. Every electric gets its own branch so a dead circuit on one pipe does not cost me the whole rig during focus.",
+       reqs:["One DMX spine to the splitter, branch to <b>every</b> electric.",
+             "Socapex from the dimmer beach to each position.",
+             "Chains per the manual \u2014 this house has been re-lamped twice this year.",
+             "Followspot on its own circuit."]},
+   src:[["DISTRO","Dimmer beach",56,232],["FOH","Console (booth)",56,58]],
+   hub:["SPLIT","Splitter (DSL)",300,58],
+   pos:[["DS","1st electric",520,44],["MS","2nd electric",520,116],
+        ["US","3rd electric",520,188],["FLR","Box booms",520,260]],
+   fx:{DS:["WASH","WASH","WASH","WASH","SPOT"],
+       MS:["BEAM","BEAM","BEAM","BEAM","WASH","WASH"],
+       US:["WASH","WASH","WASH","WASH","PAR","PAR"],
+       FLR:["PAR","PAR","PAR","PAR"]},
+   circuits:6},
+
+  {name:"Festival changeover",
+   cs:{show:"Festival \u00b7 multi-band", venue:"Outdoor side stage",
+       role:"Local lighting hand", boss:"Lighting Crew Chief",
+       manner:"shouting over the last band, changeover in twenty", clock:"Next band in 20 min", target:5,
+       say:"Fast and correct, in that order \u2014 and correct wins if you have to pick. Splitter stays where it is, you are re-running the branches. Everything outdoors gets kept off the deck and out of the puddles. Go.",
+       reqs:["Splitter at the deck, one spine from FOH.",
+             "Socapex to every position. <b>No single jumpers as home runs.</b>",
+             "Chains per the manual even when you are rushed.",
+             "Hazer isolated \u2014 wind changes and it gets killed fast."]},
+   src:[["DISTRO","Distro (SL)",56,232],["FOH","Console (FOH)",56,58]],
+   hub:["SPLIT","Splitter (deck)",300,58],
+   pos:[["DS","DS truss",520,44],["MS","MS truss",520,116],["US","US truss",520,188],["FLR","Floor pkg",520,260]],
+   fx:{DS:["MOVER","MOVER","MOVER"],
+       MS:["BEAM","BEAM","BEAM","BEAM"],
+       US:["BLIND","BLIND","WASH","WASH"],
+       FLR:["PAR","PAR","HAZE"]},
+   circuits:6},
+
+  {name:"Worship service",
+   cs:{show:"Worship \u00b7 weekend service", venue:"1,800-seat auditorium",
+       role:"Lighting tech", boss:"Technical Director",
+       manner:"volunteers arriving in an hour and they will ask questions", clock:"Rehearsal in 2 hrs", target:6,
+       say:"Cable it so a volunteer can follow it next week without calling me. Splitter at the stage, branch per position, and label as you go. Cameras are live so nothing crosses a shot and nothing gets left where it can be kicked.",
+       reqs:["Splitter at stage, branch to each position.",
+             "Socapex from the distro. <b>Clean, labelled, repeatable.</b>",
+             "Manual limits \u2014 the volunteer crew will not catch it if you are over.",
+             "Hazer on its own circuit; cameras hate surprises."]},
+   src:[["DISTRO","Distro (SR)",56,232],["FOH","Console (booth)",56,58]],
+   hub:["SPLIT","Splitter (stage)",300,58],
+   pos:[["DS","Front truss",520,44],["MS","Mid truss",520,116],
+        ["US","Rear wash",520,188],["FLR","Floor pkg",520,260]],
+   fx:{DS:["WASH","WASH","WASH","WASH","BEAM","BEAM"],
+       MS:["WASH","WASH","WASH","WASH"],
+       US:["PAR","PAR","PAR","PAR","PAR","PAR"],
+       FLR:["PAR","PAR","HAZE"]},
+   circuits:6},
+
+  {name:"Awards gala \u00b7 live to air",
+   cs:{show:"Awards gala \u00b7 live to air", venue:"Theatre, broadcast rundown",
+       role:"Lighting hand", boss:"Production Manager",
+       manner:"rundown in hand, does not repeat herself", clock:"Live to air in 3 hrs", target:6,
+       say:"We are live to air at eight, which means there is no reset and no second go. Splitter at the deck, branch per position, chains inside the manual. If something is wrong you tell me now, not at seven fifty.",
+       reqs:["One spine, splitter at deck, branch per position.",
+             "Socapex to all four positions.",
+             "<b>Manual limits, no exceptions</b> \u2014 there is no fixing it on air.",
+             "Followspot and hazer isolated.",
+             "Speak up early if the plan does not work."]},
+   src:[["DISTRO","Distro (SL)",56,232],["FOH","Console (FOH)",56,58]],
+   hub:["SPLIT","Splitter (deck)",300,58],
+   pos:[["DS","Key truss",520,44],["MS","Mid truss",520,116],
+        ["US","Back truss",520,188],["FLR","Audience pkg",520,260]],
+   fx:{DS:["WASH","WASH","WASH","WASH","SPOT"],
+       MS:["BEAM","BEAM","BEAM","BEAM","MOVER","MOVER"],
+       US:["BLIND","BLIND","WASH","WASH","WASH"],
+       FLR:["PAR","PAR","PAR","PAR","HAZE"]},
+   circuits:6}
+  ];
+
+  var job=0, pass=1, runs=[], asn={};
+  function J(){ return JOBS[job] }
+
+  function build(){
+    runs=[]; asn={}; pass=1;
+    brief(); draw(); panel(); feed("");
+  }
+  function brief(){ CallSheet.render("hrBrief", J().cs); }
+  function nodes(){
+    var j=J(), o={};
+    j.src.forEach(function(s){ o[s[0]]={n:s[1],x:s[2],y:s[3]} });
+    o[j.hub[0]]={n:j.hub[1],x:j.hub[2],y:j.hub[3]};
+    j.pos.forEach(function(p){ o[p[0]]={n:p[1],x:p[2],y:p[3]} });
+    return o;
+  }
+
+  function draw(){
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var N=nodes(), j=J();
+    runs.forEach(function(r){
+      var a=N[r.from], b=N[r.to]; if(!a||!b) return;
+      var pw = r.cable.indexOf("DMX")<0 && r.cable.indexOf("Cat")<0;
+      svg.appendChild(m("path",{d:"M"+(a.x+62)+" "+(a.y+16)+" C"+(a.x+150)+" "+(a.y+16)+
+        " "+(b.x-90)+" "+(b.y+16)+" "+b.x+" "+(b.y+16),
+        stroke: pw?"#f85149":"#bc8cff","stroke-width":pw?3:2,fill:"none",opacity:".85"}));
+    });
+    for(var k in N){
+      var d=N[k], isPos = j.pos.some(function(p){return p[0]===k});
+      var isHub = j.hub[0]===k;
+      var col = isPos?"#3fb950":(isHub?"#bc8cff":(k==="DISTRO"?"#f85149":"#58a6ff"));
+      svg.appendChild(m("rect",{class:"sf",x:d.x,y:d.y,width:62+(isPos?58:58),height:32,rx:5,
+        style:"stroke:"+col}));
+      svg.appendChild(m("text",{x:d.x+60,y:d.y+15,"text-anchor":"middle",
+        style:"font-size:9px;font-weight:800;fill:"+col},d.n));
+      if(isPos){
+        var cnt=(j.fx[k]||[]).length;
+        var done=(j.fx[k]||[]).filter(function(_,i){ return asn[k+"_"+i] }).length;
+        svg.appendChild(m("text",{x:d.x+60,y:d.y+27,"text-anchor":"middle",
+          style:"font-size:8px;fill:"+(done===cnt?"#3fb950":"#5c6773")},
+          done+" / "+cnt+" fixtures on a circuit"));
+      }
+    }
+    svg.appendChild(m("text",{x:12,y:308,style:"font-size:8.5px;fill:#5c6773"},
+      "Red = power home run   ·   Purple = data home run"));
+  }
+
+  function panel(){
+    var el=document.getElementById("hrPanel"), j=J(), N=nodes();
+    document.getElementById("hrMode").textContent =
+      pass===1 ? "Pass 1 — build the home runs" : "Pass 2 — daisy chain each position";
+
+    if(pass===1){
+      var opts=function(list){ return list.map(function(k){
+        return '<option value="'+k+'">'+N[k].n+'</option>' }).join("") };
+      var all=Object.keys(N);
+      el.innerHTML='<div class="hrbuild">'+
+        '<div class="hrsel"><label>FROM</label><select id="hrFrom">'+opts(all)+'</select></div>'+
+        '<div class="hrsel"><label>TO</label><select id="hrTo">'+opts(all)+'</select></div>'+
+        '<div class="hrsel"><label>CABLE</label><select id="hrCable">'+
+          CABLES.map(function(c){return '<option>'+c+'</option>'}).join("")+'</select></div>'+
+        '<div class="hrsel" style="display:flex;align-items:flex-end"><button class="btn pri" id="hrAdd" style="width:100%">Run it</button></div>'+
+      '</div><div class="runlist" id="hrRuns"></div>';
+      document.getElementById("hrAdd").onclick=function(){
+        var f=document.getElementById("hrFrom").value,
+            t=document.getElementById("hrTo").value,
+            c=document.getElementById("hrCable").value;
+        if(f===t){ feed("no","That run goes nowhere","A cable has to start and end in different places."); return }
+        runs.push({from:f,to:t,cable:c}); feed(""); draw(); panel();
+      };
+      var rl=document.getElementById("hrRuns");
+      rl.innerHTML = runs.length ? runs.map(function(r,i){
+        var pw = r.cable.indexOf("DMX")<0 && r.cable.indexOf("Cat")<0;
+        return '<div class="runrow '+(pw?"pw":"dt")+'">'+N[r.from].n+' &rarr; '+N[r.to].n+
+          ' <span class="cb">'+r.cable+'</span><span class="x" data-i="'+i+'">&times;</span></div>';
+      }).join("") : '<p class="banklab">No runs yet. Pick a source, a destination and the cable that belongs on that leg.</p>';
+      rl.querySelectorAll(".x").forEach(function(b){
+        b.onclick=function(){ runs.splice(+b.dataset.i,1); draw(); panel() };
+      });
+      return;
+    }
+
+    var h='<div class="poscol">';
+    j.pos.forEach(function(p){
+      var key=p[0], list=j.fx[key]||[];
+      h+='<div class="posbox"><b>'+p[1]+'</b><i>breakout &mdash; '+j.circuits+' circuits, 20 A each</i>';
+      list.forEach(function(t,i){
+        var F=FX[t], id=key+"_"+i;
+        h+='<div class="fxrow"><span class="nm">'+F.n+
+           '<em>'+F.w+' W &middot; '+F.conn+' &middot; manual max '+F.max+'/circuit</em></span><span class="ckpick">';
+        for(var c=1;c<=j.circuits;c++){
+          var cnt=count(key,c);
+          h+='<button class="ckb'+(asn[id]===c?" on":"")+(cnt>=F.max&&asn[id]!==c?" full":"")+
+             '" data-id="'+id+'" data-c="'+c+'">'+c+'</button>';
+        }
+        h+='</span></div>';
+      });
+      h+='</div>';
+    });
+    el.innerHTML=h+'</div>';
+    el.querySelectorAll(".ckb").forEach(function(b){
+      b.onclick=function(){
+        var id=b.dataset.id, c=+b.dataset.c;
+        asn[id] = asn[id]===c ? null : c;
+        draw(); panel();
+      };
+    });
+  }
+  function count(pos,c){
+    var j=J(), n=0;
+    (j.fx[pos]||[]).forEach(function(_,i){ if(asn[pos+"_"+i]===c) n++ });
+    return n;
+  }
+  function onCkt(pos,c){
+    var j=J(), out=[];
+    (j.fx[pos]||[]).forEach(function(t,i){ if(asn[pos+"_"+i]===c) out.push(t) });
+    return out;
+  }
+  function feed(cls,head,body){
+    var f=document.getElementById("hrFeed");
+    if(!cls){ f.innerHTML=""; return }
+    f.innerHTML='<div class="fb '+cls+'"><b class="h">'+head+'</b>'+body+'</div>';
+  }
+
+  document.getElementById("hrP1").onclick=function(){ pass=1; draw(); panel(); feed("") };
+  document.getElementById("hrP2").onclick=function(){ pass=2; draw(); panel(); feed("") };
+  document.getElementById("hrClear").onclick=function(){
+    if(pass===1) runs=[]; else asn={};
+    draw(); panel(); feed("");
+  };
+  document.getElementById("hrJob").onclick=function(){ job=(job+1)%JOBS.length; build() };
+
+  document.getElementById("hrCheck").onclick=function(){
+    var j=J(), N=nodes(), out=[], ok=true;
+    var POS=j.pos.map(function(p){return p[0]}), HUB=j.hub[0];
+
+    /* ---------- pass 1: home runs ---------- */
+    var dataHome=runs.filter(function(r){ return r.from==="FOH" && r.to===HUB });
+    if(!dataHome.length){ ok=false;
+      out.push(["no","“Where's my data home run?”",
+        "Nothing goes from the console to the splitter. That single long run is the spine of the whole data side &mdash; every branch hangs off it."]);
+    } else if(dataHome.some(function(r){ return r.cable.indexOf("DMX")<0 && r.cable.indexOf("Cat")<0 })){
+      ok=false;
+      out.push(["no","“That's a power cable carrying my data”",
+        "The console-to-splitter run has to be <b>5-pin DMX</b> (or Cat5e/Cat6 if you are running a network protocol to a node). You have put a power cable on it.<br><br><b>And do not use mic cable.</b> It fits, it works at focus, and it fails when the room is full &mdash; DMX is a 120&nbsp;&Omega; data line and mic cable is 60&nbsp;&Omega;."]);
+    }
+    if(dataHome.length>1){ ok=false;
+      out.push(["warn","“Why are there two data home runs?”",
+        "One console, one splitter, one long run. Duplicating it does not add redundancy here &mdash; it just doubles what you have to coil at the end of the night."]);
+    }
+    var missingData=POS.filter(function(p){
+      return !runs.some(function(r){ return r.from===HUB && r.to===p &&
+        (r.cable.indexOf("DMX")>=0 || r.cable.indexOf("Cat")>=0) });
+    });
+    if(missingData.length){ ok=false;
+      out.push(["no","“"+missingData.map(function(p){return N[p].n}).join(" and ")+" has no data”",
+        "Those positions will have power and sit there doing nothing. <b>Every position needs a branch from the splitter</b> on DMX."]);
+    }
+    var directData=runs.filter(function(r){
+      return r.from==="FOH" && POS.indexOf(r.to)>=0; });
+    if(directData.length){ ok=false;
+      out.push(["no","“You ran DMX straight from the console to a truss”",
+        "I asked for a splitter. Running console-direct to each position means <b>"+POS.length+" long cables instead of one</b>, and you lose the thing a splitter actually buys you.<br><br><b>An opto-splitter isolates each branch.</b> One bad fixture or one crushed cable takes out its branch and nothing else &mdash; and when a truss goes dark you know immediately which branch it is on. Without it, one fault anywhere can take the whole rig and you are hunting it blind."]);
+    }
+    var missingPwr=POS.filter(function(p){
+      return !runs.some(function(r){ return r.from==="DISTRO" && r.to===p &&
+        (r.cable==="Socapex" || r.cable.indexOf("jumper")>=0) });
+    });
+    if(missingPwr.length){ ok=false;
+      out.push(["no","“"+missingPwr.map(function(p){return N[p].n}).join(" and ")+" has no power”",
+        "Every position needs a power home run from the distro. On a rig this size that is <b>Socapex</b> &mdash; six circuits down one cable instead of six cables."]);
+    }
+    var jumperHome=runs.filter(function(r){
+      return r.from==="DISTRO" && POS.indexOf(r.to)>=0 && r.cable.indexOf("jumper")>=0; });
+    if(jumperHome.length){ ok=false;
+      out.push(["warn","“Single jumpers for a home run?”",
+        "A True1 or Edison jumper is a <b>local</b> cable &mdash; breakout to fixture, or fixture to fixture. For a home run from the distro to a position you want <b>Socapex</b>, then break out at the far end.<br><br>Running individual jumpers the whole distance means one cable per circuit. Six cables where one would do, and six things to coil, label and trip over."]);
+    }
+    var feeder=runs.filter(function(r){ return r.cable.indexOf("Feeder")>=0 });
+    if(feeder.length){ ok=false;
+      out.push(["no","“Put the feeder down”",
+        "Feeder is service-to-distro. It is <b>not</b> your ticket and it is not what lands on a truss. Everything downstream of the distro output is Socapex and jumpers."]);
+    }
+
+    /* ---------- pass 2: daisy chains ---------- */
+    var unassigned=0;
+    POS.forEach(function(p){ (j.fx[p]||[]).forEach(function(_,i){ if(!asn[p+"_"+i]) unassigned++ }) });
+    if(unassigned){ ok=false;
+      out.push(["no","“"+unassigned+" fixtures aren't on a circuit”",
+        "Every fixture needs to land on a circuit at its position. An unassigned fixture is one you will be chasing during rehearsal."]);
+    }
+    POS.forEach(function(p){
+      for(var c=1;c<=j.circuits;c++){
+        var on=onCkt(p,c); if(!on.length) continue;
+        var types={}; on.forEach(function(t){ types[t]=(types[t]||0)+1 });
+        /* manual limit */
+        for(var t in types){
+          if(types[t] > FX[t].max){ ok=false;
+            var mathMax=Math.floor(16/(FX[t].w/120));
+            out.push(["no","“Too many on "+N[p].n+" circuit "+c+"”",
+              "You have <b>"+types[t]+" &times; "+FX[t].n+"</b> chained together. <b>The manual says "+FX[t].max+".</b>"+
+              (mathMax>FX[t].max
+                ? "<br><br>Your arithmetic would allow "+mathMax+" &mdash; "+FX[t].w+" W is "+(FX[t].w/120).toFixed(1)+" A, and 16 A of derated circuit divided by that is "+mathMax+
+                  ". <b>The manual is lower and the manual wins.</b> It accounts for inrush when they all strike at once, and for the current rating of the link-through connector on the fixture body. <b>That connector melts before the breaker trips.</b>"
+                : "<br><br>That figure comes straight off the spec sheet. Do not improvise past it.")]);
+          }
+        }
+        /* mixed connector types on one chain */
+        var conns={}; on.forEach(function(t){ conns[FX[t].conn]=1 });
+        if(Object.keys(conns).length>1){ ok=false;
+          out.push(["no","“Mixed connectors on "+N[p].n+" circuit "+c+"”",
+            "That chain has <b>"+Object.keys(conns).join(" and ")+"</b> on it. They do not link to each other &mdash; you would need an adapter at every transition, and each one is a failure point hanging off a truss.<br><br>Keep a daisy chain to <b>one connector family</b>. Put the True1 fixtures together and the powerCON fixtures together."]);
+        }
+        /* load check */
+        var w=0; on.forEach(function(t){ w+=FX[t].w });
+        if(w/120 > 16){ ok=false;
+          out.push(["no","“"+N[p].n+" circuit "+c+" is over”",
+            on.length+" fixtures totalling <b>"+w+" W</b> is "+(w/120).toFixed(1)+" A. A 20 A circuit carries <b>16 A continuous</b>, and a show is continuous."]);
+        }
+        /* things that need their own circuit */
+        ["HAZE","SPOT"].forEach(function(solo){
+          if(types[solo] && on.length>types[solo]){ ok=false;
+            out.push(["no","“The "+FX[solo].n.toLowerCase()+" is sharing”",
+              "I asked for it on its own circuit and you have put "+(on.length-types[solo])+" other fixture"+
+              (on.length-types[solo]>1?"s":"")+" with it on "+N[p].n+" circuit "+c+"."+
+              (solo==="HAZE"
+                ? "<br><br><b>Why:</b> if the fire panel gets twitchy or the room complains, I kill the hazer at the circuit and lose <i>nothing else</i>."
+                : "<br><br><b>Why:</b> a followspot draws hard and gets moved. I want it isolated so a spot op unplugging something does not take a truss with it.")]);
+          }
+        });
+      }
+    });
+
+    if(ok){
+      var nRuns=runs.length, nFx=0;
+      POS.forEach(function(p){ nFx+=(j.fx[p]||[]).length });
+      out.unshift(["ok","“That's a rig I can hand to a spot op”",
+        "<b>"+nRuns+" home runs</b>, one DMX spine to the splitter with a branch to every position, Socapex to every truss, and all <b>"+nFx+
+        " fixtures</b> chained inside their manual limits with matched connectors.<br><br>"+
+        "<b>The habit worth keeping:</b> you decided where cable goes <i>before</i> you pulled any. That is the difference between one trip to the cable cart and four."]);
+    }
+    var g=CallSheet.grade("hrBrief");
+    if(ok){
+      CallSheet.stop("hrBrief");
+      if(g.late) out.push(["warn","\u201cRight, but slow\u201d",
+        "You got the rig correct, and correct is what matters most \u2014 <b>wrong and fast costs a fixture or a dark position.</b> But the call had you at "+
+        J().cs.target+" minutes and you took "+Math.ceil(g.mins)+
+        ".<br><br><b>Where the time actually goes:</b> deciding while you are already walking. Read the plot, picture the runs, then pull cable once. The hands who look fast are not moving faster \u2014 they are walking to the cart one time instead of four."]);
+    }
+    document.getElementById("hrFeed").innerHTML=out.map(function(o){
+      return '<div class="fb '+o[0]+'"><b class="h">'+o[1]+'</b>'+o[2]+'</div>' }).join("")+g.html;
+  };
+
+  build();
 })();
 
 </script>
